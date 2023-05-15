@@ -1,19 +1,30 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
+	"forum"
 	"html/template"
 	"log"
 	"net/http"
-	"forum"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
-		forum.CreateDatabase()
+	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
+	forum.AddUsers(database, "personne1", "1234", "j'aime les jeux video", "test@gmail.com")
+	//forum.ModifyBDD(database, 6, "petit test4")
+	defer database.Close()
+	forum.FetchRecords(database)
 	WebServer()
-	fmt.Println("hjklfef")
 }
+
+// func main() {
+// 	forum.CreateDatabase()
+// 	WebServer()
+// }
 
 func WebServer() {
 
