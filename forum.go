@@ -2,7 +2,6 @@ package forum
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -54,23 +53,22 @@ func AddUsers(db *sql.DB, username string, password string, profilDescription st
 	}
 }
 
-func FetchRecords(db *sql.DB) {
-	fmt.Println("test")
+func FetchRecords(db *sql.DB) (int, string, string, string, string) {
 	record, err := db.Query("SELECT * FROM USER")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer record.Close()
+	var id int
+	var username string
+	var password string
+	var profilDescription string
+	var mail string
 	for record.Next() {
-		var id int
-		var username string
-		var password string
-		var profilDescription string
-		var mail int
 		record.Scan(&id, &username, &password, &profilDescription, &mail)
-		fmt.Printf("User: %d %s %s %s %d", id, username, password, profilDescription, mail)
-		fmt.Println()
 	}
+	return id, username, password, profilDescription, mail
+
 }
 
 func ModifyBDD(db *sql.DB, id int, description string) {

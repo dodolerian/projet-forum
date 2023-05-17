@@ -12,12 +12,9 @@ import (
 )
 
 func main() {
-	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
-	forum.AddUsers(database, "personne1", "1234", "j'aime les jeux video", "test@gmail.com")
+	//forum.AddUsers(database, "personne1", "1234", "j'aime les jeux video", "test@gmail.com")
 	//forum.ModifyBDD(database, 6, "petit test4")
-	defer database.Close()
-	forum.FetchRecords(database)
 	WebServer()
 }
 
@@ -40,9 +37,33 @@ func WebServer() {
 	}
 }
 
+type userTable struct {
+	Id                int
+	Username          string
+	Password          string
+	ProfilDescription string
+	Mail              string
+}
+
 func Home(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
-	err := tmpl.Execute(w, nil)
+
+	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
+
+	defer database.Close()
+
+	tmpId, tmpUsername, tmpPassword, tmpProfilDescripotion, tmpMail := forum.FetchRecords(database)
+	user := userTable{Id: tmpId,
+		Username:          tmpUsername,
+		Password:          tmpPassword,
+		ProfilDescription: tmpProfilDescripotion,
+		Mail:              tmpMail}
+
+	fmt.Println(r.FormValue("username"))
+	fmt.Println(r.FormValue("password"))
+	fmt.Println(r.FormValue("mail"))
+
+	err := tmpl.Execute(w, user)
 	if err != nil {
 		log.Fatal(err)
 	}
