@@ -53,21 +53,33 @@ func AddUsers(db *sql.DB, username string, password string, profilDescription st
 	}
 }
 
-func FetchRecords(db *sql.DB) (int, string, string, string, string) {
+func FetchUser(db *sql.DB) ([]int, []string, []string, []string, []string) {
 	record, err := db.Query("SELECT * FROM USER")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer record.Close()
+
 	var id int
 	var username string
 	var password string
 	var profilDescription string
 	var mail string
+
+	var resId []int
+	var resUsername []string
+	var resPassword []string
+	var resProfilDescription []string
+	var resMail []string
 	for record.Next() {
 		record.Scan(&id, &username, &password, &profilDescription, &mail)
+		resId = append(resId, id)
+		resUsername = append(resUsername, username)
+		resPassword = append(resPassword, password)
+		resProfilDescription = append(resProfilDescription, profilDescription)
+		resMail = append(resMail, mail)
 	}
-	return id, username, password, profilDescription, mail
+	return resId, resUsername, resPassword, resProfilDescription, resMail
 
 }
 
