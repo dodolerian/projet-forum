@@ -7,19 +7,20 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func main() {
+var connectedUser []string
 
+func main() {
 	//forum.AddUsers(database, "personne1", "1234", "j'aime les jeux video", "test@gmail.com")
 	//forum.ModifyBDD(database, 6, "petit test4")
 	WebServer()
 }
 
 func WebServer() {
-
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/", Account)
 
@@ -33,10 +34,16 @@ func WebServer() {
 	}
 }
 
-type accountStruct struct {
+type createAccountStruct struct {
 	UsernameError string
 	PasswordError string
 	MailError     string
+}
+
+type HomePageStruct struct {
+	Username          string
+	ProfilDescription string
+	Mail              string
 }
 
 func Account(w http.ResponseWriter, r *http.Request) {
@@ -46,12 +53,8 @@ func Account(w http.ResponseWriter, r *http.Request) {
 
 	defer database.Close()
 
-	_, tmpUsername, _, _, tmpMail := forum.FetchUser(database)
-	user := accountStruct{}
-
-	// fmt.Println(r.FormValue("username"))
-	// fmt.Println(r.FormValue("password"))
-	// fmt.Println(r.FormValue("mail"))
+	_, tmpUsername, _, _, tmpMail := forum.FetchAllUser(database)
+	accountPage := createAccountStruct{}
 
 	usernameForm := r.FormValue("username")
 	passwordForm := r.FormValue("password")
@@ -60,32 +63,39 @@ func Account(w http.ResponseWriter, r *http.Request) {
 	if usernameForm != "" && passwordForm != "" && mailForm != "" {
 
 		if ContainsStringArray(tmpUsername, usernameForm) {
-			user = accountStruct{UsernameError: "nom déja utilisé"}
+			accountPage = createAccountStruct{UsernameError: "nom déja utilisé"}
 
 		} else if len(passwordForm) < 5 {
-			user = accountStruct{PasswordError: "mot de passe trop court"}
+			accountPage = createAccountStruct{PasswordError: "mot de passe trop court"}
 
 		} else if ContainsStringArray(tmpMail, mailForm) {
-			user = accountStruct{MailError: "adresse mail déja utilisé"}
+			accountPage = createAccountStruct{MailError: "adresse mail déja utilisé"}
 
 		} else {
 			forum.AddUsers(database, usernameForm, passwordForm, "", mailForm)
+			id, username, password, profilDescription, mail := forum.FetchUserWithName(database, usernameForm)
+			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}
 	}
 
-	err := tmpl.Execute(w, user)
+	err := tmpl.Execute(w, accountPage)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(connectedUser)
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
 
-	user := accountStruct{}
+	homePage := HomePageStruct{
+		Username:          connectedUser[1],
+		ProfilDescription: connectedUser[3],
+		Mail:              connectedUser[4],
+	}
 
-	err := tmpl.Execute(w, user)
+	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)
 	}

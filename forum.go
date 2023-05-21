@@ -53,7 +53,7 @@ func AddUsers(db *sql.DB, username string, password string, profilDescription st
 	}
 }
 
-func FetchUser(db *sql.DB) ([]int, []string, []string, []string, []string) {
+func FetchAllUser(db *sql.DB) ([]int, []string, []string, []string, []string) {
 	record, err := db.Query("SELECT * FROM USER")
 	if err != nil {
 		log.Fatal(err)
@@ -80,7 +80,6 @@ func FetchUser(db *sql.DB) ([]int, []string, []string, []string, []string) {
 		resMail = append(resMail, mail)
 	}
 	return resId, resUsername, resPassword, resProfilDescription, resMail
-
 }
 
 func ModifyBDD(db *sql.DB, id int, description string) {
@@ -95,4 +94,23 @@ func ModifyBDD(db *sql.DB, id int, description string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func FetchUserWithName(db *sql.DB, name string) (int, string, string, string, string) {
+	record, err := db.Query("SELECT * FROM USER WHERE username = '" + name + "'")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer record.Close()
+
+	var id int
+	var username string
+	var password string
+	var profilDescription string
+	var mail string
+
+	for record.Next() {
+		record.Scan(&id, &username, &password, &profilDescription, &mail)
+	}
+	return id, username, password, profilDescription, mail
 }
