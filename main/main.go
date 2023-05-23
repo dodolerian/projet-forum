@@ -22,7 +22,8 @@ func main() {
 
 func WebServer() {
 	http.HandleFunc("/home", Home)
-	http.HandleFunc("/", Account)
+	http.HandleFunc("/create", CreateAccount)
+	http.HandleFunc("/", ConnexionAccount)
 
 	fs := http.FileServer(http.Dir("assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets", fs))
@@ -46,8 +47,8 @@ type HomePageStruct struct {
 	Mail              string
 }
 
-func Account(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("template/account.html"))
+func CreateAccount(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/createAccount.html"))
 
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
@@ -76,6 +77,40 @@ func Account(w http.ResponseWriter, r *http.Request) {
 			id, username, password, profilDescription, mail := forum.FetchUserWithName(database, usernameForm)
 			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
+		}
+	}
+
+	err := tmpl.Execute(w, accountPage)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/connexionAccount.html"))
+
+	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
+
+	defer database.Close()
+
+	_, _, _, _, tmpMail := forum.FetchAllUser(database)
+	accountPage := createAccountStruct{}
+
+	passwordForm := r.FormValue("password")
+	mailForm := r.FormValue("mail")
+
+	if passwordForm != "" && mailForm != "" {
+		if !ContainsStringArray(tmpMail, mailForm) {
+			accountPage = createAccountStruct{MailError: "adresse mail pas trouvé"}
+		} else {
+			id, username, password, profilDescription, mail := forum.FetchUserWithMail(database, mailForm)
+			fmt.Println(password, passwordForm)
+			if passwordForm != password {
+				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
+			} else {
+				connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
+				http.Redirect(w, r, "/home", http.StatusSeeOther)
+			}
 		}
 	}
 

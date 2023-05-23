@@ -114,3 +114,22 @@ func FetchUserWithName(db *sql.DB, name string) (int, string, string, string, st
 	}
 	return id, username, password, profilDescription, mail
 }
+
+func FetchUserWithMail(db *sql.DB, mailEnter string) (int, string, string, string, string) {
+	record, err := db.Query("SELECT * FROM USER WHERE mail = '" + mailEnter + "'")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer record.Close()
+
+	var id int
+	var username string
+	var password string
+	var profilDescription string
+	var mail string
+
+	for record.Next() {
+		record.Scan(&id, &username, &password, &profilDescription, &mail)
+	}
+	return id, username, password, profilDescription, mail
+}
