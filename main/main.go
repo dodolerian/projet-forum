@@ -79,7 +79,6 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}
 	}
-
 	err := tmpl.Execute(w, accountPage)
 	if err != nil {
 		log.Fatal(err)
