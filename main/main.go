@@ -73,6 +73,7 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 			accountPage = createAccountStruct{MailError: "adresse mail déja utilisé"}
 
 		} else {
+			//hash
 			forum.AddUsers(database, usernameForm, passwordForm, "", mailForm)
 			id, username, password, profilDescription, mail := forum.FetchUserWithName(database, usernameForm)
 			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
@@ -104,6 +105,7 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 		} else {
 			id, username, password, profilDescription, mail := forum.FetchUserWithMail(database, mailForm)
 			fmt.Println(password, passwordForm)
+			//dehash
 			if passwordForm != password {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
