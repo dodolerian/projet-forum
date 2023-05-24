@@ -10,27 +10,38 @@
 </head>
 
 <body>
-    <div class="user">
-        <header class="user__header">
-            <h1 class="user__title">connectes toi a ton compte</h1>
-        </header>
+    <header>
+        <h1>Open Chat Room</h1>
+    </header>
+    <main>
+        <div class="user">
+            <header class="user__header">
+                <h1 class="user__title">Connectes toi a ton compte</h1>
+            </header>
+    
+            <form class="form">
+                <div class="form__group">
+                    <input type="email" name="mail" placeholder="Email" class="form__input" />
+                </div>
+                {{ if .MailError }}
+                {{ .MailError }}
+                {{ end }}
+                <div class="form__group">
+                    <input type="password" name="password" placeholder="Password" class="form__input" />
+                </div>
+                {{ if .PasswordError }}
+                {{ .PasswordError }}
+                {{ end }}
+                <input id="btn" class="btn" type="submit" value="Envoyer">
+                <a class="btn" href="/create">Pas encore inscrit ?</a>
+                <a class="btn" href="/home">Se connecter en tant que Invité</a>
+            </form>
+        </div>
+    </main>
 
-        <form class="form">
-            <div class="form__group">
-                <input type="email" name="mail" placeholder="Email" class="form__input" />
-            </div>
-            {{ if .MailError }}
-            {{ .MailError }}
-            {{ end }}
-            <div class="form__group">
-                <input type="password" name="password" placeholder="Password" class="form__input" />
-            </div>
-            {{ if .PasswordError }}
-            {{ .PasswordError }}
-            {{ end }}
-            <input class="btn" type="submit">
-        </form>
-    </div>
+    <footer>
+        <img class="logo" src="../assets/img/test/robot.jpg" alt="logo">
+    </footer>
 
     <script>
         const button = document.querySelector('.btn')
