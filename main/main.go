@@ -125,10 +125,13 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(connectedUser)
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
 
-	homePage := HomePageStruct{
-		Username:          connectedUser[1],
-		ProfilDescription: connectedUser[3],
-		Mail:              connectedUser[4],
+	homePage := HomePageStruct{}
+	if len(connectedUser) > 0 {
+		homePage = HomePageStruct{
+			Username:          connectedUser[1],
+			ProfilDescription: connectedUser[3],
+			Mail:              connectedUser[4],
+		}
 	}
 
 	err := tmpl.Execute(w, homePage)
