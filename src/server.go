@@ -1,6 +1,7 @@
 package forum
+
 import (
-		"database/sql"
+	"database/sql"
 	"fmt"
 	"html/template"
 	"log"
@@ -9,7 +10,9 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 )
+
 var connectedUser []string
+
 func WebServer() {
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/create", CreateAccount)
@@ -26,17 +29,21 @@ func WebServer() {
 }
 
 type createAccountStruct struct {
-
 	UsernameError string
 	PasswordError string
 	MailError     string
 }
 
 type HomePageStruct struct {
-	IdAuthor 		string
+	IdAuthor          string
 	Username          string
 	ProfilDescription string
 	Mail              string
+	ContentPost       string
+	AuthorPost        string
+	LikePost          int
+	DyslikePost       int
+	DatePost          string
 }
 
 func CreateAccount(w http.ResponseWriter, r *http.Request) {
@@ -96,7 +103,7 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 			accountPage = createAccountStruct{MailError: "adresse mail pas trouvé"}
 		} else {
 			id, username, password, profilDescription, mail := FetchUserWithMail(database, mailForm)
-			fmt.Println(password, passwordForm)
+
 			//dehash
 			if passwordForm != password {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
@@ -114,24 +121,33 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(connectedUser)
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
-
 	homePage := HomePageStruct{}
+
+	if r.Method == http.MethodPost {
+		ContentPost := r.FormValue("ContentPost")
+		AddPost(database, ContentPost, homePage)
+	}
+	allPost := recuperationPost()
+
+	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[2].Author))
+
 	if len(connectedUser) > 0 {
 		homePage = HomePageStruct{
-			IdAuthor: 			connectedUser[0],
+			IdAuthor:          connectedUser[0],
 			Username:          connectedUser[1],
 			ProfilDescription: connectedUser[3],
 			Mail:              connectedUser[4],
+			ContentPost:       allPost[2].Content,
+			AuthorPost:        username,
+			LikePost:          allPost[2].Like,
+			DyslikePost:       allPost[2].Dislike,
+			DatePost:          allPost[2].Date,
 		}
 	}
-	if(r.Method == http.MethodPost){
-	ContentPost := r.FormValue("ContentPost")
-	AddPost(database, ContentPost,homePage)
-	}
+
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)

@@ -25,32 +25,26 @@
             <a class="btn-nav" href="/profil"><img class="img-btn-nav" src="../assets/img/test/profil.png"
                     alt="profil"><span>Profil</span></a>
         </ul>
-        <input class="search-bar" type="text"/>
+        <input class="search-bar" type="text" />
     </nav>
     <div class="addPost">
-        <form class="addPostForm" method="post" >
+        <form class="addPostForm" method="post">
             <input type="text" name="titlePost" id="titlePost">
             <input type="text" name="ContentPost" id="ContentPost">
-            <input id="addPostButton"  type="submit" value="addPost">
+            <input id="addPostButton" type="submit" value="addPost">
         </form>
     </div>
-    <main>  
-   
+    <main>
+
         <div class="posts">
             <div class="post">
                 <div class="content">
                     <div class="user">
                         <img class="userPP" src="../assets/img/test/img1.webp" alt="pp">
-                        <h2>Utilisateur</h2>
+                        <h2>{{ .AuthorPost }}</h2>
                     </div>
                     <p class="txt">
-                        their default model text, and a search for 'lorem ipsum'.their default model text, and a search
-                        for 'lorem ipsum'.their default model text, and a search for 'lorem ipsum'.their default model
-                        text, and a search for 'lorem ipsum'.their default model text, and a search for 'lorem
-                        ipsum'.their default model text, and a search for 'lorem ipsum'.
-                        their default model text, and a search for 'lorem ipsum'.
-
-                        ougvkugmyiqguv ui
+                        {{ .ContentPost }}
                     </p>
                     <div class="likes">
                         <img id="like" src="../assets/img/test/pouces-vers-le-haut.png" alt="like">
