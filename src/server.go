@@ -107,6 +107,7 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 			id, username, hashpass, profilDescription, mail := FetchUserWithMail(database, mailForm)
 			fmt.Println(hashpass, passwordForm)
 			//dehash
+
 			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
@@ -134,20 +135,19 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	}
 	allPost := recuperationPost()
 
-	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[2].Author))
+	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[0].Author))
 
 	if len(connectedUser) > 0 {
 		homePage = HomePageStruct{
 			IdAuthor:          connectedUser[0],
-			IdAuthor:          connectedUser[0],
 			Username:          connectedUser[1],
 			ProfilDescription: connectedUser[3],
 			Mail:              connectedUser[4],
-			ContentPost:       allPost[2].Content,
+			ContentPost:       allPost[0].Content,
 			AuthorPost:        username,
-			LikePost:          allPost[2].Like,
-			DyslikePost:       allPost[2].Dislike,
-			DatePost:          allPost[2].Date,
+			LikePost:          allPost[0].Like,
+			DyslikePost:       allPost[0].Dislike,
+			DatePost:          allPost[0].Date,
 		}
 	}
 
