@@ -1,9 +1,8 @@
 package forum
 import(
 	   "database/sql"
-    "fmt"
      "log"
-
+	"fmt"
      _ "github.com/mattn/go-sqlite3"
 )
 
