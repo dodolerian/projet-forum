@@ -38,7 +38,6 @@ import (
 //         log.Fatal(err)
 //     }
 //     query.Exec()
-//     fmt.Println("Table created successfully!")
 // }
 
 func AddUsers(db *sql.DB, username string, password string, profilDescription string, mail string) {
@@ -82,7 +81,7 @@ func FetchAllUser(db *sql.DB) ([]int, []string, []string, []string, []string) {
 	return resId, resUsername, resPassword, resProfilDescription, resMail
 }
 
-func ModifyBDD(db *sql.DB, id int, description string) {
+func ModifyDescriptionUser(db *sql.DB, id int, description string) {
 	records := `UPDATE USER
 	SET  profilDescription = $1
 	WHERE id = $2`
@@ -132,4 +131,23 @@ func FetchUserWithMail(db *sql.DB, mailEnter string) (int, string, string, strin
 		record.Scan(&id, &username, &password, &profilDescription, &mail)
 	}
 	return id, username, password, profilDescription, mail
+}
+
+func FetchUserWithId(db *sql.DB, id string) (int, string, string, string, string) {
+	record, err := db.Query("SELECT * FROM USER WHERE id = '" + id + "'")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer record.Close()
+
+	var idFetch int
+	var username string
+	var password string
+	var profilDescription string
+	var mail string
+
+	for record.Next() {
+		record.Scan(&idFetch, &username, &password, &profilDescription, &mail)
+	}
+	return idFetch, username, password, profilDescription, mail
 }
