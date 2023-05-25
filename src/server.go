@@ -1,6 +1,7 @@
 package forum
+
 import (
-		"database/sql"
+	"database/sql"
 	"fmt"
 	"html/template"
 	"log"
@@ -8,8 +9,11 @@ import (
 	"strconv"
 
 	_ "github.com/mattn/go-sqlite3"
+	"golang.org/x/crypto/bcrypt"
 )
+
 var connectedUser []string
+
 func WebServer() {
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/create", CreateAccount)
@@ -26,14 +30,13 @@ func WebServer() {
 }
 
 type createAccountStruct struct {
-
 	UsernameError string
 	PasswordError string
 	MailError     string
 }
 
 type HomePageStruct struct {
-	IdAuthor 		string
+	IdAuthor          string
 	Username          string
 	ProfilDescription string
 	Mail              string
@@ -66,7 +69,8 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 
 		} else {
 			//hash
-			AddUsers(database, usernameForm, passwordForm, "", mailForm)
+			hashpass, _ := HashPassword(passwordForm)
+			AddUsers(database, usernameForm, hashpass, "", mailForm)
 			id, username, password, profilDescription, mail := FetchUserWithName(database, usernameForm)
 			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
@@ -95,13 +99,13 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 		if !ContainsStringArray(tmpMail, mailForm) {
 			accountPage = createAccountStruct{MailError: "adresse mail pas trouvé"}
 		} else {
-			id, username, password, profilDescription, mail := FetchUserWithMail(database, mailForm)
-			fmt.Println(password, passwordForm)
+			id, username, hashpass, profilDescription, mail := FetchUserWithMail(database, mailForm)
+			fmt.Println(hashpass, passwordForm)
 			//dehash
-			if passwordForm != password {
+			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
-				connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
+				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}
 		}
@@ -118,19 +122,18 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
-
 	homePage := HomePageStruct{}
 	if len(connectedUser) > 0 {
 		homePage = HomePageStruct{
-			IdAuthor: 			connectedUser[0],
+			IdAuthor:          connectedUser[0],
 			Username:          connectedUser[1],
 			ProfilDescription: connectedUser[3],
 			Mail:              connectedUser[4],
 		}
 	}
-	if(r.Method == http.MethodPost){
-	ContentPost := r.FormValue("ContentPost")
-	AddPost(database, ContentPost,homePage)
+	if r.Method == http.MethodPost {
+		ContentPost := r.FormValue("ContentPost")
+		AddPost(database, ContentPost, homePage)
 	}
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
@@ -176,4 +179,14 @@ func ContainsStringArray(array []string, value string) bool {
 		}
 	}
 	return false
+}
+
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
