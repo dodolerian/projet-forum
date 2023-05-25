@@ -11,8 +11,7 @@ import (
 )
 
 func AddPost(db *sql.DB , content string, homePage HomePageStruct ){
-	   currentTime := time.Now()
-
+	currentTime := time.Now()
 	records := `INSERT INTO POST(author,content,like,dislike,date ) VALUES (?,?,?,?,?)`
 	query, err := db.Prepare(records)
 	idAuthor := homePage.IdAuthor
@@ -24,5 +23,6 @@ func AddPost(db *sql.DB , content string, homePage HomePageStruct ){
 	if err != nil {
 		log.Fatal(err)
 	}
-		fmt.Println("envoie dans la bdd")
+	fmt.Println("envoie dans la bdd")
+	recuperationPost()
 }
