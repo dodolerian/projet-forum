@@ -14,7 +14,7 @@ func WebServer() {
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/create", CreateAccount)
 	http.HandleFunc("/", ConnexionAccount)
-
+	http.HandleFunc("/profil", Profil)
 	fs := http.FileServer(http.Dir("assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets", fs))
 
@@ -133,6 +133,37 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	AddPost(database, ContentPost,homePage)
 	}
 	err := tmpl.Execute(w, homePage)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func Profil(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("template/profil.html"))
+
+	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
+	defer database.Close()
+
+	description := r.FormValue("description")
+
+	// si le form est rempli alors change la valeur, empache qu'elle soit vide
+	if description != "" {
+		id, _ := strconv.Atoi(connectedUser[0])
+		ModifyDescriptionUser(database, id, description)
+	}
+
+	// reprend l'utilisateur modifié a chaque fois
+	idRefresh, username, password, profilDescription, mail := FetchUserWithId(database, connectedUser[0])
+	connectedUser = nil
+	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail)
+
+	profilPage := HomePageStruct{
+		Username:          connectedUser[1],
+		ProfilDescription: connectedUser[3],
+		Mail:              connectedUser[4],
+	}
+
+	err := tmpl.Execute(w, profilPage)
 	if err != nil {
 		log.Fatal(err)
 	}
