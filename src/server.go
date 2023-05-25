@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	_ "github.com/mattn/go-sqlite3"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var connectedUser []string
@@ -73,7 +74,8 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 
 		} else {
 			//hash
-			AddUsers(database, usernameForm, passwordForm, "", mailForm)
+			hashpass, _ := HashPassword(passwordForm)
+			AddUsers(database, usernameForm, hashpass, "", mailForm)
 			id, username, password, profilDescription, mail := FetchUserWithName(database, usernameForm)
 			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
@@ -102,13 +104,13 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 		if !ContainsStringArray(tmpMail, mailForm) {
 			accountPage = createAccountStruct{MailError: "adresse mail pas trouvé"}
 		} else {
-			id, username, password, profilDescription, mail := FetchUserWithMail(database, mailForm)
-
+			id, username, hashpass, profilDescription, mail := FetchUserWithMail(database, mailForm)
+			fmt.Println(hashpass, passwordForm)
 			//dehash
-			if passwordForm != password {
+			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
-				connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
+				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}
 		}
@@ -136,6 +138,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	if len(connectedUser) > 0 {
 		homePage = HomePageStruct{
+			IdAuthor:          connectedUser[0],
 			IdAuthor:          connectedUser[0],
 			Username:          connectedUser[1],
 			ProfilDescription: connectedUser[3],
@@ -192,4 +195,14 @@ func ContainsStringArray(array []string, value string) bool {
 		}
 	}
 	return false
+}
+
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
