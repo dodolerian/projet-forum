@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../assets/account.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <h1>Open Chat Room</h1>
+    </header>
+    <main>
+        <div class="user">
+            <header class="user__header">
+                <h1 class="user__title">Create your account</h1>
+            </header>
+    
+            <form class="form">
+                <div class="form__group">
+                    <input type="text" name="username" placeholder="Username" class="form__input" />
+                </div>
+                {{ if .UsernameError }}
+                {{ .UsernameError }}
+                {{ end }}
+                <div class="form__group">
+                    <input type="email" name="mail" placeholder="Email" class="form__input" />
+                </div>
+                {{ if .MailError }}
+                {{ .MailError }}
+                {{ end }}
+    
+                <div class="form__group">
+                    <input type="password" name="password" placeholder="Password" class="form__input" />
+                </div>
+                {{ if .PasswordError }}
+                {{ .PasswordError }}
+                {{ end }}
+    
+                <input id="btn" class="btn" type="submit">
+                <a class="btn" href="/">Se connecter !</a>
+                <a class="btn" href="/home">Se connecter en tant que Invité</a>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <img class="logo" src="../assets/img/test/robot.jpg" alt="logo">
+    </footer>
+
+    <script>
+        const button = document.querySelector('.btn')
+        const form = document.querySelector('.form')
+
+        button.addEventListener('click', function () {
+            form.classList.add('form--no')
+        });
+    </script>
+</body>
+
+</html>
