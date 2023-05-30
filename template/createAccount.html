@@ -19,26 +19,27 @@
                     <div id="descriptionForm" class="username">nom d'utilisateur</div>
                     <input type="text" name="username" class="form__input" />
                 </div>
-                <!-- {{ if .UsernameError }}
+                {{ if .UsernameError }}
                 {{ .UsernameError }}
-                {{ end }} -->
+                {{ end }}
                 <div class="form__group">
                     <div id="descriptionForm" class="mail">mail</div>
                     <input type="email" name="mail" class="form__input" />
                 </div>
-                <!-- {{ if .MailError }}
+                {{ if .MailError }}
                 {{ .MailError }}
-                {{ end }} -->
+                {{ end }}
 
                 <div class="form__group">
                     <div id="descriptionForm" class="password">mot de passe</div>
                     <input type="password" name="password" class="form__input" />
                 </div>
-                <!-- {{ if .PasswordError }}
+                {{ if .PasswordError }}
                 {{ .PasswordError }}
-                {{ end }} -->
+                {{ end }}
 
                 <input id="btn" class="btnSubmit" type="submit">
+
                 <div id="otherConnection">
                     <span id="textConnection">Déja un compte ? </span>
                     <a id="otherBtnConnection" href="/">Se connecter</a>
