@@ -30,8 +30,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
-		AddPost(database, ContentPost, homePage)
+		AddPost(database, ContentPost, connectedUser[0])
 	}
+
+	allPost = nil
 	allPost := recuperationPost()
 
 	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[0].Author))
