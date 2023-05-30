@@ -18,6 +18,11 @@ type HomePageStruct struct {
 	LikePost          int
 	DyslikePost       int
 	DatePost          string
+	ContentComment    string
+	AuthorComment     string
+	IdPostComment     int
+	LikeComment       int
+	DyslikeComment    int
 	Post              []recuperationPostFromDb
 	NbrPost           int
 }
@@ -29,12 +34,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	homePage := HomePageStruct{}
 
 	if r.Method == http.MethodPost {
-		ContentPost := r.FormValue("ContentPost")
-		AddPost(database, ContentPost, connectedUser[0])
+		ContentComment := r.FormValue("ContentComment")
+		AddComment(database, ContentComment, connectedUser[0], "1")
 	}
 
 	allPost = nil
 	allPost := recuperationPost()
+
+	allComment = nil
+	allComment = recuperationComment()
 
 	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[0].Author))
 
@@ -51,6 +59,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			DatePost:          allPost[0].Date,
 			Post:              allPost,
 			NbrPost:           len(allPost),
+			// ContentComment:    allPost[0].ContentComment,
+			// AuthorComment:     allPost[0].AuthorComment,
+			// IdPostComment:     allPost[0].IdPostComment,
+			// LikeComment:       allPost[0].LikeComment,
+			// DyslikeComment:    allPost[0].DislikeComment,
 		}
 	}
 
