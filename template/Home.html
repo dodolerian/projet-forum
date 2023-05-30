@@ -29,14 +29,16 @@
     </nav>
     <main>
         <div class="posts">
+            {{ if ge .NbrPost 0}}
+            {{ range $index, $instance := .Post }}
             <div class="post">
                 <div class="content">
                     <div class="user">
                         <img class="userPP" src="../assets/img/test/img1.webp" alt="pp">
-                        <h2>{{ .AuthorPost }}</h2>
+                        <h2>{{ $instance.Author }}</h2>
                     </div>
                     <p class="txt">
-                        {{ .ContentPost }}
+                        {{ $instance.Content }}
                     </p>
                     <div class="likes">
                         <img id="like" src="../assets/img/test/pouces-vers-le-haut.png" alt="like">
@@ -58,41 +60,9 @@
                     </div>
                 </div>
             </div>
-            <div class="post">
-                <div class="content">
-                    <div class="user">
-                        <img class="userPP" src="../assets/img/test/robot2.jfif" alt="pp">
-                        <h2>Utilisateur</h2>
-                    </div>
-                    <p class="txt">
-                        their default model text, and a search for 'lorem ipsum'.their default model text, and a search
-                        for 'lorem ipsum'.their default model text, and a search for 'lorem ipsum'.their default model
-                        text, and a search for 'lorem ipsum'.their default model text, and a search for 'lorem
-                        ipsum'.their default model text, and a search for 'lorem ipsum'.
-                        their default model text, and a search for 'lorem ipsum'.
 
-                        ougvkugmyiqguv ui
-                    </p>
-                    <div class="likes">
-                        <img id="like" src="../assets/img/test/pouces-vers-le-haut.png" alt="like">
-                        <img id="dislike" src="../assets/img/test/dislike.png" alt="dislike">
-                    </div>
-                </div>
-                <div class="image">
-                    <img src="../assets/img/test/robot2.jfif" alt="image">
-                </div>
-                <div class="comments">
-                    <div class="titleComment">
-                        <h2>Commentaires</h2>
-                    </div>
-                    <div class="comment">
-                        <h3>Utilisateur1</h3>
-                        <p>
-                            their default model text, and a search for 'lorem ipsum'.
-                        </p>
-                    </div>
-                </div>
-            </div>
+            {{ end }}
+            {{ end }}
         </div>
         <div class="hashtags">
             <button>#tendances</button>
