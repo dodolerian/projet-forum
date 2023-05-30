@@ -56,30 +56,31 @@
             </div>
         </div>
     </main>
-    <div class="description">
+    <div class="btn-profil">
         <button id="buttonDescription">Changer votre description</button>
-        <div class="form" id="form">
-            <form>
-                <div class=" form__group">
-                    <input type="text" name="description" placeholder="description" class="form__input" />
-                </div>
+        <button id="buttonPost">Ajouter un post</button>
+    </div>
+    <!-- Description Modif -->
+    <div class="form" id="description">
+        <form>
+            <div class=" form__group">
+                <input type="text" name="description" placeholder="description" class="form__input" />
+            </div>
 
-                <input class="btn" type="submit">
-            </form>
-        </div>
+            <input class="btn" type="submit">
+            <button class="btn" id="exitDescription">Sortir</button>
+        </form>
+    </div>
+    <!-- Ajout de Post -->
+    <div id="addPost" class="addPost">
+        <form class="addPostForm" method="post" >
+            <input type="text" name="ContentPost" id="ContentPost">
+            <input class="btn" id="addPostButton"  type="submit" value="addPost">
+            <button class="btn" id="exitPost">Sortir</button>
+        </form>
     </div>
 </body>
 
-<script>
-    let showDescription = document.getElementById("buttonDescription");
-
-    showDescription.addEventListener("click", () => {
-        if (form.style.display == "block") {
-            form.style.display = "none";
-        } else {
-            form.style.display = "block";
-        }
-    })
-</script>
+<script type="module" src="../assets/profil.js"></script>
 
 </html>
