@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -23,8 +24,6 @@ func WebServer() {
 		log.Fatal(err)
 	}
 }
-
-
 
 func ContainsStringArray(array []string, value string) bool {
 	for i := 0; i < len(array); i++ {
