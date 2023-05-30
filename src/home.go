@@ -8,7 +8,6 @@ import (
 	"strconv"
 )
 
-
 type HomePageStruct struct {
 	IdAuthor          string
 	Username          string
@@ -19,6 +18,8 @@ type HomePageStruct struct {
 	LikePost          int
 	DyslikePost       int
 	DatePost          string
+	Post              []recuperationPostFromDb
+	NbrPost           int
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -29,8 +30,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
-		AddPost(database, ContentPost, homePage)
+		AddPost(database, ContentPost, connectedUser[0])
 	}
+
+	allPost = nil
 	allPost := recuperationPost()
 
 	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[0].Author))
@@ -46,6 +49,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			LikePost:          allPost[0].Like,
 			DyslikePost:       allPost[0].Dislike,
 			DatePost:          allPost[0].Date,
+			Post:              allPost,
+			NbrPost:           len(allPost),
 		}
 	}
 
