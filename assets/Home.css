@@ -8,40 +8,6 @@
 
 body {
     background-color: #ECF8F6;
-<<<<<<< HEAD
-    font-family: monospace;
-    font-size: large;
-}
-
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.footerConnexion {
-    position: absolute;
-    bottom: 0;
-    width: 80%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    border-radius: 10px;
-    background-color: #226D68;
-    display: flex;
-    justify-content: center;
-}
-
-.connexionText {}
-
-.connexionButton {
-    margin-left: 15%;
-    margin-right: 2%;
-    background-color: #18534F;
-    border-radius: 5px;
-}
-=======
 }
 
 /* Header */
@@ -299,4 +265,3 @@ nav .search-bar {
     border-radius: 5px;
 }
 
->>>>>>> a189585ea1ef6c02cf1b4c4bd0389f9c8fbf5fec

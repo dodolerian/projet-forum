@@ -221,6 +221,7 @@ nav .search-bar {
 .form__input {
     margin-top: 1vh;
     display: block;
+    justify-content: center;
     width: 100%;
     padding: 20px;
     -webkit-appearance: none;
