@@ -32,10 +32,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		AddPost(database, ContentPost, homePage)
 	}
 	allPost := recuperationPost()
-
 	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[0].Author))
-
 	if len(connectedUser) > 0 {
+		for i:=0 ; i < len(connectedUser); i++{
 		homePage = HomePageStruct{
 			IdAuthor:          connectedUser[0],
 			Username:          connectedUser[1],
@@ -47,6 +46,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			DyslikePost:       allPost[0].Dislike,
 			DatePost:          allPost[0].Date,
 		}
+	}
 	}
 
 	err := tmpl.Execute(w, homePage)

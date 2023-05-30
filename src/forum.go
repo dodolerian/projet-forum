@@ -7,39 +7,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// func CreateDatabase() {
-//     file, err := os.Create("database.db")
-//     if err != nil {
-//         log.Fatal(err)
-//     }
-//     file.Close()
-
-//     database, _ := sql.Open("sqlite3", "database.db")
-//     // createTable(database)
-
-//     addUsers(database, "Ankita", "Maudie", "Game Developer", 140000)
-//     addUsers(database, "Emiliana", "Alfiya", "Bakend Developer", 120000)
-//     addUsers(database, "Emmet", "Brian", "DevOps Developer", 110000)
-//     addUsers(database, "Reidun", "Jorge", "Dtabase Developer", 140000)
-//     addUsers(database, "Tyrone", "Silvia", "Front-End Developer", 109000)
-//     defer database.Close()
-//     fetchRecords(database)
-// }
-
-// func createTable(db *sql.DB) {
-//     users_table := `CREATE TABLE users (
-//         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-//         "FirstName" TEXT,
-//         "LastName" TEXT,
-//         "Dept" TEXT,
-//         "Salary" INT);`
-//     query, err := db.Prepare(users_table)
-//     if err != nil {
-//         log.Fatal(err)
-//     }
-//     query.Exec()
-// }
-
 func AddUsers(db *sql.DB, username string, password string, profilDescription string, mail string) {
 	records := `INSERT INTO USER(username, password, profilDescription, mail) VALUES (?, ?, ?, ?)`
 	query, err := db.Prepare(records)
