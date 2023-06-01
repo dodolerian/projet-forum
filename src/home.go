@@ -25,6 +25,7 @@ type HomePageStruct struct {
 	DyslikeComment    int
 	Post              []PostStruct
 	NbrPost           int
+	IsConnected			bool
 }
 
 type PostStruct struct {
@@ -82,6 +83,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			DatePost:          allPost[0].Date,
 			Post:              allPostFinal,
 			NbrPost:           len(allPost),
+			IsConnected: 	   true,
 			// ContentComment:    allPost[0].ContentComment,
 			// AuthorComment:     allPost[0].AuthorComment,
 			// IdPostComment:     allPost[0].IdPostComment,
@@ -100,6 +102,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			DatePost:          allPost[0].Date,
 			Post:              allPostFinal,
 			NbrPost:           len(allPost),
+			IsConnected:       false,
 			// ContentComment:    allPost[0].ContentComment,
 			// AuthorComment:     allPost[0].AuthorComment,
 			// IdPostComment:     allPost[0].IdPostComment,
