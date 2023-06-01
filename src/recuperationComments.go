@@ -8,7 +8,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type recuperationPostFromDb struct {
+type recuperationCommentFromDb struct {
 	Id      int
 	Author  int
 	Content string
@@ -17,12 +17,12 @@ type recuperationPostFromDb struct {
 	Date    string
 }
 
-var allPost []recuperationPostFromDb
+var allComment []recuperationPostFromDb
 
-func recuperationPost() []recuperationPostFromDb {
+func recuperationComment() []recuperationPostFromDb {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	defer database.Close()
-	rows, err := database.Query("SELECT * FROM POST")
+	rows, err := database.Query("SELECT * FROM COMMENTARY")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -39,8 +39,8 @@ func recuperationPost() []recuperationPostFromDb {
 		if err != nil {
 			log.Fatal(err)
 		}
-		postIntoStruc := recuperationPostFromDb{}
-		postIntoStruc = recuperationPostFromDb{
+		commentIntoStruc := recuperationCommentFromDb{}
+		commentIntoStruc = recuperationCommentFromDb{
 			Id:      id,
 			Author:  author,
 			Content: content,
@@ -48,8 +48,8 @@ func recuperationPost() []recuperationPostFromDb {
 			Dislike: dislike,
 			Date:    date,
 		}
-		allPost = append(allPost, postIntoStruc)
+		allComment = append(allComment, recuperationPostFromDb(commentIntoStruc))
 
 	}
-	return allPost
+	return allComment
 }
