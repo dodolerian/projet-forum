@@ -13,6 +13,11 @@ type HomePageStruct struct {
 	Username          string
 	ProfilDescription string
 	Mail              string
+	ContentPost       string
+	AuthorPost        string
+	LikePost          int
+	DyslikePost       int
+	DatePost          string
 	ContentComment    string
 	AuthorComment     string
 	IdPostComment     int
@@ -64,8 +69,16 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	if len(connectedUser) > 0 {
 		homePage = HomePageStruct{
-			Post:    allPostFinal,
-			NbrPost: len(allPost),
+			IdAuthor:          connectedUser[0],
+			Username:          connectedUser[1],
+			ProfilDescription: connectedUser[3],
+			Mail:              connectedUser[4],
+			ContentPost:       allPost[0].Content,
+			LikePost:          allPost[0].Like,
+			DyslikePost:       allPost[0].Dislike,
+			DatePost:          allPost[0].Date,
+			Post:              allPostFinal,
+			NbrPost:           len(allPost),
 			// ContentComment:    allPost[0].ContentComment,
 			// AuthorComment:     allPost[0].AuthorComment,
 			// IdPostComment:     allPost[0].IdPostComment,
