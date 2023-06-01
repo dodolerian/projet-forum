@@ -12,53 +12,42 @@
 
 <body>
     <header>
-        <img class="logo" src="../assets/img/test/robot.jpg" alt="logo">
+        <img class="logo" src="../assets/img/robot.jpg" alt="logo">
         <h1>Open Chat Room</h1>
         <a class="pictureProfil" href="">
-            <img class="pictureProfil" src="../assets/img/test/robot.jpg" alt="pp">
+            <img class="pictureProfil" src="../assets/img/robot.jpg" alt="pp">
         </a>
     </header>
     <nav>
         <ul>
-            <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/test/home.png"
+            <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
                     alt="home"><span>Accueil</span></a>
-            <a class="btn-nav" href="/profil"><img class="img-btn-nav" src="../assets/img/test/profil.png"
+            <a class="btn-nav" href="/profil"><img class="img-btn-nav" src="../assets/img/profil.png"
                     alt="profil"><span>Profil</span></a>
         </ul>
-        <input class="search-bar" type="text"/>
+        <input class="search-bar" type="text" />
     </nav>
-    <div class="addPost">
-        <form class="addPostForm" method="post" >
-            <input type="text" name="titlePost" id="titlePost">
-            <input type="text" name="ContentPost" id="ContentPost">
-            <input id="addPostButton"  type="submit" value="addPost">
-        </form>
-    </div>
-    <main>  
-   
+    <main>
+
         <div class="posts">
+            {{ if ge .NbrPost 0}}
+            {{ range $index, $instance := .Post }}
             <div class="post">
                 <div class="content">
                     <div class="user">
-                        <img class="userPP" src="../assets/img/test/img1.webp" alt="pp">
-                        <h2>Utilisateur</h2>
+                        <img class="userPP" src="../assets/img/img1.webp">
+                        <h2>{{ $instance.AuthorName }}</h2>
                     </div>
                     <p class="txt">
-                        their default model text, and a search for 'lorem ipsum'.their default model text, and a search
-                        for 'lorem ipsum'.their default model text, and a search for 'lorem ipsum'.their default model
-                        text, and a search for 'lorem ipsum'.their default model text, and a search for 'lorem
-                        ipsum'.their default model text, and a search for 'lorem ipsum'.
-                        their default model text, and a search for 'lorem ipsum'.
-
-                        ougvkugmyiqguv ui
+                        {{ $instance.Content }}
                     </p>
                     <div class="likes">
-                        <img id="like" src="../assets/img/test/pouces-vers-le-haut.png" alt="like">
-                        <img id="dislike" src="../assets/img/test/dislike.png" alt="dislike">
+                        <img id="like" src="../assets/img/pouces-vers-le-haut.png" alt="like">
+                        <img id="dislike" src="../assets/img/dislike.png" alt="dislike">
                     </div>
                 </div>
                 <div class="image">
-                    <img src="../assets/img/test/img1.webp" alt="image">
+                    <img src="../assets/img/img1.webp" alt="image">
                 </div>
                 <div class="comments">
                     <div class="titleComment">
@@ -70,43 +59,12 @@
                             their default model text, and a search for 'lorem ipsum'.
                         </p>
                     </div>
+                    <img id="comment" src="../assets/img/comment.png" alt="">
                 </div>
             </div>
-            <div class="post">
-                <div class="content">
-                    <div class="user">
-                        <img class="userPP" src="../assets/img/test/robot2.jfif" alt="pp">
-                        <h2>Utilisateur</h2>
-                    </div>
-                    <p class="txt">
-                        their default model text, and a search for 'lorem ipsum'.their default model text, and a search
-                        for 'lorem ipsum'.their default model text, and a search for 'lorem ipsum'.their default model
-                        text, and a search for 'lorem ipsum'.their default model text, and a search for 'lorem
-                        ipsum'.their default model text, and a search for 'lorem ipsum'.
-                        their default model text, and a search for 'lorem ipsum'.
 
-                        ougvkugmyiqguv ui
-                    </p>
-                    <div class="likes">
-                        <img id="like" src="../assets/img/test/pouces-vers-le-haut.png" alt="like">
-                        <img id="dislike" src="../assets/img/test/dislike.png" alt="dislike">
-                    </div>
-                </div>
-                <div class="image">
-                    <img src="../assets/img/test/robot2.jfif" alt="image">
-                </div>
-                <div class="comments">
-                    <div class="titleComment">
-                        <h2>Commentaires</h2>
-                    </div>
-                    <div class="comment">
-                        <h3>Utilisateur1</h3>
-                        <p>
-                            their default model text, and a search for 'lorem ipsum'.
-                        </p>
-                    </div>
-                </div>
-            </div>
+            {{ end }}
+            {{ end }}
         </div>
         <div class="hashtags">
             <button>#tendances</button>
@@ -115,7 +73,17 @@
             <button>#tendances</button>
             <button>#tendances</button>
         </div>
+
+        <div id="addComment" class="addComment">
+            <form class="addCommentForm" method="post">
+                <input type="text" name="ContentComment" id="ContentComment">
+                <input class="btn" id="addCommentButton" type="submit" value="addComment">
+                <button class="btn" id="exitComment">Sortir</button>
+            </form>
+        </div>
     </main>
 </body>
+
+<script type="module" src="../assets/home.js"></script>
 
 </html>
