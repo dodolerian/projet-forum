@@ -23,7 +23,7 @@ type HomePageStruct struct {
 	IdPostComment     int
 	LikeComment       int
 	DyslikeComment    int
-	Post              []recuperationPostFromDb
+	Post              []PostStruct
 	NbrPost           int
 }
 
@@ -74,11 +74,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			ProfilDescription: connectedUser[3],
 			Mail:              connectedUser[4],
 			ContentPost:       allPost[0].Content,
-			AuthorPost:        username,
 			LikePost:          allPost[0].Like,
 			DyslikePost:       allPost[0].Dislike,
 			DatePost:          allPost[0].Date,
-			Post:              allPost,
+			Post:              allPostFinal,
 			NbrPost:           len(allPost),
 			// ContentComment:    allPost[0].ContentComment,
 			// AuthorComment:     allPost[0].AuthorComment,
