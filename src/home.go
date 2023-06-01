@@ -13,7 +13,17 @@ type HomePageStruct struct {
 	Username          string
 	ProfilDescription string
 	Mail              string
-	Post              []PostStruct
+	ContentPost       string
+	AuthorPost        string
+	LikePost          int
+	DyslikePost       int
+	DatePost          string
+	ContentComment    string
+	AuthorComment     string
+	IdPostComment     int
+	LikeComment       int
+	DyslikeComment    int
+	Post              []recuperationPostFromDb
 	NbrPost           int
 }
 
@@ -34,8 +44,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	homePage := HomePageStruct{}
 
 	if r.Method == http.MethodPost {
-		ContentPost := r.FormValue("ContentPost")
-		AddPost(database, ContentPost, connectedUser[0])
+		ContentComment := r.FormValue("ContentComment")
+		AddComment(database, ContentComment, connectedUser[0], "1")
 	}
 
 	allPost = nil
@@ -59,8 +69,22 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	if len(connectedUser) > 0 {
 		homePage = HomePageStruct{
-			Post:    allPostFinal,
-			NbrPost: len(allPost),
+			IdAuthor:          connectedUser[0],
+			Username:          connectedUser[1],
+			ProfilDescription: connectedUser[3],
+			Mail:              connectedUser[4],
+			ContentPost:       allPost[0].Content,
+			AuthorPost:        username,
+			LikePost:          allPost[0].Like,
+			DyslikePost:       allPost[0].Dislike,
+			DatePost:          allPost[0].Date,
+			Post:              allPost,
+			NbrPost:           len(allPost),
+			// ContentComment:    allPost[0].ContentComment,
+			// AuthorComment:     allPost[0].AuthorComment,
+			// IdPostComment:     allPost[0].IdPostComment,
+			// LikeComment:       allPost[0].LikeComment,
+			// DyslikeComment:    allPost[0].DislikeComment,
 		}
 	}
 
