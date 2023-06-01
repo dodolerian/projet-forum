@@ -2,6 +2,7 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -38,6 +39,8 @@ type PostStruct struct {
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
+	inviteConnection := "invité"
+
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
@@ -55,6 +58,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	for i := 0; i < len(allPost); i++ {
 		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+
 		postFinalIntoStruc := PostStruct{
 			Id:         allPost[i].Id,
 			Author:     allPost[i].Author,
@@ -66,13 +70,31 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 		allPostFinal = append(allPostFinal, postFinalIntoStruc)
 	}
-
 	if len(connectedUser) > 0 {
+
 		homePage = HomePageStruct{
 			IdAuthor:          connectedUser[0],
 			Username:          connectedUser[1],
 			ProfilDescription: connectedUser[3],
 			Mail:              connectedUser[4],
+			ContentPost:       allPost[0].Content,
+			LikePost:          allPost[0].Like,
+			DyslikePost:       allPost[0].Dislike,
+			DatePost:          allPost[0].Date,
+			Post:              allPostFinal,
+			NbrPost:           len(allPost),
+			// ContentComment:    allPost[0].ContentComment,
+			// AuthorComment:     allPost[0].AuthorComment,
+			// IdPostComment:     allPost[0].IdPostComment,
+			// LikeComment:       allPost[0].LikeComment,
+			// DyslikeComment:    allPost[0].DislikeComment,
+		}
+	}else{
+				homePage = HomePageStruct{
+			IdAuthor:          inviteConnection,
+			Username:          inviteConnection,
+			ProfilDescription: inviteConnection,
+			Mail:              inviteConnection,
 			ContentPost:       allPost[0].Content,
 			LikePost:          allPost[0].Like,
 			DyslikePost:       allPost[0].Dislike,

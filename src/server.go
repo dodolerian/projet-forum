@@ -21,7 +21,7 @@ func WebServer() {
 	fmt.Println("Starting server at port 8871 : http://localhost:3333")
 	err := http.ListenAndServe(":3333", nil)
 	if err != nil {
-		log.Fatal(err)
+		 log.Fatal(err)
 	}
 }
 

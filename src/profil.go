@@ -2,6 +2,7 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -29,6 +30,8 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 	// reprend l'utilisateur modifié a chaque fois
 	idRefresh, username, password, profilDescription, mail := FetchUserWithId(database, connectedUser[0])
+		fmt.Println("problema la")
+
 	connectedUser = nil
 	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail)
 
