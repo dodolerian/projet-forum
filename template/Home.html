@@ -28,6 +28,7 @@
         <input class="search-bar" type="text" />
     </nav>
     <main>
+
         <div class="posts">
             {{ if ge .NbrPost 0}}
             {{ range $index, $instance := .Post }}
@@ -35,7 +36,8 @@
                 <div class="content">
                     <div class="user">
                         <img class="userPP" src="../assets/img/test/img1.webp" alt="pp">
-                        <h2>{{ $instance.Author }}</h2>
+
+                        <h2>{{ $instance.AuthorName }}</h2>
                     </div>
                     <p class="txt">
                         {{ $instance.Content }}

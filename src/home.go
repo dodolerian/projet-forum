@@ -13,13 +13,18 @@ type HomePageStruct struct {
 	Username          string
 	ProfilDescription string
 	Mail              string
-	ContentPost       string
-	AuthorPost        string
-	LikePost          int
-	DyslikePost       int
-	DatePost          string
-	Post              []recuperationPostFromDb
+	Post              []PostStruct
 	NbrPost           int
+}
+
+type PostStruct struct {
+	Id         int
+	Author     int
+	AuthorName string
+	Content    string
+	Like       int
+	Dislike    int
+	Date       string
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -36,21 +41,26 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	allPost = nil
 	allPost := recuperationPost()
 
-	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[0].Author))
+	allPostFinal := []PostStruct{}
+
+	for i := 0; i < len(allPost); i++ {
+		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		postFinalIntoStruc := PostStruct{
+			Id:         allPost[i].Id,
+			Author:     allPost[i].Author,
+			AuthorName: username,
+			Content:    allPost[i].Content,
+			Like:       allPost[i].Like,
+			Dislike:    allPost[i].Dislike,
+			Date:       allPost[i].Date,
+		}
+		allPostFinal = append(allPostFinal, postFinalIntoStruc)
+	}
 
 	if len(connectedUser) > 0 {
 		homePage = HomePageStruct{
-			IdAuthor:          connectedUser[0],
-			Username:          connectedUser[1],
-			ProfilDescription: connectedUser[3],
-			Mail:              connectedUser[4],
-			ContentPost:       allPost[0].Content,
-			AuthorPost:        username,
-			LikePost:          allPost[0].Like,
-			DyslikePost:       allPost[0].Dislike,
-			DatePost:          allPost[0].Date,
-			Post:              allPost,
-			NbrPost:           len(allPost),
+			Post:    allPostFinal,
+			NbrPost: len(allPost),
 		}
 	}
 
