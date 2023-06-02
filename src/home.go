@@ -27,6 +27,16 @@ type HomePageStruct struct {
 	NbrPost           int
 }
 
+type CommentStruct struct {
+	IdPost     int
+	IdAuthor   int
+	AuthorName string
+	Content    string
+	Like       int
+	Dislike    int
+	Date       string
+}
+
 type PostStruct struct {
 	Id         int
 	Author     int
@@ -35,6 +45,7 @@ type PostStruct struct {
 	Like       int
 	Dislike    int
 	Date       string
+	Comments   []CommentStruct
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -51,6 +62,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	allPost = nil
 	allPost := recuperationPost()
 
+	allComment := recuperationComment()
+
+	allCommentOfThisPost := []CommentStruct{}
+
 	allPostFinal := []PostStruct{}
 
 	for i := 0; i < len(allPost); i++ {
@@ -63,6 +78,23 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Like:       allPost[i].Like,
 			Dislike:    allPost[i].Dislike,
 			Date:       allPost[i].Date,
+			Comments:   allCommentOfThisPost,
+		}
+		/* Add comments of this post */
+		for j := 0; j < len(allComment); j++ {
+			if allPost[i].Id == allComment[j].IdPost {
+				_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allComment[j].IdAuthor))
+				commentIntoStruc := CommentStruct{
+					IdPost:     allComment[j].IdPost,
+					IdAuthor:   allComment[j].IdAuthor,
+					AuthorName: username,
+					Content:    allComment[j].Content,
+					Like:       allComment[j].Like,
+					Dislike:    allComment[j].Dislike,
+					Date:       allComment[j].Date,
+				}
+				postFinalIntoStruc.Comments = append(postFinalIntoStruc.Comments, commentIntoStruc)
+			}
 		}
 		allPostFinal = append(allPostFinal, postFinalIntoStruc)
 	}
