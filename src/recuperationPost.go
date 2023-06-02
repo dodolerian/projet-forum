@@ -48,6 +48,7 @@ func recuperationPost() []recuperationPostFromDb {
 			Dislike: dislike,
 			Date:    date,
 		}
+
 		allPost = append(allPost, postIntoStruc)
 
 	}

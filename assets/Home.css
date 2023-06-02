@@ -182,8 +182,10 @@ nav .search-bar {
     width: 100%;
 }
 
-.post .content .likes #like,
-.post .content .likes #dislike {
+#like,
+#dislike {
+    cursor: pointer;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -286,3 +288,11 @@ nav .search-bar {
     align-items: center;
     justify-content: center;
 }
+
+/* LIKE */
+/* 
+#like {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+} */

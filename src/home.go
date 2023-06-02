@@ -23,8 +23,18 @@ type HomePageStruct struct {
 	IdPostComment     int
 	LikeComment       int
 	DyslikeComment    int
-	Post              []recuperationPostFromDb
+	Post              []PostStruct
 	NbrPost           int
+}
+
+type PostStruct struct {
+	Id         int
+	Author     int
+	AuthorName string
+	Content    string
+	Like       bool
+	Dislike    bool
+	Date       string
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -33,37 +43,55 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	homePage := HomePageStruct{}
 
+	RecuperationLike()
+
+	allPost = nil
+	allPost := recuperationPost()
+	allPostFinal := []PostStruct{}
+
+	connectedUserId, _ := strconv.Atoi(connectedUser[0])
+
 	if r.Method == http.MethodPost {
 		ContentComment := r.FormValue("ContentComment")
 		AddComment(database, ContentComment, connectedUser[0], "1")
 	}
 
-	allPost = nil
-	allPost := recuperationPost()
+	if r.Method == http.MethodPost {
+		likeIdPostStr := r.FormValue("like")
+		likeIdPost, _ := strconv.Atoi(likeIdPostStr)
+		isLiked := LikeOnPost(connectedUserId, likeIdPost, allLikeList)
+		if isLiked == true {
+			DeleteLike(database, connectedUserId, likeIdPost)
+		} else {
+			AddLike(database, connectedUserId, likeIdPost)
+		}
+	}
 
-	allComment = nil
-	allComment = recuperationComment()
+	//LIKE
 
-	_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[0].Author))
+	RecuperationLike()
+
+	for i := 0; i < len(allPost); i++ {
+		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+
+		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
+		postFinalIntoStruc := PostStruct{
+			Id:         allPost[i].Id,
+			Author:     allPost[i].Author,
+			AuthorName: username,
+			Content:    allPost[i].Content,
+			Like:       isLiked,
+			Dislike:    true,
+			Date:       allPost[i].Date,
+		}
+
+		allPostFinal = append(allPostFinal, postFinalIntoStruc)
+	}
 
 	if len(connectedUser) > 0 {
 		homePage = HomePageStruct{
-			IdAuthor:          connectedUser[0],
-			Username:          connectedUser[1],
-			ProfilDescription: connectedUser[3],
-			Mail:              connectedUser[4],
-			ContentPost:       allPost[0].Content,
-			AuthorPost:        username,
-			LikePost:          allPost[0].Like,
-			DyslikePost:       allPost[0].Dislike,
-			DatePost:          allPost[0].Date,
-			Post:              allPost,
-			NbrPost:           len(allPost),
-			// ContentComment:    allPost[0].ContentComment,
-			// AuthorComment:     allPost[0].AuthorComment,
-			// IdPostComment:     allPost[0].IdPostComment,
-			// LikeComment:       allPost[0].LikeComment,
-			// DyslikeComment:    allPost[0].DislikeComment,
+			Post:    allPostFinal,
+			NbrPost: len(allPost),
 		}
 	}
 

@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"strconv"
 )
+
 type createAccountStruct struct {
 	UsernameError string
 	PasswordError string
 	MailError     string
 }
-
 
 func CreateAccount(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/createAccount.html"))
