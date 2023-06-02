@@ -2,6 +2,7 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -57,8 +58,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	allPostFinal := []PostStruct{}
 
 	for i := 0; i < len(allPost); i++ {
-		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
-
+		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))		
 		postFinalIntoStruc := PostStruct{
 			Id:         allPost[i].Id,
 			Author:     allPost[i].Author,
