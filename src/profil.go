@@ -2,6 +2,7 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -17,6 +18,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
+		fmt.Println(len(ContentPost))
 		AddPost(database, ContentPost, connectedUser[0])
 	}
 

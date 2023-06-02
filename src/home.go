@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type HomePageStruct struct {
@@ -58,11 +59,24 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	for i := 0; i < len(allPost); i++ {
 		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))		
+		/* Check valide post */
+		checkPost := strings.Split(allPost[i].Content , "")
+					limite :=0
+
+		for v := 0; v <len(checkPost); v++  {
+			if(limite  >= 27 && checkPost[v] != " "){
+				checkPost[v] = " "
+				limite = 0
+			}
+				limite ++
+		}
+
+		test := strings.Join(checkPost, "")
 		postFinalIntoStruc := PostStruct{
 			Id:         allPost[i].Id,
 			Author:     allPost[i].Author,
 			AuthorName: username,
-			Content:    allPost[i].Content,
+			Content:    test,
 			Like:       allPost[i].Like,
 			Dislike:    allPost[i].Dislike,
 			Date:       allPost[i].Date,
