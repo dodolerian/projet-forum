@@ -54,51 +54,23 @@
                         <h2>Commentaires</h2>
                     </div>
                     <div class="comment">
+                        {{ range $i, $comment := .Comments }}
                         <div class="commentCard">
-                            <h3>Utilisateur1</h3>
+                            <h3>{{ $comment.AuthorName }}</h3>
                             <p>
-                                their default model text, and a search for 'lorem ipsum'.
+                                {{ $comment.Content }}
                             </p>
                         </div>
-                        <div class="commentCard">
-                            <h3>Utilisateur1</h3>
-                            <p>
-                                their default model text, and a search for 'lorem ipsum'.
-                            </p>
-                        </div>
-                        <div class="commentCard">
-                            <h3>Utilisateur1</h3>
-                            <p>
-                                their default model text, and a search for 'lorem ipsum'.
-                            </p>
-                        </div>
-                        <div class="commentCard">
-                            <h3>Utilisateur1</h3>
-                            <p>
-                                their default model text, and a search for 'lorem ipsum'.
-                            </p>
-                        </div>
-                        <div class="commentCard">
-                            <h3>Utilisateur1</h3>
-                            <p>
-                                their default model text, and a search for 'lorem ipsum'.
-                            </p>
-                        </div>
+                        {{ end }}
                     </div>
-                    <img id="comment" src="../assets/img/comment.png" alt="">
+                    <form class="addCommentForm" method="post">
+                        <input name="idPost" type="hidden" value="{{ $instance.Id }}">
+                        <input type="text" name="ContentComment" id="ContentComment" placeholder="Commentaires ...">
+                        <input class="btn" id="addCommentButton" type="submit" value="envoyer">
+                    </form>
                 </div>
             </div>
-
-           <!-- PopUP add comment --> 
-            <div id="addComment" class="addComment">
-                <form class="addCommentForm" method="post">
-                    <input type="hidden" value="{{ $instance.Id }}">
-                    <input type="text" name="ContentComment" id="ContentComment">
-                    <input class="btn" id="addCommentButton" type="submit" value="addComment">
-                    <button class="btn" id="exitComment">Sortir</button>
-                </form>
-            </div>
-
+            
             {{ end }}
             {{ end }}
         </div>
@@ -113,6 +85,6 @@
     </main>
 </body>
 
-<script type="module" src="../assets/home.js"></script>
+<script type="text/javascript" src="../assets/home.js"></script>
 
 </html>

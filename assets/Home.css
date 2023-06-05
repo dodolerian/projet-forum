@@ -271,6 +271,10 @@ nav .search-bar {
     align-items: center;
     justify-content: center;
     width: 18rem;
+    gap: 0.5rem;
+    border-bottom: 1px solid #0D1B2A;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 
@@ -304,14 +308,46 @@ nav .search-bar {
 
 /* ADD COMMENT */
 
-#addComment {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    backdrop-filter: blur(10px);
-    display: none;
+.post .addCommentForm {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0 0 1rem 0;
+    height: 3.125rem;
+    width: 100%;
+    background-color: #415A77;
+    color: #ECF8F6;
 }
+
+.post .addCommentForm #ContentComment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    width: 90%;
+    margin: 0.1rem;
+    padding: 0.1rem;
+    background: none;
+    border: none;
+    color: #ECF8F6;
+}
+
+.post .addCommentForm .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    margin: 0.1rem;
+    padding: 0.1rem;
+    background-color: #415A77;
+    color: #ECF8F6;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.post .addCommentForm #ContentComment::placeholder {
+    color: #ECF8F6;
+  }

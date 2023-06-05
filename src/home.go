@@ -25,6 +25,7 @@ type HomePageStruct struct {
 	DyslikeComment    int
 	Post              []PostStruct
 	NbrPost           int
+	Comments          []recuperationCommentFromDb
 }
 
 type CommentStruct struct {
@@ -55,7 +56,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	homePage := HomePageStruct{}
 
 	if r.Method == http.MethodPost {
-		IdPost := r.FormValue("idPost") // id du post qu'il faut recuper avec le bouton submit du form
+		IdPost := r.FormValue("idPost")
 		ContentComment := r.FormValue("ContentComment")
 		AddComment(database, ContentComment, connectedUser[0], IdPost)
 	}
@@ -112,11 +113,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			DatePost:          allPost[0].Date,
 			Post:              allPostFinal,
 			NbrPost:           len(allPost),
-			// ContentComment:    allPost[0].ContentComment,
-			// AuthorComment:     allPost[0].AuthorComment,
-			// IdPostComment:     allPost[0].IdPostComment,
-			// LikeComment:       allPost[0].LikeComment,
-			// DyslikeComment:    allPost[0].DislikeComment,
+			ContentComment:    allComment[0].Content,
+			IdPostComment:     allComment[0].IdPost,
+			LikeComment:       allComment[0].Like,
+			DyslikeComment:    allComment[0].Dislike,
+			Comments:          allComment,
 		}
 	}
 
