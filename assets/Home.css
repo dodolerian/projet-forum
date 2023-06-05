@@ -12,6 +12,16 @@ body {
     background-size: cover;
 }
 
+body::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: #0D1B2A
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #415A77;
+}
+
 /* Header */
 header {
     display: flex;
@@ -239,12 +249,31 @@ nav .search-bar {
     justify-content: center;
     height: 14rem;
     width: 18.75rem;
+    gap: 2rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: 1px;
+}
+
+.post .comments .comment::-webkit-scrollbar {
+    width: 0;
 }
 
 .post .comments #comment {
     height: 1.875rem;
     width: 1.875rem;
 }
+
+.post .comments .comment .commentCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 18rem;
+}
+
+
 
 /* hashtag */
 

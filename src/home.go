@@ -55,8 +55,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	homePage := HomePageStruct{}
 
 	if r.Method == http.MethodPost {
+		IdPost := r.FormValue("idPost") // id du post qu'il faut recuper avec le bouton submit du form
 		ContentComment := r.FormValue("ContentComment")
-		AddComment(database, ContentComment, connectedUser[0], "1")
+		AddComment(database, ContentComment, connectedUser[0], IdPost)
 	}
 
 	allPost = nil

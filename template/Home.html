@@ -54,13 +54,49 @@
                         <h2>Commentaires</h2>
                     </div>
                     <div class="comment">
-                        <h3>Utilisateur1</h3>
-                        <p>
-                            their default model text, and a search for 'lorem ipsum'.
-                        </p>
+                        <div class="commentCard">
+                            <h3>Utilisateur1</h3>
+                            <p>
+                                their default model text, and a search for 'lorem ipsum'.
+                            </p>
+                        </div>
+                        <div class="commentCard">
+                            <h3>Utilisateur1</h3>
+                            <p>
+                                their default model text, and a search for 'lorem ipsum'.
+                            </p>
+                        </div>
+                        <div class="commentCard">
+                            <h3>Utilisateur1</h3>
+                            <p>
+                                their default model text, and a search for 'lorem ipsum'.
+                            </p>
+                        </div>
+                        <div class="commentCard">
+                            <h3>Utilisateur1</h3>
+                            <p>
+                                their default model text, and a search for 'lorem ipsum'.
+                            </p>
+                        </div>
+                        <div class="commentCard">
+                            <h3>Utilisateur1</h3>
+                            <p>
+                                their default model text, and a search for 'lorem ipsum'.
+                            </p>
+                        </div>
                     </div>
                     <img id="comment" src="../assets/img/comment.png" alt="">
                 </div>
+            </div>
+
+           <!-- PopUP add comment --> 
+            <div id="addComment" class="addComment">
+                <form class="addCommentForm" method="post">
+                    <input type="hidden" value="{{ $instance.Id }}">
+                    <input type="text" name="ContentComment" id="ContentComment">
+                    <input class="btn" id="addCommentButton" type="submit" value="addComment">
+                    <button class="btn" id="exitComment">Sortir</button>
+                </form>
             </div>
 
             {{ end }}
@@ -74,13 +110,6 @@
             <button>#tendances</button>
         </div>
 
-        <div id="addComment" class="addComment">
-            <form class="addCommentForm" method="post">
-                <input type="text" name="ContentComment" id="ContentComment">
-                <input class="btn" id="addCommentButton" type="submit" value="addComment">
-                <button class="btn" id="exitComment">Sortir</button>
-            </form>
-        </div>
     </main>
 </body>
 
