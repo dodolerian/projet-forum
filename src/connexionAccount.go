@@ -14,7 +14,10 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/connexionAccount.html"))
 
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
-
+	if r.Method == http.MethodPost {
+	r.FormValue("deconnection")
+	connectedUser = nil
+	}
 	defer database.Close()
 
 	_, _, _, _, tmpMail := FetchAllUser(database)

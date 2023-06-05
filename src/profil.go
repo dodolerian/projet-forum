@@ -14,11 +14,9 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	defer database.Close()
-
 	description := r.FormValue("description")
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
-		fmt.Println(len(ContentPost))
 		AddPost(database, ContentPost, connectedUser[0])
 	}
 
@@ -39,7 +37,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],
 	}
-
+	fmt.Println(profilPage)
 	err := tmpl.Execute(w, profilPage)
 	if err != nil {
 		log.Fatal(err)
