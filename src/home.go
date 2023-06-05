@@ -44,6 +44,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	homePage := HomePageStruct{}
 
 	RecuperationLike()
+	RecuperationDislike()
 
 	allPost = nil
 	allPost := recuperationPost()
@@ -58,30 +59,58 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
 		likeIdPostStr := r.FormValue("like")
+		dislikeIdPostStr := r.FormValue("dislike")
+
 		likeIdPost, _ := strconv.Atoi(likeIdPostStr)
-		isLiked := LikeOnPost(connectedUserId, likeIdPost, allLikeList)
-		if isLiked == true {
-			DeleteLike(database, connectedUserId, likeIdPost)
-		} else {
-			AddLike(database, connectedUserId, likeIdPost)
+		dislikeIdPost, _ := strconv.Atoi(dislikeIdPostStr)
+
+		if likeIdPostStr == "" {
+			isLiked := LikeOnPost(connectedUserId, dislikeIdPost, allLikeList)
+			isDisliked := DislikeOnPost(connectedUserId, dislikeIdPost, allDislikeList)
+
+			if isLiked == true {
+				DeleteLike(database, connectedUserId, dislikeIdPost)
+			}
+			if isDisliked == true {
+				DeleteDislike(database, connectedUserId, dislikeIdPost)
+			} else {
+				AddDislike(database, connectedUserId, dislikeIdPost)
+			}
 		}
+
+		if dislikeIdPostStr == "" {
+			isLiked := LikeOnPost(connectedUserId, likeIdPost, allLikeList)
+			isDisliked := DislikeOnPost(connectedUserId, likeIdPost, allDislikeList)
+
+			if isDisliked == true {
+				DeleteDislike(database, connectedUserId, likeIdPost)
+			}
+			if isLiked == true {
+				DeleteLike(database, connectedUserId, likeIdPost)
+			} else {
+				AddLike(database, connectedUserId, likeIdPost)
+			}
+		}
+
 	}
 
 	//LIKE
 
 	RecuperationLike()
+	RecuperationDislike()
 
 	for i := 0; i < len(allPost); i++ {
 		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
+		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
 		postFinalIntoStruc := PostStruct{
 			Id:         allPost[i].Id,
 			Author:     allPost[i].Author,
 			AuthorName: username,
 			Content:    allPost[i].Content,
 			Like:       isLiked,
-			Dislike:    true,
+			Dislike:    isDisliked,
 			Date:       allPost[i].Date,
 		}
 
