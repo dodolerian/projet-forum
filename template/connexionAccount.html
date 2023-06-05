@@ -18,7 +18,7 @@
             <form class="form">
                 <div class="form__group">
                     <div id="descriptionForm" class="mail">mail</div>
-                    <input type="email" name="mail" class="form__input" />
+                    <input type="email" id="mailToSave" name="mail" class="form__input" />
                 </div>
                 {{ if .MailError }}
                 {{ .MailError }}
@@ -31,8 +31,8 @@
                 {{ if .PasswordError }}
                 {{ .PasswordError }}
                 {{ end }}
-                <input id="btn" class="btnSubmit" type="submit">
-
+                <input type="checkbox" name="rememberMe" value="rember" id="rememberMe"> <label for="rememberMe">Remember me</label>
+                <input id="btn" class="btnSubmit" type="submit" >
                 <div id="otherConnection">
                     <span id="textConnection">Pas encore de compte ? </span>
                     <a id="otherBtnConnection" href="/create">Créer</a>
@@ -46,12 +46,15 @@
     </main>
 
     <script>
+
         const button = document.querySelector('.btn')
         const form = document.querySelector('.form')
-
+                     
+        
         button.addEventListener('click', function () {
-            form.classList.add('form--no')
+            form.classList.add('form--no')  
         });
+
     </script>
 </body>
 

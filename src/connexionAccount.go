@@ -2,11 +2,13 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"strconv"
 )
+
 
 func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/connexionAccount.html"))
@@ -20,17 +22,21 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 
 	passwordForm := r.FormValue("password")
 	mailForm := r.FormValue("mail")
-
+	rememberMe := r.FormValue("rememberMe")
+	if rememberMe != "" {
+		
+		fmt.Println(("on est ici"))
+	}
 	if passwordForm != "" && mailForm != "" {
 		if !ContainsStringArray(tmpMail, mailForm) {
 			accountPage = createAccountStruct{MailError: "adresse mail pas trouvé"}
 		} else {
 			id, username, hashpass, profilDescription, mail := FetchUserWithMail(database, mailForm)
 			//dehash
-
 			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
+
 				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}
