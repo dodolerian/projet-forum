@@ -9,14 +9,13 @@ import (
 	"strconv"
 )
 
-
 func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/connexionAccount.html"))
 
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	if r.Method == http.MethodPost {
-	r.FormValue("deconnection")
-	connectedUser = nil
+		r.FormValue("deconnection")
+		connectedUser = nil
 	}
 	defer database.Close()
 
@@ -27,7 +26,7 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	mailForm := r.FormValue("mail")
 	rememberMe := r.FormValue("rememberMe")
 	if rememberMe != "" {
-		
+
 		fmt.Println(("on est ici"))
 	}
 	if passwordForm != "" && mailForm != "" {

@@ -2,7 +2,6 @@ package forum
 
 import (
 	"database/sql"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -37,7 +36,6 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],
 	}
-	fmt.Println(profilPage)
 	err := tmpl.Execute(w, profilPage)
 	if err != nil {
 		log.Fatal(err)
