@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type HomePageStruct struct {
@@ -26,6 +27,7 @@ type HomePageStruct struct {
 	Post              []PostStruct
 	NbrPost           int
 	Comments          []recuperationCommentFromDb
+	IsConnected       bool
 }
 
 type CommentStruct struct {
@@ -39,17 +41,19 @@ type CommentStruct struct {
 }
 
 type PostStruct struct {
-	Id         int
-	Author     int
-	AuthorName string
-	Content    string
-	Like       bool
-	Dislike    bool
-	Date       string
-	Comments   []CommentStruct
+	Id          int
+	Author      int
+	AuthorName  string
+	Content     string
+	Like        bool
+	Dislike     bool
+	Date        string
+	Comments    []CommentStruct
+	IsConnected bool
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
+
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
@@ -125,15 +129,31 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
 		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
+		_, username, _, _, _ = FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		/* Check valide post */
+		checkPost := strings.Split(allPost[i].Content, "")
+		limite := 0
+
+		for v := 0; v < len(checkPost); v++ {
+			if limite >= 27 && checkPost[v] != " " {
+				checkPost[v] = " "
+				limite = 0
+			}
+			limite++
+		}
+
+		content := strings.Join(checkPost, "")
+
 		postFinalIntoStruc := PostStruct{
-			Id:         allPost[i].Id,
-			Author:     allPost[i].Author,
-			AuthorName: username,
-			Content:    allPost[i].Content,
-			Like:       isLiked,
-			Dislike:    isDisliked,
-			Date:       allPost[i].Date,
-			Comments:   allCommentOfThisPost,
+			Id:          allPost[i].Id,
+			Author:      allPost[i].Author,
+			AuthorName:  username,
+			Content:     content,
+			Like:        isLiked,
+			Dislike:     isDisliked,
+			Date:        allPost[i].Date,
+			Comments:    allCommentOfThisPost,
+			IsConnected: true,
 		}
 		/* Add comments of this post */
 		for j := 0; j < len(allComment); j++ {
@@ -154,8 +174,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 		allPostFinal = append(allPostFinal, postFinalIntoStruc)
 	}
-
 	if len(connectedUser) > 0 {
+
 		homePage = HomePageStruct{
 			IdAuthor:          connectedUser[0],
 			Username:          connectedUser[1],

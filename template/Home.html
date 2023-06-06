@@ -22,8 +22,14 @@
         <ul>
             <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
                     alt="home"><span>Accueil</span></a>
+                    {{ if not  .IsConnected  }}
             <a class="btn-nav" href="/profil"><img class="img-btn-nav" src="../assets/img/profil.png"
                     alt="profil"><span>Profil</span></a>
+                    {{ else }}
+                    <a class="btn-nav" href="/"><img class="img-btn-nav" src="../assets/img/profil.png"
+                            alt="profil"><span>Connection</span></a>
+                    {{ end }}
+                  
         </ul>
         <input class="search-bar" type="text" />
     </nav>

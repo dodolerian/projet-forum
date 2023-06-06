@@ -9,6 +9,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+// Add post
 func AddPost(db *sql.DB, content string, idAutor string) {
 	parseTime, err := time.Parse("Jan 02, 2006", "Sep 30, 2021")
 	if err != nil {
