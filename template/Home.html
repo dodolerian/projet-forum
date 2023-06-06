@@ -42,8 +42,32 @@
                         {{ $instance.Content }}
                     </p>
                     <div class="likes">
-                        <img id="like" src="../assets/img/pouces-vers-le-haut.png" alt="like">
-                        <img id="dislike" src="../assets/img/dislike.png" alt="dislike">
+                        <form method="post">
+                            <button id="like" type="submit">
+                                {{ if $instance.Like }}
+                                <img id="like" src="../assets/img/like_black.png" alt="like">
+                                {{ end }}
+
+                                {{ if not $instance.Like }}
+                                <img id="like" src="../assets/img/like_white.png" alt="like">
+                                {{ end }}
+
+                                <input class="more" type="hidden" value={{ $instance.Id }} name="like">
+                            </button>
+                        </form>
+                        <form method="post">
+                            <button id="dislike" type="submit">
+                                {{ if $instance.Dislike }}
+                                <img id="dislike" src="../assets/img/dislike_black.png" alt="dislike">
+                                {{ end }}
+
+                                {{ if not $instance.Dislike }}
+                                <img id="dislike" src="../assets/img/dislike_white.png" alt="dislike">
+                                {{ end }}
+
+                                <input class="more" type="hidden" value={{ $instance.Id }} name="dislike">
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div class="image">

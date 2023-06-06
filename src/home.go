@@ -43,8 +43,8 @@ type PostStruct struct {
 	Author     int
 	AuthorName string
 	Content    string
-	Like       int
-	Dislike    int
+	Like       bool
+	Dislike    bool
 	Date       string
 	Comments   []CommentStruct
 }
@@ -55,6 +55,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	homePage := HomePageStruct{}
 
+	RecuperationLike()
+	RecuperationDislike()
+
+	allPost = nil
+	allPost := recuperationPost()
+	allPostFinal := []PostStruct{}
+
+	connectedUserId, _ := strconv.Atoi(connectedUser[0])
+
 	if r.Method == http.MethodPost {
 		IdPost := r.FormValue("idPost")
 		ContentComment := r.FormValue("ContentComment")
@@ -63,22 +72,66 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	allPost = nil
 	allPost := recuperationPost()
 
+	if r.Method == http.MethodPost {
+		likeIdPostStr := r.FormValue("like")
+		dislikeIdPostStr := r.FormValue("dislike")
+
+		likeIdPost, _ := strconv.Atoi(likeIdPostStr)
+		dislikeIdPost, _ := strconv.Atoi(dislikeIdPostStr)
+
+		if likeIdPostStr == "" {
+			isLiked := LikeOnPost(connectedUserId, dislikeIdPost, allLikeList)
+			isDisliked := DislikeOnPost(connectedUserId, dislikeIdPost, allDislikeList)
+
+			if isLiked == true {
+				DeleteLike(database, connectedUserId, dislikeIdPost)
+			}
+			if isDisliked == true {
+				DeleteDislike(database, connectedUserId, dislikeIdPost)
+			} else {
+				AddDislike(database, connectedUserId, dislikeIdPost)
+			}
+		}
+
+		if dislikeIdPostStr == "" {
+			isLiked := LikeOnPost(connectedUserId, likeIdPost, allLikeList)
+			isDisliked := DislikeOnPost(connectedUserId, likeIdPost, allDislikeList)
+
+			if isDisliked == true {
+				DeleteDislike(database, connectedUserId, likeIdPost)
+			}
+			if isLiked == true {
+				DeleteLike(database, connectedUserId, likeIdPost)
+			} else {
+				AddLike(database, connectedUserId, likeIdPost)
+			}
+		}
+
+	}
+
+	//LIKE
+
 	allComment = nil
 	allComment := recuperationComment()
 
 	allCommentOfThisPost := []CommentStruct{}
 
 	allPostFinal := []PostStruct{}
+	RecuperationLike()
+	RecuperationDislike()
 
 	for i := 0; i < len(allPost); i++ {
 		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+
+		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
+		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
 		postFinalIntoStruc := PostStruct{
 			Id:         allPost[i].Id,
 			Author:     allPost[i].Author,
 			AuthorName: username,
 			Content:    allPost[i].Content,
-			Like:       allPost[i].Like,
-			Dislike:    allPost[i].Dislike,
+			Like:       isLiked,
+			Dislike:    isDisliked,
 			Date:       allPost[i].Date,
 			Comments:   allCommentOfThisPost,
 		}
@@ -98,6 +151,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 				postFinalIntoStruc.Comments = append(postFinalIntoStruc.Comments, commentIntoStruc)
 			}
 		}
+
 		allPostFinal = append(allPostFinal, postFinalIntoStruc)
 	}
 

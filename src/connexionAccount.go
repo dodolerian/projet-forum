@@ -2,7 +2,6 @@ package forum
 
 import (
 	"database/sql"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -26,8 +25,6 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 			accountPage = createAccountStruct{MailError: "adresse mail pas trouvé"}
 		} else {
 			id, username, hashpass, profilDescription, mail := FetchUserWithMail(database, mailForm)
-			fmt.Println(hashpass, passwordForm)
-			//dehash
 
 			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}

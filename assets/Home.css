@@ -192,8 +192,10 @@ nav .search-bar {
     width: 100%;
 }
 
-.post .content .likes #like,
-.post .content .likes #dislike {
+#like,
+#dislike {
+    cursor: pointer;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
