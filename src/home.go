@@ -60,10 +60,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		ContentComment := r.FormValue("ContentComment")
 		AddComment(database, ContentComment, connectedUser[0], IdPost)
 	}
-
 	allPost = nil
 	allPost := recuperationPost()
 
+	allComment = nil
 	allComment := recuperationComment()
 
 	allCommentOfThisPost := []CommentStruct{}

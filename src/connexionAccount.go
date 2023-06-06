@@ -11,7 +11,6 @@ import (
 
 func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/connexionAccount.html"))
-	connectedUser = nil
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
 	defer database.Close()
