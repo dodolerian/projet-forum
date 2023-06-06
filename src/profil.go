@@ -2,6 +2,7 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -19,6 +20,35 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
 		AddPost(database, ContentPost, connectedUser[0])
+
+		file, _, err := r.FormFile("photo")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		defer file.Close()
+
+		buff := make([]byte, 512)
+		_, err = file.Read(buff)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		filetype := http.DetectContentType(buff)
+
+		fmt.Println(filetype)
+		// if filetype != "image/jpeg" && filetype != "image/png" { {
+		// 	http.Error(w, "The provided file format is not allowed. Please upload a JPEG or PNG image", http.StatusBadRequest)
+		// 	return
+		// }
+
+		// _, err := file.Seek(0, io.SeekStart)
+		// if err != nil {
+		// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+		// 	return
+		// }
 	}
 
 	// si le form est rempli alors change la valeur, empache qu'elle soit vide

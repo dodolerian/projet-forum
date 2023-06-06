@@ -73,9 +73,10 @@
     </div>
     <!-- Ajout de Post -->
     <div id="addPost" class="addPost">
-        <form class="addPostForm" method="post" >
+        <form class="addPostForm" method="post" enctype="multipart/form-data">
             <input type="text" name="ContentPost" id="ContentPost">
-            <input class="btn" id="addPostButton"  type="submit" value="addPost">
+            <input class="btn" id="addPostButton" type="submit" value="addPost">
+            <input type="file" id="photo" name="photo" />
             <button class="btn" id="exitPost">Sortir</button>
         </form>
     </div>
