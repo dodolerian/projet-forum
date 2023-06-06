@@ -64,14 +64,14 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	connectedUserId, _ := strconv.Atoi(connectedUser[0])
 
+	/* COMMENTS */
 	if r.Method == http.MethodPost {
 		IdPost := r.FormValue("idPost")
 		ContentComment := r.FormValue("ContentComment")
 		AddComment(database, ContentComment, connectedUser[0], IdPost)
 	}
-	allPost = nil
-	allPost := recuperationPost()
 
+	/* LIKE */
 	if r.Method == http.MethodPost {
 		likeIdPostStr := r.FormValue("like")
 		dislikeIdPostStr := r.FormValue("dislike")
@@ -116,7 +116,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	allCommentOfThisPost := []CommentStruct{}
 
-	allPostFinal := []PostStruct{}
+	allPostFinal = []PostStruct{}
 	RecuperationLike()
 	RecuperationDislike()
 
