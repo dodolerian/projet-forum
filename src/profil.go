@@ -19,36 +19,40 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
-		AddPost(database, ContentPost, connectedUser[0])
 
-		file, _, err := r.FormFile("photo")
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
+		file, handler, err := r.FormFile("photo")
+		if file != nil {
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			defer file.Close()
+
+			buff := make([]byte, handler.Size)
+
+			_, err := file.Read(buff)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			filetype := http.DetectContentType(buff)
+
+			if filetype != "image/jpeg" {
+				fmt.Println("image type not good")
+			} else {
+				if handler.Size > 5000000 {
+					fmt.Println("image to heavy")
+				} else {
+					AddPost(database, ContentPost, connectedUser[0], buff)
+					fmt.Println("post add image")
+				}
+			}
+
+		} else {
+			AddPost(database, ContentPost, connectedUser[0], nil)
+			fmt.Println("post add without image")
 		}
-
-		defer file.Close()
-
-		buff := make([]byte, 512)
-		_, err = file.Read(buff)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		filetype := http.DetectContentType(buff)
-
-		fmt.Println(filetype)
-		// if filetype != "image/jpeg" && filetype != "image/png" { {
-		// 	http.Error(w, "The provided file format is not allowed. Please upload a JPEG or PNG image", http.StatusBadRequest)
-		// 	return
-		// }
-
-		// _, err := file.Seek(0, io.SeekStart)
-		// if err != nil {
-		// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-		// 	return
-		// }
 	}
 
 	// si le form est rempli alors change la valeur, empache qu'elle soit vide

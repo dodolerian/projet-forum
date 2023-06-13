@@ -17,9 +17,9 @@ type recuperationCommentFromDb struct {
 	Date    string
 }
 
-var allComment []recuperationPostFromDb
+var allComment []recuperationCommentFromDb
 
-func recuperationComment() []recuperationPostFromDb {
+func recuperationComment() []recuperationCommentFromDb {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	defer database.Close()
 	rows, err := database.Query("SELECT * FROM COMMENTARY")
@@ -48,7 +48,7 @@ func recuperationComment() []recuperationPostFromDb {
 			Dislike: dislike,
 			Date:    date,
 		}
-		allComment = append(allComment, recuperationPostFromDb(commentIntoStruc))
+		allComment = append(allComment, commentIntoStruc)
 
 	}
 	return allComment

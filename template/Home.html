@@ -41,7 +41,7 @@
                     <p class="txt">
                         {{ $instance.Content }}
                     </p>
-                    <div class="likes">
+                    <div class=" likes">
                         <form method="post">
                             <button id="like" type="submit">
                                 {{ if $instance.Like }}
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="image">
-                    <img src="../assets/img/img1.webp" alt="image">
+                    <img src="data:image/jpg;base64,{{ $instance.Image }}">
                 </div>
                 <div class="comments">
                     <div class="titleComment">

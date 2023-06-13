@@ -2,6 +2,7 @@ package forum
 
 import (
 	"database/sql"
+	"encoding/base64"
 	"html/template"
 	"log"
 	"net/http"
@@ -13,11 +14,6 @@ type HomePageStruct struct {
 	Username          string
 	ProfilDescription string
 	Mail              string
-	ContentPost       string
-	AuthorPost        string
-	LikePost          int
-	DyslikePost       int
-	DatePost          string
 	ContentComment    string
 	AuthorComment     string
 	IdPostComment     int
@@ -35,6 +31,7 @@ type PostStruct struct {
 	Like       bool
 	Dislike    bool
 	Date       string
+	Image      string
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -99,11 +96,14 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	RecuperationLike()
 	RecuperationDislike()
 
-	for i := 0; i < len(allPost); i++ {
+	for i := len(allPost) - 1; i >= 0; i-- {
 		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
 		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
+
+		imgBase64Str := base64.StdEncoding.EncodeToString(allPost[i].Image)
+
 		postFinalIntoStruc := PostStruct{
 			Id:         allPost[i].Id,
 			Author:     allPost[i].Author,
@@ -112,6 +112,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Like:       isLiked,
 			Dislike:    isDisliked,
 			Date:       allPost[i].Date,
+			Image:      imgBase64Str,
 		}
 
 		allPostFinal = append(allPostFinal, postFinalIntoStruc)
