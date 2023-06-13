@@ -36,21 +36,31 @@ body {
 
 .helloNext {
     margin-top: 0vw;
-    margin-bottom: 4vw;
+    margin-bottom: 1vw;
     color: #d3d6da;
     font-size: 1.5vw;
 }
 
-.form {
-    display: block;
+.form-connexion {
+    display: flex;
+    flex-direction: column;
+    color: #d3d6da;
 }
 
 .form__group {
-    margin: 1vw;
+    margin: 0.5vw;
     display: block;
 }
 
+.remember {
+    margin: 1vw;
+    display: flex;
+    gap: 1vw;
+    align-items: center;
+}
+
 #descriptionForm {
+    display: flex;
     text-align: left;
     margin-bottom: 1vh;
     color: #d3d6da;
