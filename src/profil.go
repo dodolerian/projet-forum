@@ -15,10 +15,15 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	defer database.Close()
 	description := r.FormValue("description")
 	if r.Method == http.MethodPost {
+		AddCensure := r.FormValue("censureValue")
 		ContentPost := r.FormValue("ContentPost")
-		AddPost(database, ContentPost, connectedUser[0])
+		if AddCensure != ""{
+			addCensure(AddCensure)
 	}
 
+		AddPost(database, ContentPost, connectedUser[0])
+	}
+	
 	// si le form est rempli alors change la valeur, empache qu'elle soit vide
 	if description != "" {
 		id, _ := strconv.Atoi(connectedUser[0])
