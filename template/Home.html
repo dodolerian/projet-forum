@@ -22,7 +22,7 @@
         <ul>
             <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
                     alt="home"><span>Accueil</span></a>
-                    {{ if not  .IsConnected  }}
+                    {{ if .IsConnected  }}
             <a class="btn-nav" href="/profil"><img class="img-btn-nav" src="../assets/img/profil.png"
                     alt="profil"><span>Profil</span></a>
                     {{ else }}
@@ -47,6 +47,8 @@
                     <p class="txt">
                         {{ $instance.Content }}
                     </p>
+                    <!-- {{ if .IsConnected }} -->
+
                     <div class="likes">
                         <form method="post">
                             <button id="like" type="submit">
@@ -76,6 +78,7 @@
                         </form>
                     </div>
                 </div>
+                <!-- {{ end }} -->
                 <div class="image">
                     <img src="../assets/img/img1.webp" alt="image">
                 </div>
