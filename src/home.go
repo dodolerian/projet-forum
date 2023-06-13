@@ -2,6 +2,7 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -157,9 +158,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			IsConnected:  true,
 		}
 
-		// if (len(connectedUser) == 1){
-		// 	postFinalIntoStruc.IsConnected = false
-		// }
+		if (len(connectedUser) == 1){
+			postFinalIntoStruc.IsConnected = false
+		}
 		/* Add comments of this post */
 		for j := 0; j < len(allComment); j++ {
 			if allPost[i].Id == allComment[j].IdPost {
