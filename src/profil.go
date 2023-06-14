@@ -71,7 +71,6 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	connectedUser = nil
 	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail)
 
-	fmt.Println(connectedUser)
 
 	profilPage := ProfilPageStruct{
 		Username:          connectedUser[1],

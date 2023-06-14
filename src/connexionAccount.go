@@ -41,7 +41,6 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 			} else {
 				connectedUser = nil
 				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
-				fmt.Println(connectedUser)
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}
 		}
