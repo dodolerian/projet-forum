@@ -22,14 +22,14 @@
         <ul>
             <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
                     alt="home"><span>Accueil</span></a>
-                    {{ if .IsConnected  }}
+            {{ if .IsConnected }}
             <a class="btn-nav" href="/profil"><img class="img-btn-nav" src="../assets/img/profil.png"
                     alt="profil"><span>Profil</span></a>
-                    {{ else }}
-                    <a class="btn-nav" href="/"><img class="img-btn-nav" src="../assets/img/profil.png"
-                            alt="profil"><span>Connection</span></a>
-                    {{ end }}
-                  
+            {{ else }}
+            <a class="btn-nav" href="/"><img class="img-btn-nav" src="../assets/img/profil.png"
+                    alt="profil"><span>Connection</span></a>
+            {{ end }}
+
         </ul>
         <input class="search-bar" type="text" />
     </nav>
@@ -85,9 +85,9 @@
                     </div>
                     {{ end }}
                 </div>
-                
+
                 <div class="image">
-                    <img src="../assets/img/img1.webp" alt="image">
+                    <img src="data:image/jpg;base64,{{ $instance.Image }}">
                 </div>
                 <div class="comments">
                     <div class="titleComment">
@@ -112,7 +112,7 @@
                     {{ end }}
                 </div>
             </div>
-            
+
             {{ end }}
             {{ end }}
         </div>
