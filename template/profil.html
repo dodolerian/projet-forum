@@ -25,7 +25,8 @@
             <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
                     alt="home"><span>Accueil</span></a>
             <form method="post" action="/">
-            <input class="btn-nav" name="deconnection" type="submit" value="deconnection" src="./assets/img/deconnection.jpg" alt="Déconnection"></input>
+                <input class="btn-nav" name="deconnection" type="submit" value="deconnection"
+                    src="./assets/img/deconnection.jpg" alt="Déconnection"></input>
             </form>
         </ul>
 
@@ -73,12 +74,11 @@
     </div>
     <!-- Ajout de Post -->
     <div id="addPost" class="addPost">
-        <form class="addPostForm" method="post" >
-            <input type="text" name="ContentPost" id="ContentPost" placeholder="ajouter un post" maxlength="300">
-            <div class="addPostButton">
-            <input class="btn" id="addPostButton"  type="submit" value="addPost">
+        <form class="addPostForm" method="post" enctype="multipart/form-data">
+            <input type="text" name="ContentPost" id="ContentPost">
+            <input type="file" name="photo" accept=".jpg">
+            <input class="btn" id="addPostButton" type="submit" value="addPost">
             <button class="btn" id="exitPost">Sortir</button>
-            </div>
         </form>
     </div>
 

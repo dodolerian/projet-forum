@@ -2,6 +2,8 @@ package forum
 
 import (
 	"database/sql"
+	"encoding/base64"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -10,24 +12,10 @@ import (
 )
 
 type HomePageStruct struct {
-	IdAuthor          string
-	Username          string
-	ProfilDescription string
-	Mail              string
-	ContentPost       string
-	AuthorPost        string
-	LikePost          int
-	DyslikePost       int
-	DatePost          string
-	ContentComment    string
-	AuthorComment     string
-	IdPostComment     int
-	LikeComment       int
-	DyslikeComment    int
-	Post              []PostStruct
-	NbrPost           int
-	Comments          []recuperationCommentFromDb
-	IsConnected       bool
+	Post        []PostStruct
+	NbrPost     int
+	Comments    []recuperationCommentFromDb
+	IsConnected bool
 }
 
 type CommentStruct struct {
@@ -38,6 +26,7 @@ type CommentStruct struct {
 	Like       int
 	Dislike    int
 	Date       string
+	Image      string
 }
 
 type PostStruct struct {
@@ -49,6 +38,7 @@ type PostStruct struct {
 	Dislike     bool
 	Date        string
 	Comments    []CommentStruct
+	Image       string
 	IsConnected bool
 }
 
@@ -58,16 +48,17 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	
 	homePage := HomePageStruct{}
-	invité := "invité"
+	// invité := "invité"
 	RecuperationLike()
 	RecuperationDislike()
 	
 	allPost = nil
 	allPost := recuperationPost()
 	allPostFinal := []PostStruct{}
-	if len(connectedUser ) == 0{
-		connectedUser = append(connectedUser,  "-1")
+	if len(connectedUser) == 0 {
+		connectedUser = append(connectedUser, "-1")
 	}
+
 	connectedUserId, _ := strconv.Atoi(connectedUser[0])
 	
 	/* COMMENTS */
@@ -88,34 +79,34 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		if likeIdPostStr == "" {
 			isLiked := LikeOnPost(connectedUserId, dislikeIdPost, allLikeList)
 			isDisliked := DislikeOnPost(connectedUserId, dislikeIdPost, allDislikeList)
-			
-			if isLiked{
+
+			if isLiked {
 				DeleteLike(database, connectedUserId, dislikeIdPost)
 			}
-			if isDisliked{
+			if isDisliked {
 				DeleteDislike(database, connectedUserId, dislikeIdPost)
-				} else {
-					AddDislike(database, connectedUserId, dislikeIdPost)
-				}
+			} else {
+				AddDislike(database, connectedUserId, dislikeIdPost)
 			}
-			
-			if dislikeIdPostStr == "" {
-				isLiked := LikeOnPost(connectedUserId, likeIdPost, allLikeList)
-				isDisliked := DislikeOnPost(connectedUserId, likeIdPost, allDislikeList)
-				
-				if isDisliked{
-					DeleteDislike(database, connectedUserId, likeIdPost)
-				}
-				if isLiked {
-					DeleteLike(database, connectedUserId, likeIdPost)
-					} else {
-						AddLike(database, connectedUserId, likeIdPost)
-					}
-				}
-				
+		}
+
+		if dislikeIdPostStr == "" {
+			isLiked := LikeOnPost(connectedUserId, likeIdPost, allLikeList)
+			isDisliked := DislikeOnPost(connectedUserId, likeIdPost, allDislikeList)
+
+			if isDisliked {
+				DeleteDislike(database, connectedUserId, likeIdPost)
 			}
-			
-			//LIKE
+			if isLiked {
+				DeleteLike(database, connectedUserId, likeIdPost)
+			} else {
+				AddLike(database, connectedUserId, likeIdPost)
+			}
+		}
+
+	}
+
+	//LIKE
 
 	allComment = nil
 	allComment := recuperationComment()
@@ -126,7 +117,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	RecuperationLike()
 	RecuperationDislike()
 
-	for i := 0; i < len(allPost); i++ {
+	for i := len(allPost) - 1; i >= 0; i-- {
 		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
@@ -145,6 +136,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 		
 		content := strings.Join(checkPost, "")
+
+		imgBase64Str := base64.StdEncoding.EncodeToString(allPost[i].Image)
+
 		postFinalIntoStruc := PostStruct{
 			Id:          allPost[i].Id,
 			Author:      allPost[i].Author,
@@ -154,10 +148,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Dislike:     isDisliked,
 			Date:        allPost[i].Date,
 			Comments:    allCommentOfThisPost,
-			IsConnected:  true,
+			Image:       imgBase64Str,
+			IsConnected: true,
 		}
 
-		if (len(connectedUser) == 1){
+		if len(connectedUser) == 1 {
 			postFinalIntoStruc.IsConnected = false
 		}
 		/* Add comments of this post */
@@ -175,53 +170,36 @@ func Home(w http.ResponseWriter, r *http.Request) {
 				}
 				postFinalIntoStruc.Comments = append(postFinalIntoStruc.Comments, commentIntoStruc)
 			}
+
 		}
 		
 		allPostFinal = append(allPostFinal, postFinalIntoStruc)
 	}
-	if len(connectedUser) >1 {
+	if len(connectedUser) > 1 {
 		homePage = HomePageStruct{
-			IdAuthor:          connectedUser[0],
-			Username:          connectedUser[1],
-			ProfilDescription: connectedUser[3],
-			Mail:              connectedUser[4],
-			ContentPost:       allPost[0].Content,
-			LikePost:          allPost[0].Like,
-			DyslikePost:       allPost[0].Dislike,
-			DatePost:          allPost[0].Date,
-			Post:              allPostFinal,
-			NbrPost:           len(allPost),
-			ContentComment:    allComment[0].Content,
-			IdPostComment:     allComment[0].IdPost,
-			LikeComment:       allComment[0].Like,
-			DyslikeComment:    allComment[0].Dislike,
-			Comments:          allComment,
+			Post:        allPostFinal,
+			NbrPost:     len(allPost),
+			Comments:    allComment,
 			IsConnected: true,
 		}
-		
-		}else{
-			homePage = HomePageStruct{
 
-				IdAuthor:          "-1",
-				Username:          invité,
-				ProfilDescription: invité,
-				Mail:              invité,
-				ContentPost:       allPost[0].Content,
-				LikePost:          allPost[0].Like,
-				DyslikePost:       allPost[0].Dislike,
-				DatePost:          allPost[0].Date,
-				Post:              allPostFinal,
-				NbrPost:           len(allPost),
-				ContentComment:    allComment[0].Content,
-				IdPostComment:     allComment[0].IdPost,
-				LikeComment:       allComment[0].Like,
-				DyslikeComment:    allComment[0].Dislike,
-				Comments:          allComment,
-				IsConnected: false,
-			}
-		}
-		err := tmpl.Execute(w, homePage)
-		if err != nil {
-			log.Fatal(err)
+	} else {
+		homePage = HomePageStruct{
+			// IdAuthor:          "-1",
+			// Username:          invité,
+			// ProfilDescription: invité,
+			// Mail:              invité,
+
+			Post:        allPostFinal,
+			NbrPost:     len(allPost),
+			Comments:    allComment,
+			IsConnected: false,
 		}
 	}
+
+	fmt.Println(connectedUser)
+	err := tmpl.Execute(w, homePage)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
