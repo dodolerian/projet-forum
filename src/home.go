@@ -3,7 +3,6 @@ package forum
 import (
 	"database/sql"
 	"encoding/base64"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -197,7 +196,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println(connectedUser)
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)
