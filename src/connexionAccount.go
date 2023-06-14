@@ -14,7 +14,7 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	if r.Method == http.MethodPost {
 		r.FormValue("deconnection")
-					connectedUser = nil
+		connectedUser = nil
 
 	}
 
@@ -39,8 +39,9 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
-
+				connectedUser = nil
 				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
+				fmt.Println(connectedUser)
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}
 		}

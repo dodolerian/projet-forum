@@ -12,19 +12,10 @@ import (
 )
 
 type HomePageStruct struct {
-	IdAuthor          string
-	Username          string
-	ProfilDescription string
-	Mail              string
-	ContentComment    string
-	AuthorComment     string
-	IdPostComment     int
-	LikeComment       int
-	DyslikeComment    int
-	Post              []PostStruct
-	NbrPost           int
-	Comments          []recuperationCommentFromDb
-	IsConnected       bool
+	Post        []PostStruct
+	NbrPost     int
+	Comments    []recuperationCommentFromDb
+	IsConnected bool
 }
 
 type CommentStruct struct {

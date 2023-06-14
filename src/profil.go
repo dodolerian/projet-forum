@@ -9,6 +9,12 @@ import (
 	"strconv"
 )
 
+type ProfilPageStruct struct {
+	Username          string
+	ProfilDescription string
+	Mail              string
+}
+
 func Profil(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/profil.html"))
 
@@ -67,7 +73,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(connectedUser)
 
-	profilPage := HomePageStruct{
+	profilPage := ProfilPageStruct{
 		Username:          connectedUser[1],
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],
