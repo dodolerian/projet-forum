@@ -3,7 +3,6 @@ package forum
 import (
 	"database/sql"
 	"encoding/base64"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -39,6 +38,7 @@ type PostStruct struct {
 	Date        string
 	Comments    []CommentStruct
 	Image       string
+	IsImage     bool
 	IsConnected bool
 }
 
@@ -138,6 +138,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		content := strings.Join(checkPost, "")
 
 		imgBase64Str := base64.StdEncoding.EncodeToString(allPost[i].Image)
+		isImage := true
+		if imgBase64Str == "" {
+			isImage = false
+		}
 
 		postFinalIntoStruc := PostStruct{
 			Id:          allPost[i].Id,
@@ -149,6 +153,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Date:        allPost[i].Date,
 			Comments:    allCommentOfThisPost,
 			Image:       imgBase64Str,
+			IsImage:     isImage,
 			IsConnected: true,
 		}
 
@@ -185,11 +190,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 		homePage = HomePageStruct{
-			// IdAuthor:          "-1",
-			// Username:          invité,
-			// ProfilDescription: invité,
-			// Mail:              invité,
-
 			Post:        allPostFinal,
 			NbrPost:     len(allPost),
 			Comments:    allComment,
@@ -197,7 +197,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println(connectedUser)
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)
