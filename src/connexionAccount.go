@@ -33,6 +33,7 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
+				connectedUser = nil
 				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}

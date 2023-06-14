@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"strconv"
 )
+
 type createAccountStruct struct {
 	UsernameError string
 	PasswordError string
 	MailError     string
 }
-
 
 func CreateAccount(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/createAccount.html"))
@@ -44,6 +44,7 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 			hashpass, _ := HashPassword(passwordForm)
 			AddUsers(database, usernameForm, hashpass, "", mailForm)
 			id, username, password, profilDescription, mail := FetchUserWithName(database, usernameForm)
+			connectedUser = nil
 			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}

@@ -15,11 +15,15 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	defer database.Close()
 
 	description := r.FormValue("description")
+	
 
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
+		tag := r.FormValue("tag")
 		AddPost(database, ContentPost, connectedUser[0])
+
 	}
+
 
 	// si le form est rempli alors change la valeur, empache qu'elle soit vide
 	if description != "" {
