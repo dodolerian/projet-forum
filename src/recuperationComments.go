@@ -9,12 +9,12 @@ import (
 )
 
 type recuperationCommentFromDb struct {
-	Id      int
-	Author  int
-	Content string
-	Like    int
-	Dislike int
-	Date    string
+	IdPost   int
+	IdAuthor int
+	Content  string
+	Like     int
+	Dislike  int
+	Date     string
 }
 
 var allComment []recuperationCommentFromDb
@@ -28,25 +28,25 @@ func recuperationComment() []recuperationCommentFromDb {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		var id int
-		var author int
+		var idPost int
+		var idAuthor int
 		var content string
 		var like int
 		var dislike int
 		var date string
-		err = rows.Scan(&id, &author, &content, &like, &dislike, &date)
+		err = rows.Scan(&idPost, &idAuthor, &content, &like, &dislike, &date)
 
 		if err != nil {
 			log.Fatal(err)
 		}
 		commentIntoStruc := recuperationCommentFromDb{}
 		commentIntoStruc = recuperationCommentFromDb{
-			Id:      id,
-			Author:  author,
-			Content: content,
-			Like:    like,
-			Dislike: dislike,
-			Date:    date,
+			IdPost:   idPost,
+			IdAuthor: idAuthor,
+			Content:  content,
+			Like:     like,
+			Dislike:  dislike,
+			Date:     date,
 		}
 		allComment = append(allComment, commentIntoStruc)
 

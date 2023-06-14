@@ -14,9 +14,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	defer database.Close()
-
 	description := r.FormValue("description")
-
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
 
@@ -63,15 +61,17 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 	// reprend l'utilisateur modifié a chaque fois
 	idRefresh, username, password, profilDescription, mail := FetchUserWithId(database, connectedUser[0])
+
 	connectedUser = nil
 	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail)
+
+	fmt.Println(connectedUser)
 
 	profilPage := HomePageStruct{
 		Username:          connectedUser[1],
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],
 	}
-
 	err := tmpl.Execute(w, profilPage)
 	if err != nil {
 		log.Fatal(err)
