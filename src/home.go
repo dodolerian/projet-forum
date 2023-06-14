@@ -3,7 +3,6 @@ package forum
 import (
 	"database/sql"
 	"encoding/base64"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -39,6 +38,7 @@ type PostStruct struct {
 	Date        string
 	Comments    []CommentStruct
 	Image       string
+	IsImage     bool
 	IsConnected bool
 }
 
@@ -49,12 +49,16 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	homePage := HomePageStruct{}
 	// invité := "invité"
+	// invité := "invité"
 	RecuperationLike()
 	RecuperationDislike()
 
 	allPost = nil
 	allPost := recuperationPost()
 	allPostFinal := []PostStruct{}
+	if len(connectedUser) == 0 {
+		connectedUser = append(connectedUser, "-1")
+	}
 	if len(connectedUser) == 0 {
 		connectedUser = append(connectedUser, "-1")
 	}
@@ -138,6 +142,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		content := strings.Join(checkPost, "")
 
 		imgBase64Str := base64.StdEncoding.EncodeToString(allPost[i].Image)
+		isImage := true
+		if imgBase64Str == "" {
+			isImage = false
+		}
 
 		postFinalIntoStruc := PostStruct{
 			Id:          allPost[i].Id,
@@ -149,6 +157,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Date:        allPost[i].Date,
 			Comments:    allCommentOfThisPost,
 			Image:       imgBase64Str,
+			IsImage:     isImage,
 			IsConnected: true,
 		}
 
@@ -170,9 +179,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 				}
 				postFinalIntoStruc.Comments = append(postFinalIntoStruc.Comments, commentIntoStruc)
 			}
-
 		}
-
 		allPostFinal = append(allPostFinal, postFinalIntoStruc)
 	}
 	if len(connectedUser) > 1 {
@@ -182,22 +189,14 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Comments:    allComment,
 			IsConnected: true,
 		}
-
 	} else {
 		homePage = HomePageStruct{
-			// IdAuthor:          "-1",
-			// Username:          invité,
-			// ProfilDescription: invité,
-			// Mail:              invité,
-
 			Post:        allPostFinal,
 			NbrPost:     len(allPost),
 			Comments:    allComment,
 			IsConnected: false,
 		}
 	}
-
-	fmt.Println(connectedUser)
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)

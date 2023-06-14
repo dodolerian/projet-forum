@@ -87,9 +87,17 @@
                 </div>
 
                 <div class="image">
+                    {{ if $instance.IsImage }}
                     <img src="data:image/jpg;base64,{{ $instance.Image }}">
+                    {{ end }}
+
+                    {{ if not $instance.IsImage }}
+                    <img src="../assets/img/postImgBase.webp">
+
+                    {{ end }}
+
                 </div>
-                <div class="comments">
+                <div class=" comments">
                     <div class="titleComment">
                         <h2>Commentaires</h2>
                     </div>
