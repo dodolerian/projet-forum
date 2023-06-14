@@ -106,7 +106,7 @@
                     {{ if .IsConnected }}
                     <form class="addCommentForm" method="post">
                         <input name="idPost" type="hidden" value="{{ $instance.Id }}">
-                        <input type="text" name="ContentComment" id="ContentComment" placeholder="Commentaires ...">
+                        <input type="text" name="ContentComment" id="ContentComment" placeholder="Commentaires ..." maxlength="30">
                         <input class="btn" id="addCommentButton" type="submit" value="envoyer">
                     </form>
                     {{ end }}
