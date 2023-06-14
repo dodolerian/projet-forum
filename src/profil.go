@@ -2,11 +2,18 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"strconv"
 )
+
+type ProfilPageStruct struct {
+	Username          string
+	ProfilDescription string
+	Mail              string
+}
 
 func Profil(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/profil.html"))
@@ -16,7 +23,40 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 	if r.Method == http.MethodPost {
 		ContentPost := r.FormValue("ContentPost")
-		AddPost(database, ContentPost, connectedUser[0])
+
+		file, handler, err := r.FormFile("photo")
+		if file != nil {
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			defer file.Close()
+
+			buff := make([]byte, handler.Size)
+
+			_, err := file.Read(buff)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			filetype := http.DetectContentType(buff)
+
+			if filetype != "image/jpeg" {
+				fmt.Println("image type not good")
+			} else {
+				if handler.Size > 5000000 {
+					fmt.Println("image to heavy")
+				} else {
+					AddPost(database, ContentPost, connectedUser[0], buff)
+					fmt.Println("post add image")
+				}
+			}
+
+		} else {
+			AddPost(database, ContentPost, connectedUser[0], nil)
+			fmt.Println("post add without image")
+		}
 	}
 
 	// si le form est rempli alors change la valeur, empache qu'elle soit vide
@@ -31,7 +71,9 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	connectedUser = nil
 	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail)
 
-	profilPage := HomePageStruct{
+	fmt.Println(connectedUser)
+
+	profilPage := ProfilPageStruct{
 		Username:          connectedUser[1],
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],

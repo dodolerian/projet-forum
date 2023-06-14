@@ -177,9 +177,9 @@ nav .search-bar {
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-      height: 12.813rem;
-    width: 18.75rem; 
-    padding: 0.625rem; 
+    height: 12.813rem;
+    width: 18.75rem;
+    padding: 0.625rem;
 }
 
 /*like */
@@ -210,7 +210,7 @@ nav .search-bar {
     align-items: center;
     justify-content: center;
     width: 28.125rem;
-    height: 23.125rem;
+    height: 22.125rem;
     background-color: #1B263B;
 }
 
@@ -352,4 +352,4 @@ nav .search-bar {
 
 .post .addCommentForm #ContentComment::placeholder {
     color: #ECF8F6;
-  }
+}

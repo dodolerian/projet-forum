@@ -15,7 +15,9 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		r.FormValue("deconnection")
 		connectedUser = nil
+
 	}
+
 	defer database.Close()
 
 	_, _, _, _, tmpMail := FetchAllUser(database)
@@ -37,8 +39,9 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
-
+				connectedUser = nil
 				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
+				fmt.Println(connectedUser)
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}
 		}
