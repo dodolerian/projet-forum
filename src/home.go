@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -63,6 +64,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	tag := ""
 	/* COMMENTS */
 	if r.Method == http.MethodPost {
+		censure := r.FormValue("censure")
+		if censure !=""{
+			fmt.Println("ici")
+	}
 		IdPost := r.FormValue("idPost")
 		tag = r.FormValue("tag")
 		ContentComment := r.FormValue("ContentComment")

@@ -29,9 +29,26 @@
                     src="./assets/img/deconnection.jpg" alt="Déconnection"></input>
             </form>
         </ul>
-    <form>
-        
+    <div class="censure">
+    <form action="post">
+            <input class="btn-censure"  id="censure" type="submit" value="Ajouter la censure">
+        <label for="censureLabel">Voulez vous censurer un mot:</label>
+        <select id="censure" name="censure">
+            <option value="">Aucun</option>
+            <option value="connard">Connard</option>
+            <option value="enculer">Enculer</option>
+            <option value="ntm">ntm</option>
+            <option value="tg">tg</option>
+            <option value="TG">tg</option>
+            <option value="niqueTaMere">Nique ta mère </option>
+            <option value="Connasse">Connasse</option>
+            <option value="pute">Pute</option>
+            <option value="Salope">Salope</option>
+            <option value="fdp">Fdp</option>
+            <option value="Salop">Salop</option>      
+        </select>
     </form>
+    </div>
     </nav>
     <main>
         <div class="profile-card">
@@ -80,7 +97,7 @@
             <input type="text" name="ContentPost" id="ContentPost">
             <label for="tag">Choisissez un tag :</label>
                 <select id="tag" name="tag">
-                    <option value="">All</option>
+                    <option value="">Tout</option>
                     <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
                     <option value="#gaming">#gaming</option>
                     <option value="#voiture">#voiture</option>

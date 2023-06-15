@@ -275,3 +275,12 @@ nav ul .btn-nav span {
     text-align: center;
 }
 
+/* Censure */
+.censure label{
+    color: white;
+    font-size: 24px;
+}
+
+.btn-censure{
+    margin-left: 25vh;
+}
