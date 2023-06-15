@@ -3,7 +3,6 @@ package forum
 import (
 	"database/sql"
 	"encoding/base64"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -61,10 +60,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	connectedUserId, _ := strconv.Atoi(connectedUser[0])
-
+	tag := ""
 	/* COMMENTS */
 	if r.Method == http.MethodPost {
 		IdPost := r.FormValue("idPost")
+		tag = r.FormValue("tag")
 		ContentComment := r.FormValue("ContentComment")
 		AddComment(database, ContentComment, connectedUser[0], IdPost)
 	}
@@ -173,7 +173,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		allPostFinal = append(allPostFinal, postFinalIntoStruc)
+		if tag == "" {
+			allPostFinal = append(allPostFinal, postFinalIntoStruc)
+		} else {
+			if tag == postFinalIntoStruc.Tag {
+				allPostFinal = append(allPostFinal, postFinalIntoStruc)
+			}
+
+		}
+
 	}
 	if len(connectedUser) > 1 {
 		homePage = HomePageStruct{
@@ -191,8 +199,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			IsConnected: false,
 		}
 	}
-
-	fmt.Println(connectedUser)
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)
