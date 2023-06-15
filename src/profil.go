@@ -21,8 +21,11 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	defer database.Close()
 	description := r.FormValue("description")
+
 	if r.Method == http.MethodPost {
+
 		ContentPost := r.FormValue("ContentPost")
+		tag := r.FormValue("tag")
 
 		file, handler, err := r.FormFile("photo")
 		if file != nil {
@@ -48,13 +51,13 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 				if handler.Size > 5000000 {
 					fmt.Println("image to heavy")
 				} else {
-					AddPost(database, ContentPost, connectedUser[0], buff)
+					AddPost(database, ContentPost, connectedUser[0], buff, tag)
 					fmt.Println("post add image")
 				}
 			}
 
 		} else {
-			AddPost(database, ContentPost, connectedUser[0], nil)
+			AddPost(database, ContentPost, connectedUser[0], nil, tag)
 			fmt.Println("post add without image")
 		}
 	}

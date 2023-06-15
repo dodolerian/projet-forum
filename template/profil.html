@@ -77,7 +77,24 @@
     <!-- Ajout de Post -->
     <div id="addPost" class="addPost">
         <form class="addPostForm" method="post" enctype="multipart/form-data">
-            <input type="text" name="ContentPost" id="ContentPost" maxlength="100">
+            <input type="text" name="ContentPost" id="ContentPost">
+            <label for="tag">Choisissez un tag :</label>
+                <select id="tag" name="tag">
+                    <option value="">All</option>
+                    <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
+                    <option value="#gaming">#gaming</option>
+                    <option value="#voiture">#voiture</option>
+                    <option value="#etude">#etude</option>
+                    <option value="#actu">#actu</option>
+                    <option value="#technologie">#technologie</option>
+                    <option value="#ville">#ville</option>
+                    <option value="#animaux">#animaux</option>
+                    <option value="#gouvernement">#gouvernement</option>
+                    <option value="#alcool">#alcool</option>
+                    <option value="#sport">#sport</option>
+                    <option value="#hashtag">#hashtag</option>
+
+                </select>
             <input type="file" name="photo" accept=".jpg">
             <input class="btn" id="addPostButton" type="submit" value="addPost">
             <button class="btn" id="exitPost">Sortir</button>

@@ -39,6 +39,7 @@ type PostStruct struct {
 	Comments    []CommentStruct
 	Image       string
 	IsConnected bool
+	Tag         string
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -53,16 +54,17 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	
 	allPost = nil
 	allPost := recuperationPost()
-	allPostFinal := []PostStruct{}
+
 	if len(connectedUser) == 0 {
 		connectedUser = append(connectedUser, "-1")
 	}
 
 	connectedUserId, _ := strconv.Atoi(connectedUser[0])
-	
+	tag := ""
 	/* COMMENTS */
 	if r.Method == http.MethodPost {
 		IdPost := r.FormValue("idPost")
+		tag = r.FormValue("tag")
 		ContentComment := r.FormValue("ContentComment")
 		AddComment(database, ContentComment, connectedUser[0], IdPost)
 	}
@@ -105,14 +107,12 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	//LIKE
-
 	allComment = nil
 	allComment := recuperationComment()
 
 	allCommentOfThisPost := []CommentStruct{}
 
-	allPostFinal = []PostStruct{}
+	allPostFinal := []PostStruct{}
 	RecuperationLike()
 	RecuperationDislike()
 
@@ -149,6 +149,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Comments:    allCommentOfThisPost,
 			Image:       imgBase64Str,
 			IsConnected: true,
+			Tag:         allPost[i].Tag,
 		}
 
 		if len(connectedUser) == 1 {
@@ -171,8 +172,16 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
-		
-		allPostFinal = append(allPostFinal, postFinalIntoStruc)
+
+		if tag == "" {
+			allPostFinal = append(allPostFinal, postFinalIntoStruc)
+		} else {
+			if tag == postFinalIntoStruc.Tag {
+				allPostFinal = append(allPostFinal, postFinalIntoStruc)
+			}
+
+		}
+
 	}
 	if len(connectedUser) > 1 {
 		homePage = HomePageStruct{
@@ -184,18 +193,12 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 		homePage = HomePageStruct{
-			// IdAuthor:          "-1",
-			// Username:          invité,
-			// ProfilDescription: invité,
-			// Mail:              invité,
-
 			Post:        allPostFinal,
 			NbrPost:     len(allPost),
 			Comments:    allComment,
 			IsConnected: false,
 		}
 	}
-
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)
