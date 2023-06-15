@@ -21,7 +21,7 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 
 	defer database.Close()
 
-	_, tmpUsername, _, _, tmpMail := FetchAllUser(database)
+	_, tmpUsername, _, _, tmpMail, _ := FetchAllUser(database)
 	accountPage := createAccountStruct{}
 
 	usernameForm := r.FormValue("username")
@@ -43,9 +43,9 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 			hashpass, _ := HashPassword(passwordForm)
 
 			AddUsers(database, usernameForm, hashpass, "", mailForm)
-			id, username, password, profilDescription, mail := FetchUserWithName(database, usernameForm)
+			id, username, password, profilDescription, mail, xp := FetchUserWithName(database, usernameForm)
 			connectedUser = nil
-			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
+			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail, strconv.Itoa(xp))
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}
 	}

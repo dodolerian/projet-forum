@@ -16,6 +16,7 @@ type recuperationPostFromDb struct {
 	Dislike int
 	Date    string
 	Image   []byte
+	Tag     string
 }
 
 var allPost []recuperationPostFromDb
@@ -36,7 +37,8 @@ func recuperationPost() []recuperationPostFromDb {
 		var dislike int
 		var date string
 		var image []byte
-		err = rows.Scan(&id, &author, &content, &like, &dislike, &date, &image)
+		var tag string
+		err = rows.Scan(&id, &author, &content, &like, &dislike, &date, &image, &tag)
 
 		if err != nil {
 			log.Fatal(err)
@@ -50,6 +52,7 @@ func recuperationPost() []recuperationPostFromDb {
 			Dislike: dislike,
 			Date:    date,
 			Image:   image,
+			Tag:     tag,
 		}
 
 		allPost = append(allPost, postIntoStruc)

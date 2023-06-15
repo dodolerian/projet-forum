@@ -20,7 +20,7 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 
 	defer database.Close()
 
-	_, _, _, _, tmpMail := FetchAllUser(database)
+	_, _, _, _, tmpMail, _ := FetchAllUser(database)
 	accountPage := createAccountStruct{}
 
 	passwordForm := r.FormValue("password")
@@ -34,13 +34,13 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 		if !ContainsStringArray(tmpMail, mailForm) {
 			accountPage = createAccountStruct{MailError: "adresse mail pas trouvé"}
 		} else {
-			id, username, hashpass, profilDescription, mail := FetchUserWithMail(database, mailForm)
+			id, username, hashpass, profilDescription, mail, xp := FetchUserWithMail(database, mailForm)
 			//dehash
 			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
 				connectedUser = nil
-				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
+				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail, strconv.Itoa(xp))
 				fmt.Println(connectedUser)
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}

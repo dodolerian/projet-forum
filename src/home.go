@@ -118,11 +118,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	RecuperationDislike()
 
 	for i := len(allPost) - 1; i >= 0; i-- {
-		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
 		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
-		_, username, _, _, _ = FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		_, username, _, _, _, _ = FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		/* Check valide post */
 		checkPost := strings.Split(allPost[i].Content, "")
 		limite := 0
@@ -163,7 +163,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		/* Add comments of this post */
 		for j := 0; j < len(allComment); j++ {
 			if allPost[i].Id == allComment[j].IdPost {
-				_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allComment[j].IdAuthor))
+				_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allComment[j].IdAuthor))
 				commentIntoStruc := CommentStruct{
 					IdPost:     allComment[j].IdPost,
 					IdAuthor:   allComment[j].IdAuthor,
