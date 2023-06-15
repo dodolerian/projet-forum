@@ -40,10 +40,13 @@
             {{ range $index, $instance := .Post }}
             <div class="post">
                 <div class="content">
-                    <div class="user">
-                        <img class="userPP" src="../assets/img/img1.webp">
-                        <h2>{{ $instance.AuthorName }}</h2>
-                    </div>
+                    <form method="post" class="form-user">
+                        <button type="submit" class="user">
+                            <img class="userPP" src="../assets/img/img1.webp">
+                            <h2>{{ $instance.AuthorName }}</h2>
+                            <input type="hidden" value={{ $instance.Author }} name="author">
+                        </button>
+                    </form>
                     <p class="txt">
                         {{ $instance.Content }}
                     </p>
@@ -117,6 +120,13 @@
             {{ end }}
         </div>
         <div class="hashtags">
+            <!-- User description -->
+            <div class="popUpUser">
+                {{ range $index, $instance := .User }}
+                <h2 class="name">{{ $instance.Username }}</h2>
+                <p class="description">{{ $instance.ProfilDescription }}</p>
+                {{ end }}
+            </div>
             <button>#tendances</button>
             <button>#tendances</button>
             <button>#tendances</button>
@@ -127,6 +137,6 @@
     </main>
 </body>
 
-<script type="text/javascript" src="../assets/home.js"></script>
+<script type="module" src="../assets/home.js"></script>
 
 </html>

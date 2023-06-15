@@ -15,6 +15,7 @@ type HomePageStruct struct {
 	Post        []PostStruct
 	NbrPost     int
 	Comments    []recuperationCommentFromDb
+	User        []UserStruct
 	IsConnected bool
 }
 
@@ -42,6 +43,12 @@ type PostStruct struct {
 	IsConnected bool
 }
 
+type UserStruct struct {
+	Id                int
+	Username          string
+	ProfilDescription string
+}
+
 func Home(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
@@ -55,11 +62,41 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	allPost = nil
 	allPost := recuperationPost()
 	allPostFinal := []PostStruct{}
+
+	/* Recuperation User */
+
+	allUsers = nil
+	allUsers := recuperationUser()
+	User := []UserStruct{}
+
+	//.....
+
 	if len(connectedUser) == 0 {
 		connectedUser = append(connectedUser, "-1")
 	}
 
 	connectedUserId, _ := strconv.Atoi(connectedUser[0])
+
+	/* Author Post */
+	if r.Method == http.MethodPost {
+		IdAuthor := r.FormValue("author")
+		for i := 0; i < len(allUsers); i++ {
+			if strconv.Itoa(allUsers[i].Id) == IdAuthor {
+				name := allUsers[i].Username
+				description := allUsers[i].ProfilDescription
+				if description == "" {
+					description = "Pas de description"
+				}
+				userStruct := UserStruct{}
+				userStruct = UserStruct{
+					Id:                allUsers[i].Id,
+					Username:          name,
+					ProfilDescription: description,
+				}
+				User = append(User, userStruct)
+			}
+		}
+	}
 
 	/* COMMENTS */
 	if r.Method == http.MethodPost {
@@ -180,6 +217,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Post:        allPostFinal,
 			NbrPost:     len(allPost),
 			Comments:    allComment,
+			User:        User,
 			IsConnected: true,
 		}
 
@@ -193,6 +231,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Post:        allPostFinal,
 			NbrPost:     len(allPost),
 			Comments:    allComment,
+			User:        User,
 			IsConnected: false,
 		}
 	}

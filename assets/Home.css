@@ -118,6 +118,22 @@ nav .search-bar {
 
 /* POSTS */
 
+/* DESCRIPTION PopUp */
+
+.popUpUser {
+    padding: 1vh 0;
+    width: 80%;
+    background-color: #0D1B2A;
+    color: #ECF8F6;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* */
+
 .posts {
     display: flex;
     flex-direction: column;
@@ -154,14 +170,26 @@ nav .search-bar {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.form-user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 2vw;
+    width: 100%;
+    border: none;
+    background-color: #ECF8F6;
+}
+
 .post .content .user {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 1.682vw;
     gap: 1.682vw;
     width: 100%;
     color: #0D1B2A;
+    border: none;
+    background-color: #ECF8F6;
+    cursor: pointer;
 }
 
 .post .content .user .userPP {
@@ -199,7 +227,7 @@ nav .search-bar {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 3.23vh;
+    background-color: #ECF8F6;
     width: 1.576vw;
 }
 
