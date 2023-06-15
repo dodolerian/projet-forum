@@ -40,8 +40,8 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 			accountPage = createAccountStruct{MailError: "adresse mail déja utilisé"}
 
 		} else {
-			//hash
 			hashpass, _ := HashPassword(passwordForm)
+
 			AddUsers(database, usernameForm, hashpass, "", mailForm)
 			id, username, password, profilDescription, mail := FetchUserWithName(database, usernameForm)
 			connectedUser = nil

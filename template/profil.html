@@ -24,10 +24,12 @@
         <ul>
             <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
                     alt="home"><span>Accueil</span></a>
-            <a class="btn-nav" href="/profil"><img class="img-btn-nav" src="../assets/img/profil.png"
-                    alt="profil"><span>Profil</span></a>
+            <form method="post" action="/">
+                <input class="btn-nav" name="deconnection" type="submit" value="deconnection"
+                    src="./assets/img/deconnection.jpg" alt="Déconnection"></input>
+            </form>
         </ul>
-        <input class="search-bar" type="text">
+
     </nav>
     <main>
         <div class="profile-card">
@@ -73,25 +75,26 @@
     </div>
     <!-- Ajout de Post -->
     <div id="addPost" class="addPost">
-        <form class="addPostForm" method="post" >
+        <form class="addPostForm" method="post" enctype="multipart/form-data">
             <input type="text" name="ContentPost" id="ContentPost">
             <label for="tag">Choisissez un tag :</label>
                 <select id="tag" name="tag">
-                    <option value="1">#lesdevsongeniaux</option>
-                    <option value="2">#gaming</option>
-                    <option value="3">#voiture</option>
-                    <option value="4">#etude</option>
-                    <option value="5">#actu</option>
-                    <option value="6">#technologie</option>
-                    <option value="7">#ville</option>
-                    <option value="8">#animaux</option>
-                    <option value="9">#gouvernement</option>
-                    <option value="10">#alcool</option>
-                    <option value="11">#sport</option>
-                    <option value="12">#hashtag</option>
+                    <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
+                    <option value="#gaming">#gaming</option>
+                    <option value="#voiture">#voiture</option>
+                    <option value="#etude">#etude</option>
+                    <option value="#actu">#actu</option>
+                    <option value="#technologie">#technologie</option>
+                    <option value="#ville">#ville</option>
+                    <option value="#animaux">#animaux</option>
+                    <option value="#gouvernement">#gouvernement</option>
+                    <option value="#alcool">#alcool</option>
+                    <option value="#sport">#sport</option>
+                    <option value="#hashtag">#hashtag</option>
 
                 </select>
-            <input class="btn" id="addPostButton"  type="submit" value="addPost">
+            <input type="file" name="photo" accept=".jpg">
+            <input class="btn" id="addPostButton" type="submit" value="addPost">
             <button class="btn" id="exitPost">Sortir</button>
         </form>
     </div>
