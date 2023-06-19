@@ -11,8 +11,6 @@ import (
 
 func AddPost(db *sql.DB, content string, idAutor string, imageFile []byte) {
 
-func AddPost(db *sql.DB, content string, idAutor string, imageFile []byte) {
-
 	parseTime, err := time.Parse("Jan 02, 2006", "Sep 30, 2021")
 	if err != nil {
 		panic(err)

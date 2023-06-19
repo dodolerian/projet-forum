@@ -30,7 +30,8 @@ func recuperationUser() []recuperationUserFromDb {
 		var password string
 		var profilDescription string
 		var mail string
-		err = rows.Scan(&id, &username, &password, &profilDescription, &mail)
+		var xp string
+		err = rows.Scan(&id, &username, &password, &profilDescription, &mail, &xp)
 
 		if err != nil {
 			log.Fatal(err)

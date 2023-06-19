@@ -28,7 +28,6 @@ type CommentStruct struct {
 	Dislike    int
 	Date       string
 	Image      string
-	Image      string
 }
 
 type PostStruct struct {
@@ -245,7 +244,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println(connectedUser)
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)
