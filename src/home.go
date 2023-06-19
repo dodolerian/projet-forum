@@ -11,6 +11,7 @@ import (
 )
 
 type HomePageStruct struct {
+	ConnectedUserXp int
 	Post        []PostStruct
 	NbrPost     int
 	Comments    []recuperationCommentFromDb
@@ -42,12 +43,14 @@ type PostStruct struct {
 	IsImage     bool
 	IsConnected bool
 	Tag         string
+	Xp 			int
 }
 
 type UserStruct struct {
 	Id                int
 	Username          string
 	ProfilDescription string
+	xp				  int
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -161,7 +164,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
 		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
-		_, username, _, _, _, _ = FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		_, username, _, _, _, xpIntPost := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		/* Check valide post */
 		checkPost := strings.Split(allPost[i].Content, "")
 		limite := 0
@@ -195,6 +198,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			IsImage:     isImage,
 			IsConnected: true,
 			Tag:         allPost[i].Tag,
+			Xp:          xpIntPost,
 		}
 
 		if len(connectedUser) == 1 {
@@ -230,21 +234,24 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	}
 	if len(connectedUser) > 1 {
+		xpInt, _ := strconv.Atoi(connectedUser[5])
 		homePage = HomePageStruct{
-			Post:        allPostFinal,
-			NbrPost:     len(allPost),
-			Comments:    allComment,
-			User:        User,
-			IsConnected: true,
+			ConnectedUserXp: xpInt,
+			Post:        	allPostFinal,
+			NbrPost:    	len(allPost),
+			Comments:    	allComment,
+			User:        	User,
+			IsConnected: 	true,
 		}
 
 	} else {
 		homePage = HomePageStruct{
-			Post:        allPostFinal,
-			NbrPost:     len(allPost),
-			Comments:    allComment,
-			User:        User,
-			IsConnected: false,
+			ConnectedUserXp: 0,
+			Post:        	allPostFinal,
+			NbrPost:     	len(allPost),
+			Comments:    	allComment,
+			User:        	User,
+			IsConnected: 	false,
 		}
 	}
 

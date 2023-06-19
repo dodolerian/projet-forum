@@ -13,6 +13,7 @@ type ProfilPageStruct struct {
 	Username          string
 	ProfilDescription string
 	Mail              string
+	ConnectedUserXp   int
 }
 
 func Profil(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +95,9 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	connectedUser = nil
 	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail, strconv.Itoa(xp))
 
+	xpInt, _ := strconv.Atoi(connectedUser[5])
 	profilPage := ProfilPageStruct{
+		ConnectedUserXp:   xpInt,
 		Username:          connectedUser[1],
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],

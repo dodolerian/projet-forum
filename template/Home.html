@@ -14,9 +14,26 @@
     <header>
         <img class="logo" src="../assets/img/logo.png" alt="logo">
         <h1>Open Chat Room</h1>
+
+        {{ if lt .ConnectedUserXp 20}}
         <a class="pictureProfil" href="">
-            <img class="pictureProfil" src="../assets/img/robot.jpg" alt="pp">
+            <img class="pictureProfil" src="../assets/img/ppLevel1.png">
         </a>
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 19}}
+        {{ if lt .ConnectedUserXp 100}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel2.png">
+        </a>
+        {{ end }}
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 99}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel3.png">
+        </a>
+        {{ end }}
     </header>
     <nav>
         <ul>
@@ -60,7 +77,20 @@
                 <div class="content">
                     <form method="post" class="form-user">
                         <button type="submit" class="user">
-                            <img class="userPP" src="../assets/img/postImgBase.webp">
+                            {{ if lt .Xp 20}}
+                            <img class="userPP" src="../assets/img/ppLevel1.png">
+                            {{ end }}
+
+                            {{ if gt .Xp 19}}
+                            {{ if lt .Xp 100}}
+                            <img class="userPP" src="../assets/img/ppLevel2.png">
+                            {{ end }}
+                            {{ end }}
+
+                            {{ if gt .Xp 99}}
+                            <img class="userPP" src="../assets/img/ppLevel3.png">
+                            {{ end }}
+
                             <h2>{{ $instance.AuthorName }}</h2>
                             <input type="hidden" value={{ $instance.Author }} name="author">
                         </button>

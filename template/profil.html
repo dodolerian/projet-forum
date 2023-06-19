@@ -14,11 +14,29 @@
 
 <body>
     <header>
-        <img class="logo" src="../assets/img/robot.jpg" alt="logo">
+        <img class="logo" src="../assets/img/logo.png" alt="logo">
         <h1>Open Chat Room</h1>
-        <a class="pictureProfil">
-            <img class="pictureProfil" src="../assets/img/robot.jpg" alt="pp">
+
+        {{ if lt .ConnectedUserXp 20}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel1.png">
+        </a>>
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 19}}
+        {{ if lt .ConnectedUserXp 100}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel2.png">
         </a>
+        {{ end }}
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 99}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel3.png">
+        </a>
+        {{ end }}
+
     </header>
     <nav>
         <ul>
@@ -35,7 +53,19 @@
         <div class="profile-card">
 
             <div class="image">
-                <img src="../assets/img/postImgBase.webp" alt="" class="profile-img" />
+                {{ if lt .ConnectedUserXp 20}}
+                <img class="profile-img" src="../assets/img/ppLevel1.png">
+                {{ end }}
+
+                {{ if gt .ConnectedUserXp 19}}
+                {{ if lt .ConnectedUserXp 100}}
+                <img class="profile-img" src="../assets/img/ppLevel2.png">
+                {{ end }}
+                {{ end }}
+
+                {{ if gt .ConnectedUserXp 99}}
+                <img class="profile-img" src="../assets/img/ppLevel3.png">
+                {{ end }}
             </div>
 
             <div class="text-data">
