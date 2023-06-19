@@ -64,11 +64,11 @@
     </div>
     <!-- Description Modif -->
     <div class="form" id="description">
-        <form>
+        <form class="form_description">
+            <h2 class="form_description_title">Changer de description</h2>
             <div class=" form__group">
-                <input type="text" name="description" placeholder="description" class="form__input" />
+                <input type="text" name="description" placeholder="Description" class="form__input" maxlength="20" />
             </div>
-
             <input class="btn" type="submit">
             <button class="btn" id="exitDescription">Sortir</button>
         </form>
@@ -76,9 +76,15 @@
     <!-- Ajout de Post -->
     <div id="addPost" class="addPost">
         <form class="addPostForm" method="post" enctype="multipart/form-data">
-            <input type="text" name="ContentPost" id="ContentPost">
-            <input type="file" name="photo" accept=".jpg">
-            <input class="btn" id="addPostButton" type="submit" value="addPost">
+            <h2 class="form_add_title">Ajouter un post</h2>
+            <input type="text" name="ContentPost" id="ContentPost" placeholder="Contenu">
+            <div class="file-input">
+                <input type="file" name="photo" id="file-input" class="file-input__input" accept=".jpg" />
+                <label class="file-input__label" for="file-input">
+
+                    <span>Charger un fichier</span></label>
+            </div>
+            <input class="btn" id="addPostButton" type="submit" value="Ajouter un post">
             <button class="btn" id="exitPost">Sortir</button>
         </form>
     </div>

@@ -15,6 +15,7 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		r.FormValue("deconnection")
 		connectedUser = nil
+		connectedUser = nil
 
 	}
 
