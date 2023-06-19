@@ -46,11 +46,11 @@
                             <h2>{{ $instance.AuthorName }}</h2>
                             <input type="hidden" value={{ $instance.Author }} name="author">
                         </button>
-                        <p class="tag">{{ $instance.Tag }}</p>
                     </form>
                     <p class="txt">
                         {{ $instance.Content }}
                     </p>
+                    <p class="tag">{{ $instance.Tag }}</p>
                     {{ if .IsConnected }}
 
                     <div class="likes">
@@ -131,7 +131,6 @@
         <div class="hashtags">
             <form class="searchForm" method="post">
                 <label for="tag">Choisissez un tag :</label>
-                <input type="submit" value="Entrer">
                 <select id="tag" name="tag">
                     <option value="">All</option>
                     <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
@@ -148,6 +147,7 @@
                     <option value="#hashtag">#hashtag</option>
     
                 </select>
+                <input type="submit" value="Entrer">
             </form>
             <!-- User description -->
             <div class="popUpUser">

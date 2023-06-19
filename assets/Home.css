@@ -128,22 +128,6 @@ nav .search-bar {
 
 /* POSTS */
 
-/* DESCRIPTION PopUp */
-
-.popUpUser {
-    padding: 1vh 0;
-    width: 80%;
-    background-color: #0D1B2A;
-    color: #ECF8F6;
-    display: flex;
-    flex-direction: column;
-    gap: 1vh;
-    align-items: center;
-    justify-content: center;
-}
-
-/* */
-
 .posts {
     display: flex;
     flex-direction: column;
@@ -221,6 +205,19 @@ nav .search-bar {
     padding: 1vh;
 }
 
+/* tags */
+
+.post .content .tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: #0D1B2A;
+    border: none;
+    background-color: #ECF8F6;
+    font-size: 0.7vw;
+}
+
 /*like */
 
 .post .content .likes {
@@ -254,7 +251,8 @@ nav .search-bar {
 }
 
 .post .image img {
-    height: 100%;
+    max-height: 100%;
+    max-width: 20vw;
     object-fit: cover;
 }
 
@@ -336,6 +334,56 @@ nav .search-bar {
     color: #FEEAA1;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
+.searchForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5vh;
+    color: #ECF8F6;
+}
+
+.searchForm label {
+    font-size: 2.5vh;
+    font-weight: bold;
+}
+
+.searchForm select {
+    width: 15.765vw;
+    height: 3vh;
+    border: none;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+    color: #0D1B2A;
+}
+
+.searchForm input {
+    width: 15.765vw;
+    height: 3.45vh;
+    border: none;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+    color: #0D1B2A;
+}
+
+/* DESCRIPTION PopUp */
+
+.popUpUser {
+    padding: 1vh 0;
+    width: 80%;
+    background-color: #0D1B2A;
+    color: #ECF8F6;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    height: 50%;
+    margin-top: 2vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* */
 
 /* ADD COMMENT */
 
