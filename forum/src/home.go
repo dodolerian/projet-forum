@@ -3,7 +3,6 @@ package forum
 import (
 	"database/sql"
 	"encoding/base64"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -15,6 +14,7 @@ type HomePageStruct struct {
 	Post        []PostStruct
 	NbrPost     int
 	Comments    []recuperationCommentFromDb
+	User        []UserStruct
 	IsConnected bool
 }
 
@@ -39,7 +39,15 @@ type PostStruct struct {
 	Date        string
 	Comments    []CommentStruct
 	Image       string
+	IsImage     bool
 	IsConnected bool
+	Tag         string
+}
+
+type UserStruct struct {
+	Id                int
+	Username          string
+	ProfilDescription string
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -48,22 +56,54 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
 	homePage := HomePageStruct{}
-	// invité := "invité"
 	RecuperationLike()
 	RecuperationDislike()
 
 	allPost = nil
 	allPost := recuperationPost()
 	allPostFinal := []PostStruct{}
+
+	/* Recuperation User */
+
+	allUsers = nil
+	allUsers := recuperationUser()
+	User := []UserStruct{}
+
+	//.....
+
 	if len(connectedUser) == 0 {
 		connectedUser = append(connectedUser, "-1")
 	}
 
 	connectedUserId, _ := strconv.Atoi(connectedUser[0])
 
+	/* Author Post */
+	if r.Method == http.MethodPost {
+		IdAuthor := r.FormValue("author")
+		for i := 0; i < len(allUsers); i++ {
+			if strconv.Itoa(allUsers[i].Id) == IdAuthor {
+				name := allUsers[i].Username
+				description := allUsers[i].ProfilDescription
+				if description == "" {
+					description = "Pas de description"
+				}
+				userStruct := UserStruct{}
+				userStruct = UserStruct{
+					Id:                allUsers[i].Id,
+					Username:          name,
+					ProfilDescription: description,
+				}
+				User = append(User, userStruct)
+			}
+		}
+	}
+
+	tag := ""
+
 	/* COMMENTS */
 	if r.Method == http.MethodPost {
 		IdPost := r.FormValue("idPost")
+		tag = r.FormValue("tag")
 		ContentComment := r.FormValue("ContentComment")
 		AddComment(database, ContentComment, connectedUser[0], IdPost)
 	}
@@ -106,23 +146,22 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	//LIKE
-
 	allComment = nil
 	allComment := recuperationComment()
 
 	allCommentOfThisPost := []CommentStruct{}
 
+	allPostFinal = nil
 	allPostFinal = []PostStruct{}
 	RecuperationLike()
 	RecuperationDislike()
 
 	for i := len(allPost) - 1; i >= 0; i-- {
-		_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
 		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
-		_, username, _, _, _ = FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		_, username, _, _, _, _ = FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		/* Check valide post */
 		checkPost := strings.Split(allPost[i].Content, "")
 		limite := 0
@@ -138,6 +177,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		content := strings.Join(checkPost, "")
 
 		imgBase64Str := base64.StdEncoding.EncodeToString(allPost[i].Image)
+		isImage := true
+		if imgBase64Str == "" {
+			isImage = false
+		}
 
 		postFinalIntoStruc := PostStruct{
 			Id:          allPost[i].Id,
@@ -149,7 +192,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Date:        allPost[i].Date,
 			Comments:    allCommentOfThisPost,
 			Image:       imgBase64Str,
+			IsImage:     isImage,
 			IsConnected: true,
+			Tag:         allPost[i].Tag,
 		}
 
 		if len(connectedUser) == 1 {
@@ -158,7 +203,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		/* Add comments of this post */
 		for j := 0; j < len(allComment); j++ {
 			if allPost[i].Id == allComment[j].IdPost {
-				_, username, _, _, _ := FetchUserWithId(database, strconv.Itoa(allComment[j].IdAuthor))
+				_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allComment[j].IdAuthor))
 				commentIntoStruc := CommentStruct{
 					IdPost:     allComment[j].IdPost,
 					IdAuthor:   allComment[j].IdAuthor,
@@ -171,33 +216,38 @@ func Home(w http.ResponseWriter, r *http.Request) {
 				postFinalIntoStruc.Comments = append(postFinalIntoStruc.Comments, commentIntoStruc)
 			}
 
+
 		}
 
-		allPostFinal = append(allPostFinal, postFinalIntoStruc)
+		if tag == "" {
+			allPostFinal = append(allPostFinal, postFinalIntoStruc)
+		} else {
+			if tag == postFinalIntoStruc.Tag {
+				allPostFinal = append(allPostFinal, postFinalIntoStruc)
+			}
+
+		}
+
 	}
 	if len(connectedUser) > 1 {
 		homePage = HomePageStruct{
 			Post:        allPostFinal,
 			NbrPost:     len(allPost),
 			Comments:    allComment,
+			User:        User,
 			IsConnected: true,
 		}
 
 	} else {
 		homePage = HomePageStruct{
-			// IdAuthor:          "-1",
-			// Username:          invité,
-			// ProfilDescription: invité,
-			// Mail:              invité,
-
 			Post:        allPostFinal,
 			NbrPost:     len(allPost),
 			Comments:    allComment,
+			User:        User,
 			IsConnected: false,
 		}
 	}
 
-	fmt.Println(connectedUser)
 	err := tmpl.Execute(w, homePage)
 	if err != nil {
 		log.Fatal(err)
