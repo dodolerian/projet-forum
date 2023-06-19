@@ -8,11 +8,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type DislikeFromDb struct {
-	IdUser int
-	IdPost int
-}
-
 var allDislikeList []DislikeFromDb
 
 func RecuperationDislike() {

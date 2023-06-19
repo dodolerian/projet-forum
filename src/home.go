@@ -11,37 +11,6 @@ import (
 	"strings"
 )
 
-type HomePageStruct struct {
-	Post        []PostStruct
-	NbrPost     int
-	Comments    []recuperationCommentFromDb
-	IsConnected bool
-}
-
-type CommentStruct struct {
-	IdPost     int
-	IdAuthor   int
-	AuthorName string
-	Content    string
-	Like       int
-	Dislike    int
-	Date       string
-	Image      string
-}
-
-type PostStruct struct {
-	Id          int
-	Author      int
-	AuthorName  string
-	Content     string
-	Like        bool
-	Dislike     bool
-	Date        string
-	Comments    []CommentStruct
-	Image       string
-	IsConnected bool
-	Tag         string
-}
 
 func Home(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))

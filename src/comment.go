@@ -2,20 +2,14 @@ package forum
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
-
+	"strconv"
+	"time"
+	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type recuperationCommentFromDb struct {
-	IdPost   int
-	IdAuthor int
-	Content  string
-	Like     int
-	Dislike  int
-	Date     string
-}
+
 
 var allComment []recuperationCommentFromDb
 
@@ -52,4 +46,25 @@ func recuperationComment() []recuperationCommentFromDb {
 
 	}
 	return allComment
+}
+
+func AddComment(db *sql.DB, content string, idAuthor string, idPost string) {
+	parseTime, err := time.Parse("Jan 02, 2006", "Sep 30, 2021")
+	if err != nil {
+		panic(err)
+	}
+	currentTimePArse := parseTime.Format("02, Jan 2006")
+	records := `INSERT INTO COMMENTARY(idPost,idAuthor,content,like,dislike,date ) VALUES (?,?,?,?,?,?)`
+	query, err := db.Prepare(records)
+	idPostStr := idPost
+	idPostIntoInt, _ := strconv.Atoi(idPostStr)
+	idAuthorStr := idAuthor
+	idAuthorIntoInt, _ := strconv.Atoi(idAuthorStr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_, err = query.Exec(idPostIntoInt, idAuthorIntoInt, content, 0, 0, currentTimePArse)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

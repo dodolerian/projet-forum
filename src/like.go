@@ -3,15 +3,10 @@ package forum
 import (
 	"database/sql"
 	"fmt"
-	"log"
-
 	_ "github.com/mattn/go-sqlite3"
+	"log"
 )
 
-type LikeFromDb struct {
-	IdUser int
-	IdPost int
-}
 
 var allLikeList []LikeFromDb
 
