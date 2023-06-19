@@ -24,6 +24,7 @@ body::-webkit-scrollbar-thumb {
 
 /* Header */
 header {
+    position: fixed;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -47,6 +48,14 @@ header .pictureProfil {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
+.cache {
+    position: fixed;
+    margin-top: 16vh;
+    width: 100%;
+    height: 5vh;
+    background-color: #ECF8F6;
+}
+
 /* MAIN */
 
 main {
@@ -58,11 +67,12 @@ main {
 /* NAVBAR */
 
 nav {
+    position: fixed;
     display: flex;
     align-items: center;
     width: 100%;
     height: 8.6vh;
-    margin-top: 3.23vh;
+    margin-top: 20vh;
     background-color: #1B263B;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
@@ -140,6 +150,7 @@ nav .search-bar {
     align-items: center;
     justify-content: center;
     margin-left: 5.045vw;
+    margin-top: 30vh;
 }
 
 .posts .post {
@@ -312,28 +323,18 @@ nav .search-bar {
 /* hashtag */
 
 .hashtags {
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 3.45vh 0;
     border-radius: 5px;
-    margin: 3.23vh 10.3vh 0 10.3vh;
+    margin: 50vh 10.3vh 0 150.3vh;
+    height: 22.701vh;
     width: 22.701vw;
     background-color: #1B263B;
     color: #FEEAA1;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.hashtags button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 10.3vh;
-    width: 16.816vw;
-    margin: 1.72vh 0;
-    font-size: 1.261vw;
-    background-color: #ECF8F6;
-    border-radius: 5px;
 }
 
 /* ADD COMMENT */

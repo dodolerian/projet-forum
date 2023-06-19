@@ -18,6 +18,7 @@
             <img class="pictureProfil" src="../assets/img/robot.jpg" alt="pp">
         </a>
     </header>
+    <div class="cache"></div>
     <nav>
         <ul>
             <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
@@ -31,25 +32,6 @@
             {{ end }}
 
         </ul>
-        <form class="searchForm" method="post">
-            <label for="tag">Choisissez un tag :</label>
-            <input type="submit" value="Entrer">
-            <select id="tag" name="tag">
-                <option value="">All</option>
-                <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
-                <option value="#gaming">#gaming</option>
-                <option value="#voiture">#voiture</option>
-                <option value="#etude">#etude</option>
-                <option value="#actu">#actu</option>
-                <option value="#technologie">#technologie</option>
-                <option value="#ville">#ville</option>
-                <option value="#animaux">#animaux</option>
-                <option value="#gouvernement">#gouvernement</option>
-                <option value="#alcool">#alcool</option>
-                <option value="#sport">#sport</option>
-                <option value="#hashtag">#hashtag</option>
-
-            </select>
     </nav>
     <main>
 
@@ -147,6 +129,26 @@
             {{ end }}
         </div>
         <div class="hashtags">
+            <form class="searchForm" method="post">
+                <label for="tag">Choisissez un tag :</label>
+                <input type="submit" value="Entrer">
+                <select id="tag" name="tag">
+                    <option value="">All</option>
+                    <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
+                    <option value="#gaming">#gaming</option>
+                    <option value="#voiture">#voiture</option>
+                    <option value="#etude">#etude</option>
+                    <option value="#actu">#actu</option>
+                    <option value="#technologie">#technologie</option>
+                    <option value="#ville">#ville</option>
+                    <option value="#animaux">#animaux</option>
+                    <option value="#gouvernement">#gouvernement</option>
+                    <option value="#alcool">#alcool</option>
+                    <option value="#sport">#sport</option>
+                    <option value="#hashtag">#hashtag</option>
+    
+                </select>
+            </form>
             <!-- User description -->
             <div class="popUpUser">
                 {{ range $index, $instance := .User }}
@@ -154,11 +156,6 @@
                 <p class="description">{{ $instance.ProfilDescription }}</p>
                 {{ end }}
             </div>
-            <button>#tendances</button>
-            <button>#tendances</button>
-            <button>#tendances</button>
-            <button>#tendances</button>
-            <button>#tendances</button>
         </div>
 
     </main>
