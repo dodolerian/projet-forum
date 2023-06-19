@@ -1,0 +1,337 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #ECF8F6;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 29.427vw;
+    width: 100%;
+    height: 16.15vh;
+    color: #ECF8F6;
+    font-size: 1.261vw;
+    background-color: #0D1B2A;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+header .logo,
+header .pictureProfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.255vw;
+    width: 5.255vw;
+    border-radius: 50%;
+}
+
+/* MAIN */
+
+main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #ECF8F6;
+}
+
+/* NAVBAR */
+
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 8.6vh;
+    margin-top: 3.23vh;
+    background-color: #1B263B;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+    position: relative;
+    left: 7.567vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3.941vw;
+    height: 100%;
+    color: #FEEAA1;
+}
+
+nav ul .btn-nav {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.38vh;
+    width: 10.51vw;
+    gap: 0.631vw;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+}
+
+nav ul .img-btn-nav {
+    height: 4.3vh;
+    width: 2.102vw;
+}
+
+nav ul .btn-nav span {
+    color: #0D1B2A;
+    font-size: 1.261vw;
+    font-weight: 600;
+}
+
+/*search bar */
+
+
+/* profil */
+
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    max-width: 50vw;
+    width: 100%;
+    background: #fff;
+    margin-top: 10vh;
+    margin-bottom: 4vh;
+    border-radius: 24px;
+    padding: 3vw;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.profile-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 36%;
+    width: 100%;
+    border-radius: 24px 24px 0 0;
+    background-color: #1B263B;
+}
+
+.image {
+    position: relative;
+    height: 8vw;
+    width: 8vw;
+    border-radius: 50%;
+    background-color: #1B263B;
+    padding: 3px;
+    margin-bottom: 10px;
+}
+
+.image .profile-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+
+.profile-card .text-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+}
+
+.text-data .name {
+    margin: 1vw;
+    margin-top: 0vw;
+    font-size: 2.3vw;
+    font-weight: 500;
+}
+
+.text-data .mail {
+    font-size: 1.5vw;
+    font-weight: 400;
+}
+
+.text-data .descriptionText {
+    margin: 1vw;
+    font-size: 1.7vw;
+    font-weight: 400;
+}
+
+/* BUTTONS _ description and post */
+
+.btn-profil {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
+    justify-content: space-evenly;
+    background-color: #ECF8F6;
+}
+
+#buttonDescription,
+#buttonPost {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vw;
+    width: 10vw;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+    color: #0D1B2A;
+    font-size: 1vw;
+    font-weight: 2vw;
+    border-color: white;
+}
+
+/* DESCRIPTION */
+
+#description {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.form_description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    width: 80vw;
+    background-color: #1B263B;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.form_description_title {
+    font-size: 4vw;
+    font-weight: 2vw;
+    margin-bottom: 2vh;
+    color: #ECF8F6;
+}
+
+.form__group {
+    width: 80%;
+}
+
+.form__input {
+    margin-top: 1vh;
+    display: block;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    transition: 0.3s;
+    font-size: 1vw;
+    font-weight: 2vw;
+
+    &:focus {
+        background: darken(#fff, 3%);
+    }
+}
+
+.btn {
+    margin-top: 2vh;
+    cursor: pointer;
+    /* align-items: center; */
+    justify-content: center;
+    height: 3vw;
+    width: 10vw;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+    color: #0D1B2A;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ADD POST */
+
+#addPost {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.addPostForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    width: 80vw;
+    background-color: #1B263B;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.form_add_title {
+    font-size: 4vw;
+    font-weight: 2vw;
+    margin-bottom: 2vh;
+    color: #ECF8F6;
+}
+
+#addPost input[type="text"] {
+    margin-top: 1vh;
+    display: block;
+    justify-content: center;
+    width: 80%;
+    padding: 20px;
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    transition: 0.3s;
+    font-size: 1vw;
+    font-weight: 2vw;
+
+    &:focus {
+        background: darken(#ECF8F6, 3%);
+    }
+}
+
+.file-input__input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.file-input__label {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0D1B2A;
+    font-size: 14px;
+    padding: 10px 12px;
+    margin-top: 2vh;
+    background-color: #ECF8F6;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+}
