@@ -3,10 +3,10 @@ package forum
 import (
 	"database/sql"
 	"encoding/base64"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -44,12 +44,10 @@ type PostStruct struct {
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	
 	homePage := HomePageStruct{}
-	// invité := "invité"
 	RecuperationLike()
 	RecuperationDislike()
 	
@@ -62,12 +60,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	connectedUserId, _ := strconv.Atoi(connectedUser[0])
 	tag := ""
+	censure :=""
 	/* COMMENTS */
 	if r.Method == http.MethodPost {
-		censure := r.FormValue("censure")
-		if censure !=""{
-			fmt.Println("ici")
-	}
+		
 		IdPost := r.FormValue("idPost")
 		tag = r.FormValue("tag")
 		ContentComment := r.FormValue("ContentComment")
@@ -112,6 +108,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	}
 
+	if r.Method == http.MethodPost{
+		censure = r.FormValue("censure")
+		fmt.Println(censure,"ici")
+	}
 	allComment = nil
 	allComment := recuperationComment()
 
@@ -186,8 +186,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
-
 	}
+
 	if len(connectedUser) > 1 {
 		homePage = HomePageStruct{
 			Post:        allPostFinal,
@@ -203,6 +203,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Comments:    allComment,
 			IsConnected: false,
 		}
+
 	}
 	err := tmpl.Execute(w, homePage)
 	if err != nil {

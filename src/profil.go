@@ -58,7 +58,6 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 		} else {
 			AddPost(database, ContentPost, connectedUser[0], nil, tag)
-			fmt.Println("post add without image")
 		}
 	}
 

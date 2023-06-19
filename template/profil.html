@@ -29,12 +29,11 @@
                     src="./assets/img/deconnection.jpg" alt="Déconnection"></input>
             </form>
         </ul>
-    <div class="censure">
-    <form action="post">
-            <input class="btn-censure"  id="censure" type="submit" value="Ajouter la censure">
+    <!-- <form method="post" class="censure"  enctype="multipart/form-data">
+    <input class="btn-censure" id="censure" type="submit" value="Ajouter la censure">
         <label for="censureLabel">Voulez vous censurer un mot:</label>
         <select id="censure" name="censure">
-            <option value="">Aucun</option>
+            <option value="aucun">Aucun</option>
             <option value="connard">Connard</option>
             <option value="enculer">Enculer</option>
             <option value="ntm">ntm</option>
@@ -47,8 +46,8 @@
             <option value="fdp">Fdp</option>
             <option value="Salop">Salop</option>      
         </select>
-    </form>
-    </div>
+
+    </form> -->
     </nav>
     <main>
         <div class="profile-card">
@@ -110,7 +109,6 @@
                     <option value="#alcool">#alcool</option>
                     <option value="#sport">#sport</option>
                     <option value="#hashtag">#hashtag</option>
-
                 </select>
             <input type="file" name="photo" accept=".jpg">
             <input class="btn" id="addPostButton" type="submit" value="addPost">
