@@ -3,7 +3,6 @@ package forum
 import (
 	"database/sql"
 	"encoding/base64"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -42,6 +41,7 @@ type PostStruct struct {
 	Image       string
 	IsImage     bool
 	IsConnected bool
+	Tag         string
 }
 
 type UserStruct struct {
@@ -56,8 +56,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
 	homePage := HomePageStruct{}
-	// invité := "invité"
-	// invité := "invité"
 	RecuperationLike()
 	RecuperationDislike()
 
@@ -100,9 +98,12 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	tag := ""
+
 	/* COMMENTS */
 	if r.Method == http.MethodPost {
 		IdPost := r.FormValue("idPost")
+		tag = r.FormValue("tag")
 		ContentComment := r.FormValue("ContentComment")
 		AddComment(database, ContentComment, connectedUser[0], IdPost)
 	}
@@ -145,13 +146,12 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	//LIKE
-
 	allComment = nil
 	allComment := recuperationComment()
 
 	allCommentOfThisPost := []CommentStruct{}
 
+	allPostFinal = nil
 	allPostFinal = []PostStruct{}
 	RecuperationLike()
 	RecuperationDislike()
@@ -194,6 +194,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Image:       imgBase64Str,
 			IsImage:     isImage,
 			IsConnected: true,
+			Tag:         allPost[i].Tag,
 		}
 
 		if len(connectedUser) == 1 {
@@ -218,7 +219,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		allPostFinal = append(allPostFinal, postFinalIntoStruc)
+		if tag == "" {
+			allPostFinal = append(allPostFinal, postFinalIntoStruc)
+		} else {
+			if tag == postFinalIntoStruc.Tag {
+				allPostFinal = append(allPostFinal, postFinalIntoStruc)
+			}
+
+		}
+
 	}
 	if len(connectedUser) > 1 {
 		homePage = HomePageStruct{
@@ -231,11 +240,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 		homePage = HomePageStruct{
-			// IdAuthor:          "-1",
-			// Username:          invité,
-			// ProfilDescription: invité,
-			// Mail:              invité,
-
 			Post:        allPostFinal,
 			NbrPost:     len(allPost),
 			Comments:    allComment,

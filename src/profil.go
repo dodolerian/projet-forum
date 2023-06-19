@@ -21,8 +21,11 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	defer database.Close()
 	description := r.FormValue("description")
+
 	if r.Method == http.MethodPost {
+
 		ContentPost := r.FormValue("ContentPost")
+		tag := r.FormValue("tag")
 
 		file, handler, err := r.FormFile("photo")
 		if file != nil {
@@ -48,7 +51,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 				if handler.Size > 5000000 {
 					fmt.Println("image to heavy")
 				} else {
-					AddPost(database, ContentPost, connectedUser[0], buff)
+					AddPost(database, ContentPost, connectedUser[0], buff, tag)
 					fmt.Println("post add image")
 
 					currentXp, err := strconv.Atoi(connectedUser[5])
@@ -64,7 +67,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 			}
 
 		} else {
-			AddPost(database, ContentPost, connectedUser[0], nil)
+			AddPost(database, ContentPost, connectedUser[0], nil, tag)
 			fmt.Println("post add without image")
 
 			currentXp, err := strconv.Atoi(connectedUser[5])
@@ -91,7 +94,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	connectedUser = nil
 	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail, strconv.Itoa(xp))
 
-	profilPage := HomePageStruct{
+	profilPage := ProfilPageStruct{
 		Username:          connectedUser[1],
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],
