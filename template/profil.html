@@ -14,11 +14,29 @@
 
 <body>
     <header>
-        <img class="logo" src="../assets/img/robot.jpg" alt="logo">
+        <img class="logo" src="../assets/img/logo.png" alt="logo">
         <h1>Open Chat Room</h1>
-        <a class="pictureProfil">
-            <img class="pictureProfil" src="../assets/img/robot.jpg" alt="pp">
+
+        {{ if lt .ConnectedUserXp 20}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel1.png">
+        </a>>
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 19}}
+        {{ if lt .ConnectedUserXp 100}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel2.png">
         </a>
+        {{ end }}
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 99}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel3.png">
+        </a>
+        {{ end }}
+
     </header>
     <nav>
         <ul>
@@ -35,7 +53,19 @@
         <div class="profile-card">
 
             <div class="image">
-                <img src="https://tinypic.host/images/2022/12/19/img_avatar.png" alt="" class="profile-img" />
+                {{ if lt .ConnectedUserXp 20}}
+                <img class="profile-img" src="../assets/img/ppLevel1.png">
+                {{ end }}
+
+                {{ if gt .ConnectedUserXp 19}}
+                {{ if lt .ConnectedUserXp 100}}
+                <img class="profile-img" src="../assets/img/ppLevel2.png">
+                {{ end }}
+                {{ end }}
+
+                {{ if gt .ConnectedUserXp 99}}
+                <img class="profile-img" src="../assets/img/ppLevel3.png">
+                {{ end }}
             </div>
 
             <div class="text-data">
@@ -64,9 +94,10 @@
     </div>
     <!-- Description Modif -->
     <div class="form" id="description">
-        <form>
+        <form class="form_description">
+            <h2 class="form_description_title">Changer de description</h2>
             <div class=" form__group">
-                <input type="text" name="description" placeholder="description" class="form__input" />
+                <input type="text" name="description" placeholder="Description" class="form__input" maxlength="20" />
             </div>
             <input class="btn" type="submit">
             <button class="btn" id="exitDescription">Sortir</button>
@@ -75,28 +106,36 @@
     <!-- Ajout de Post -->
     <div id="addPost" class="addPost">
         <form class="addPostForm" method="post" enctype="multipart/form-data">
-            <input type="text" name="ContentPost" id="ContentPost">
+            <h2 class="form_add_title">Ajouter un post</h2>
+            <input type="text" name="ContentPost" id="ContentPost" placeholder="Contenu">
+            <div class="file-input">
+                <input type="file" name="photo" id="file-input" class="file-input__input" accept=".jpg" />
+                <label class="file-input__label" for="file-input">
+
+                    <span>Charger un fichier</span></label>
+            </div>
             <label for="tag">Choisissez un tag :</label>
-                <select id="tag" name="tag">
-                    <option value="">Tout</option>
-                    <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
-                    <option value="#gaming">#gaming</option>
-                    <option value="#voiture">#voiture</option>
-                    <option value="#etude">#etude</option>
-                    <option value="#actu">#actu</option>
-                    <option value="#technologie">#technologie</option>
-                    <option value="#ville">#ville</option>
-                    <option value="#animaux">#animaux</option>
-                    <option value="#gouvernement">#gouvernement</option>
-                    <option value="#alcool">#alcool</option>
-                    <option value="#sport">#sport</option>
-                    <option value="#hashtag">#hashtag</option>
-                </select>
-            <input type="file" name="photo" accept=".jpg">
-            <input class="btn" id="addPostButton" type="submit" value="addPost">
+            <select id="tag" name="tag">
+                <option value="">All</option>
+                <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
+                <option value="#gaming">#gaming</option>
+                <option value="#voiture">#voiture</option>
+                <option value="#etude">#etude</option>
+                <option value="#actu">#actu</option>
+                <option value="#technologie">#technologie</option>
+                <option value="#ville">#ville</option>
+                <option value="#animaux">#animaux</option>
+                <option value="#gouvernement">#gouvernement</option>
+                <option value="#alcool">#alcool</option>
+                <option value="#sport">#sport</option>
+                <option value="#hashtag">#hashtag</option>
+
+            </select>
+            <input class="btn" id="addPostButton" type="submit" value="Ajouter un post">
             <button class="btn" id="exitPost">Sortir</button>
         </form>
     </div>
+
 
 </body>
 

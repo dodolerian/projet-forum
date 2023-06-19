@@ -27,9 +27,11 @@ type DislikeFromDb struct {
 // Home Structure
 
 type HomePageStruct struct {
+	ConnectedUserXp int
 	Post        []PostStruct
 	NbrPost     int
 	Comments    []recuperationCommentFromDb
+	User        []UserStruct
 	IsConnected bool
 }
 
@@ -54,9 +56,12 @@ type PostStruct struct {
 	Date        string
 	Comments    []CommentStruct
 	Image       string
+	IsImage     bool
 	IsConnected bool
 	Tag         string
+	Xp 			int
 }
+
 
 // Like Structure
 
@@ -82,9 +87,26 @@ type recuperationPostFromDb struct {
 
 // Profil Structure
 
+
 type ProfilPageStruct struct {
 	Username          string
 	ProfilDescription string
 	Mail              string
+	ConnectedUserXp   int
 }
 
+// Recuperation User 
+
+type recuperationUserFromDb struct {
+	Id                int
+	Username          string
+	ProfilDescription string
+}
+
+// User struct 
+type UserStruct struct {
+	Id                int
+	Username          string
+	ProfilDescription string
+	xp				  int
+}

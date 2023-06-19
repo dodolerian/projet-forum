@@ -1,9 +1,17 @@
+let user = document.getElementById("user");
 
-function commentPop(div) {
-    const comment = div.getElementsByTagName('div')[0]; // get the fisrt div element
-    if (comment.style.display == "flex") {
-        comment.style.display = "none";
-    } else {
-        comment.style.display = "flex";
-    }
-}
+let popUp = document.getElementById("popUpUser");
+
+user.addEventListener("click", () => {
+  if (popUp.style.display == "flex") {
+    popUp.style.display = "none";
+  } else {
+    popUp.style.display = "flex";
+  }
+});
+
+let exitPost = document.getElementById("exitPost");
+
+exitPost.addEventListener("click", () => {
+  popUp.style.display = "none";
+});

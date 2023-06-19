@@ -2,13 +2,20 @@ package forum
 
 import (
 	"database/sql"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"strconv"
 )
 
+func ContainsStringArray(array []string, value string) bool {
+	for i := 0; i < len(array); i++ {
+		if value == array[i] {
+			return true
+		}
+	}
+	return false
+}
 
 func CreateAccount(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/createAccount.html"))
@@ -17,7 +24,7 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 
 	defer database.Close()
 
-	_, tmpUsername, _, _, tmpMail := FetchAllUser(database)
+	_, tmpUsername, _, _, tmpMail, _ := FetchAllUser(database)
 	accountPage := createAccountStruct{}
 
 	usernameForm := r.FormValue("username")
@@ -38,10 +45,11 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 		} else {
 			hashpass, _ := HashPassword(passwordForm)
 
+
 			AddUsers(database, usernameForm, hashpass, "", mailForm)
-			id, username, password, profilDescription, mail := FetchUserWithName(database, usernameForm)
+			id, username, password, profilDescription, mail, xp := FetchUserWithName(database, usernameForm)
 			connectedUser = nil
-			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail)
+			connectedUser = append(connectedUser, strconv.Itoa(id), username, password, profilDescription, mail, strconv.Itoa(xp))
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}
 	}
@@ -57,32 +65,28 @@ func ConnexionAccount(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		r.FormValue("deconnection")
 		connectedUser = nil
+		connectedUser = nil
 
 	}
 
 	defer database.Close()
 
-	_, _, _, _, tmpMail := FetchAllUser(database)
+	_, _, _, _, tmpMail, _ := FetchAllUser(database)
 	accountPage := createAccountStruct{}
 
 	passwordForm := r.FormValue("password")
 	mailForm := r.FormValue("mail")
-	rememberMe := r.FormValue("rememberMe")
-	if rememberMe != "" {
-
-		fmt.Println(("on est ici"))
-	}
 	if passwordForm != "" && mailForm != "" {
 		if !ContainsStringArray(tmpMail, mailForm) {
 			accountPage = createAccountStruct{MailError: "adresse mail pas trouvé"}
 		} else {
-			id, username, hashpass, profilDescription, mail := FetchUserWithMail(database, mailForm)
+			id, username, hashpass, profilDescription, mail, xp := FetchUserWithMail(database, mailForm)
 			//dehash
 			if !CheckPasswordHash(passwordForm, hashpass) {
 				accountPage = createAccountStruct{PasswordError: "mot de passe faux"}
 			} else {
 				connectedUser = nil
-				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail)
+				connectedUser = append(connectedUser, strconv.Itoa(id), username, hashpass, profilDescription, mail, strconv.Itoa(xp))
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 			}
 		}

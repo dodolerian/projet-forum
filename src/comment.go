@@ -8,9 +8,6 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 )
-
-
-
 var allComment []recuperationCommentFromDb
 
 func recuperationComment() []recuperationCommentFromDb {

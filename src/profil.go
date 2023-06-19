@@ -10,7 +10,6 @@ import (
 )
 
 
-
 func Profil(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("template/profil.html"))
 
@@ -49,11 +48,32 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 				} else {
 					AddPost(database, ContentPost, connectedUser[0], buff, tag)
 					fmt.Println("post add image")
+
+					currentXp, err := strconv.Atoi(connectedUser[5])
+					currentId, err := strconv.Atoi(connectedUser[0])
+
+					if err != nil {
+						log.Fatal(err)
+					}
+					nextXp := currentXp + 10
+
+					ModifyXpUser(database, currentId, nextXp)
 				}
 			}
 
 		} else {
 			AddPost(database, ContentPost, connectedUser[0], nil, tag)
+			fmt.Println("post add without image")
+
+			currentXp, err := strconv.Atoi(connectedUser[5])
+			currentId, err := strconv.Atoi(connectedUser[0])
+
+			if err != nil {
+				log.Fatal(err)
+			}
+			nextXp := currentXp + 5
+
+			ModifyXpUser(database, currentId, nextXp)
 		}
 	}
 
@@ -64,13 +84,14 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// reprend l'utilisateur modifié a chaque fois
-	idRefresh, username, password, profilDescription, mail := FetchUserWithId(database, connectedUser[0])
+	idRefresh, username, password, profilDescription, mail, xp := FetchUserWithId(database, connectedUser[0])
 
 	connectedUser = nil
-	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail)
+	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail, strconv.Itoa(xp))
 
-
+	xpInt, _ := strconv.Atoi(connectedUser[5])
 	profilPage := ProfilPageStruct{
+		ConnectedUserXp:   xpInt,
 		Username:          connectedUser[1],
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],

@@ -14,9 +14,26 @@
     <header>
         <img class="logo" src="../assets/img/logo.png" alt="logo">
         <h1>Open Chat Room</h1>
+
+        {{ if lt .ConnectedUserXp 20}}
         <a class="pictureProfil" href="">
-            <img class="pictureProfil" src="../assets/img/robot.jpg" alt="pp">
+            <img class="pictureProfil" src="../assets/img/ppLevel1.png">
         </a>
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 19}}
+        {{ if lt .ConnectedUserXp 100}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel2.png">
+        </a>
+        {{ end }}
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 99}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel3.png">
+        </a>
+        {{ end }}
     </header>
     <nav>
         <ul>
@@ -35,34 +52,50 @@
             <label for="tag">Choisissez un tag :</label>
             <input type="submit" value="Entrer">
             <select id="tag" name="tag">
-                    <option value="">All</option>
-                    <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
-                    <option value="#gaming">#gaming</option>
-                    <option value="#voiture">#voiture</option>
-                    <option value="#etude">#etude</option>
-                    <option value="#actu">#actu</option>
-                    <option value="#technologie">#technologie</option>
-                    <option value="#ville">#ville</option>
-                    <option value="#animaux">#animaux</option>
-                    <option value="#gouvernement">#gouvernement</option>
-                    <option value="#alcool">#alcool</option>
-                    <option value="#sport">#sport</option>
-                    <option value="#hashtag">#hashtag</option>
+                <option value="">All</option>
+                <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
+                <option value="#gaming">#gaming</option>
+                <option value="#voiture">#voiture</option>
+                <option value="#etude">#etude</option>
+                <option value="#actu">#actu</option>
+                <option value="#technologie">#technologie</option>
+                <option value="#ville">#ville</option>
+                <option value="#animaux">#animaux</option>
+                <option value="#gouvernement">#gouvernement</option>
+                <option value="#alcool">#alcool</option>
+                <option value="#sport">#sport</option>
+                <option value="#hashtag">#hashtag</option>
 
-                </select>
+            </select>
     </nav>
     <main>
 
         <div class="posts">
             {{ if ge .NbrPost 0}}
             {{ range $index, $instance := .Post }}
-            {{ $instance.Tag }}
             <div class="post">
                 <div class="content">
-                    <div class="user">
-                        <img class="userPP" src="../assets/img/img1.webp">
-                        <h2>{{ $instance.AuthorName }}</h2>
-                    </div>
+                    <form method="post" class="form-user">
+                        <button type="submit" class="user">
+                            {{ if lt .Xp 20}}
+                            <img class="userPP" src="../assets/img/ppLevel1.png">
+                            {{ end }}
+
+                            {{ if gt .Xp 19}}
+                            {{ if lt .Xp 100}}
+                            <img class="userPP" src="../assets/img/ppLevel2.png">
+                            {{ end }}
+                            {{ end }}
+
+                            {{ if gt .Xp 99}}
+                            <img class="userPP" src="../assets/img/ppLevel3.png">
+                            {{ end }}
+
+                            <h2>{{ $instance.AuthorName }}</h2>
+                            <input type="hidden" value={{ $instance.Author }} name="author">
+                        </button>
+                        <p class="tag">{{ $instance.Tag }}</p>
+                    </form>
                     <p class="txt">
                         {{ $instance.Content }}
                     </p>
@@ -106,9 +139,17 @@
                 </div>
 
                 <div class="image">
+                    {{ if $instance.IsImage }}
                     <img src="data:image/jpg;base64,{{ $instance.Image }}">
+                    {{ end }}
+
+                    {{ if not $instance.IsImage }}
+                    <img src="../assets/img/postImgBase.webp">
+
+                    {{ end }}
+
                 </div>
-                <div class="comments">
+                <div class=" comments">
                     <div class="titleComment">
                         <h2>Commentaires</h2>
                     </div>
@@ -125,7 +166,7 @@
                     {{ if .IsConnected }}
                     <form class="addCommentForm" method="post">
                         <input name="idPost" type="hidden" value="{{ $instance.Id }}">
-                        <input type="text" name="ContentComment" id="ContentComment" placeholder="Commentaires ..." maxlength="30">
+                        <input type="text" name="ContentComment" id="ContentComment" placeholder="Commentaires ...">
                         <input class="btn" id="addCommentButton" type="submit" value="envoyer">
                     </form>
                     {{ end }}
@@ -136,6 +177,13 @@
             {{ end }}
         </div>
         <div class="hashtags">
+            <!-- User description -->
+            <div class="popUpUser">
+                {{ range $index, $instance := .User }}
+                <h2 class="name">{{ $instance.Username }}</h2>
+                <p class="description">{{ $instance.ProfilDescription }}</p>
+                {{ end }}
+            </div>
             <button>#tendances</button>
             <button>#tendances</button>
             <button>#tendances</button>
@@ -146,6 +194,6 @@
     </main>
 </body>
 
-<script type="text/javascript" src="../assets/home.js"></script>
+<script type="module" src="../assets/home.js"></script>
 
 </html>

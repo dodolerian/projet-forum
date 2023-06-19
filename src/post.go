@@ -8,8 +8,6 @@ import (
 "fmt"
 	_ "github.com/mattn/go-sqlite3"
 )
-
-
 var allPost []recuperationPostFromDb
 
 func recuperationPost() []recuperationPostFromDb {
@@ -51,7 +49,6 @@ func recuperationPost() []recuperationPostFromDb {
 	}
 	return allPost
 }
-
 func AddPost(db *sql.DB, content string, idAutor string, imageFile []byte, tag string) {
 
 	parseTime, err := time.Parse("Jan 02, 2006", "Sep 30, 2021")
