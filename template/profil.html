@@ -20,7 +20,7 @@
         {{ if lt .ConnectedUserXp 20}}
         <a class="pictureProfil" href="">
             <img class="pictureProfil" src="../assets/img/ppLevel1.png">
-        </a>>
+        </a>
         {{ end }}
 
         {{ if gt .ConnectedUserXp 19}}
@@ -43,8 +43,11 @@
             <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
                     alt="home"><span>Accueil</span></a>
             <form method="post" action="/">
-                <input class="btn-nav" name="deconnection" type="submit" value="deconnection"
-                    src="./assets/img/deconnection.jpg" alt="Déconnection"></input>
+                <button class="btn-nav-deco" type="submit">
+                    <img class="img-btn-nav" src="../assets/img/deconnection.jpg" alt="deconnection">
+                    <span>Déconnection</span>
+                </button>
+                <input name="deconnection" type="hidden" value="deconnection" alt="Déconnection"></input>
             </form>
         </ul>
 
@@ -114,7 +117,7 @@
 
                     <span>Charger un fichier</span></label>
             </div>
-            <label for="tag">Choisissez un tag :</label>
+            <label class="tag" for="tag">Choisissez un tag :</label>
             <select id="tag" name="tag">
                 <option value="">All</option>
                 <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
