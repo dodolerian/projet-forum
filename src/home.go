@@ -119,11 +119,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	for i := len(allPost) - 1; i >= 0; i-- {
 		_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
-		_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
 		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
-		_, username, _, _, _, xpIntPost := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		_, username, _, _, _, xpIntPost := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		/* Check valide post */
 		checkPost := strings.Split(allPost[i].Content, "")
@@ -144,10 +142,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		if imgBase64Str == "" {
 			isImage = false
 		}
-		isImage := true
-		if imgBase64Str == "" {
-			isImage = false
-		}
 
 		postFinalIntoStruc := PostStruct{
 			Id:          allPost[i].Id,
@@ -160,10 +154,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Comments:    allCommentOfThisPost,
 			Image:       imgBase64Str,
 			IsImage:     isImage,
-			IsImage:     isImage,
 			IsConnected: true,
 			Tag:         allPost[i].Tag,
-			Xp:          xpIntPost,
 			Xp:          xpIntPost,
 		}
 
@@ -200,7 +192,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	}
 	if len(connectedUser) > 1 {
-		xpInt, _ := strconv.Atoi(connectedUser[5])
 		xpInt, _ := strconv.Atoi(connectedUser[5])
 		homePage = HomePageStruct{
 			ConnectedUserXp: xpInt,
