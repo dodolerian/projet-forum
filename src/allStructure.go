@@ -78,6 +78,7 @@ type ProfilPageStruct struct {
 	ProfilDescription string
 	Mail              string
 	ConnectedUserXp   int
+	Error string
 }
 
 // Recuperation User 

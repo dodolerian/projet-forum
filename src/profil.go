@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 
@@ -16,11 +17,14 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 	defer database.Close()
 	description := r.FormValue("description")
+	errorPost :=""
 
 	if r.Method == http.MethodPost {
 
 		ContentPost := r.FormValue("ContentPost")
 		tag := r.FormValue("tag")
+
+		
 
 		file, handler, err := r.FormFile("photo")
 		if file != nil {
@@ -42,42 +46,52 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 			if filetype != "image/jpeg" {
 				fmt.Println("image type not good")
+				errorPost = "image type not good"
 			} else {
 				if handler.Size > 5000000 {
 					fmt.Println("image to heavy")
+					errorPost = "image to heavy"
 				} else {
-					AddPost(database, ContentPost, connectedUser[0], buff, tag)
-					fmt.Println("post add image")
+					if !VerifyPostContent(ContentPost) {
+						AddPost(database, ContentPost, connectedUser[0], buff, tag)
+						fmt.Println("post add image")
 
-					currentXp, err := strconv.Atoi(connectedUser[5])
-					currentId, err := strconv.Atoi(connectedUser[0])
+						currentXp, err := strconv.Atoi(connectedUser[5])
+						currentId, err := strconv.Atoi(connectedUser[0])
 
-					if err != nil {
-						log.Fatal(err)
+						if err != nil {
+							log.Fatal(err)
+						}
+						nextXp := currentXp + 10
+
+						ModifyXpUser(database, currentId, nextXp)
+					} else {
+						errorPost = "a banned word was used"
 					}
-					nextXp := currentXp + 10
-
-					ModifyXpUser(database, currentId, nextXp)
 				}
 			}
 
 		} else {
-			AddPost(database, ContentPost, connectedUser[0], nil, tag)
-			fmt.Println("post add without image")
+			if !VerifyPostContent(ContentPost) {
+				AddPost(database, ContentPost, connectedUser[0], nil, tag)
+				fmt.Println("post add without image")
 
-			currentXp, err := strconv.Atoi(connectedUser[5])
-			currentId, err := strconv.Atoi(connectedUser[0])
+				currentXp, err := strconv.Atoi(connectedUser[5])
+				currentId, err := strconv.Atoi(connectedUser[0])
 
-			if err != nil {
-				log.Fatal(err)
+				if err != nil {
+					log.Fatal(err)
+				}
+				nextXp := currentXp + 5
+
+				ModifyXpUser(database, currentId, nextXp)
+			} else {
+				errorPost = "a banned word was used"
 			}
-			nextXp := currentXp + 5
-
-			ModifyXpUser(database, currentId, nextXp)
 		}
 	}
 
-	// si le form est rempli alors change la valeur, empache qu'elle soit vide
+	// si le form est rempli alors change la valeur, empeche qu'elle soit vide
 	if description != "" {
 		id, _ := strconv.Atoi(connectedUser[0])
 		ModifyDescriptionUser(database, id, description)
@@ -90,14 +104,36 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	connectedUser = append(connectedUser, strconv.Itoa(idRefresh), username, password, profilDescription, mail, strconv.Itoa(xp))
 
 	xpInt, _ := strconv.Atoi(connectedUser[5])
+
 	profilPage := ProfilPageStruct{
 		ConnectedUserXp:   xpInt,
 		Username:          connectedUser[1],
 		ProfilDescription: connectedUser[3],
 		Mail:              connectedUser[4],
 	}
+
+	if errorPost != "" {
+		profilPage = ProfilPageStruct{
+			ConnectedUserXp:   xpInt,
+			Username:          connectedUser[1],
+			ProfilDescription: connectedUser[3],
+			Mail:              connectedUser[4],
+			Error: errorPost,
+		}
+	}
+	
 	err := tmpl.Execute(w, profilPage)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func VerifyPostContent(content string) bool {
+	bannedWords := []string{"nazi","gay","lgbt","suicide","terrorisme", "fuck", "connard", "pute", "salope", "enculé", ""}
+	for i:=0;i<len(bannedWords);i++{
+		if strings.Contains(content,bannedWords[i]) {
+			return true
+		}	
+	}
+	return false
 }

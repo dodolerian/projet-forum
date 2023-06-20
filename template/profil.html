@@ -93,8 +93,14 @@
     </main>
     <div class="btn-profil">
         <button id="buttonDescription">Changer votre description</button>
+        <div class="errorCreatePost">
+            {{ if .Error }}
+            {{ .Error }}
+            {{ end }}
+        </div>
         <button id="buttonPost">Ajouter un post</button>
     </div>
+
     <!-- Description Modif -->
     <div class="form" id="description">
         <form class="form_description">
@@ -138,8 +144,6 @@
             <button class="btn" id="exitPost">Sortir</button>
         </form>
     </div>
-
-
 </body>
 
 <script type="module" src="../assets/profil.js"></script>
