@@ -10,49 +10,6 @@ import (
 	"strings"
 )
 
-type HomePageStruct struct {
-	ConnectedUserXp int
-	Post        []PostStruct
-	NbrPost     int
-	Comments    []recuperationCommentFromDb
-	User        []UserStruct
-	IsConnected bool
-}
-
-type CommentStruct struct {
-	IdPost     int
-	IdAuthor   int
-	AuthorName string
-	Content    string
-	Like       int
-	Dislike    int
-	Date       string
-	Image      string
-}
-
-type PostStruct struct {
-	Id          int
-	Author      int
-	AuthorName  string
-	Content     string
-	Like        bool
-	Dislike     bool
-	Date        string
-	Comments    []CommentStruct
-	Image       string
-	IsImage     bool
-	IsConnected bool
-	Tag         string
-	Xp 			int
-}
-
-type UserStruct struct {
-	Id                int
-	Username          string
-	ProfilDescription string
-	xp				  int
-}
-
 func Home(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
@@ -116,37 +73,14 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		likeIdPostStr := r.FormValue("like")
 		dislikeIdPostStr := r.FormValue("dislike")
 
-		likeIdPost, _ := strconv.Atoi(likeIdPostStr)
-		dislikeIdPost, _ := strconv.Atoi(dislikeIdPostStr)
+		UseLike(database, likeIdPostStr, dislikeIdPostStr, connectedUserId )
+	}
 
-		if likeIdPostStr == "" {
-			isLiked := LikeOnPost(connectedUserId, dislikeIdPost, allLikeList)
-			isDisliked := DislikeOnPost(connectedUserId, dislikeIdPost, allDislikeList)
+	if r.Method == http.MethodPost {
+		likeIdCommentStr := r.FormValue("likeComment")
+		dislikeIdCommentStr := r.FormValue("dislikeComment")
 
-			if isLiked {
-				DeleteLike(database, connectedUserId, dislikeIdPost)
-			}
-			if isDisliked {
-				DeleteDislike(database, connectedUserId, dislikeIdPost)
-			} else {
-				AddDislike(database, connectedUserId, dislikeIdPost)
-			}
-		}
-
-		if dislikeIdPostStr == "" {
-			isLiked := LikeOnPost(connectedUserId, likeIdPost, allLikeList)
-			isDisliked := DislikeOnPost(connectedUserId, likeIdPost, allDislikeList)
-
-			if isDisliked {
-				DeleteDislike(database, connectedUserId, likeIdPost)
-			}
-			if isLiked {
-				DeleteLike(database, connectedUserId, likeIdPost)
-			} else {
-				AddLike(database, connectedUserId, likeIdPost)
-			}
-		}
-
+		UseLikeComment(database, likeIdCommentStr, dislikeIdCommentStr, connectedUserId )
 	}
 
 	allComment = nil
@@ -156,8 +90,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	allPostFinal = nil
 	allPostFinal = []PostStruct{}
+
 	RecuperationLike()
 	RecuperationDislike()
+	RecuperationLikeComment()
+	RecuperationDislikeComment()
 
 	for i := len(allPost) - 1; i >= 0; i-- {
 		_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
@@ -207,20 +144,20 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		/* Add comments of this post */
 		for j := 0; j < len(allComment); j++ {
 			if allPost[i].Id == allComment[j].IdPost {
+				isLikedComment := LikeOnComment(connectedUserId, allComment[j].IdComment, allLikeCommentList)
+				isDislikedComment := DislikeOnComment(connectedUserId, allComment[j].IdComment, allDislikeCommentList)
 				_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allComment[j].IdAuthor))
 				commentIntoStruc := CommentStruct{
 					IdPost:     allComment[j].IdPost,
 					IdAuthor:   allComment[j].IdAuthor,
 					AuthorName: username,
 					Content:    allComment[j].Content,
-					Like:       allComment[j].Like,
-					Dislike:    allComment[j].Dislike,
-					Date:       allComment[j].Date,
+					Like:       isLikedComment,
+					Dislike:    isDislikedComment,
+					IdComment:  allComment[j].IdComment,
 				}
 				postFinalIntoStruc.Comments = append(postFinalIntoStruc.Comments, commentIntoStruc)
 			}
-
-
 		}
 
 		if tag == "" {

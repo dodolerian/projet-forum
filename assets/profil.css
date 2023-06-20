@@ -265,7 +265,7 @@ nav ul .btn-nav span {
 
 #addPost {
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     height: 100vh;
     width: 100vw;
@@ -274,6 +274,7 @@ nav ul .btn-nav span {
     align-items: center;
     justify-content: center;
 }
+
 .addPostForm {
     display: flex;
     flex-direction: column;
@@ -285,12 +286,14 @@ nav ul .btn-nav span {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 .form_add_title {
     font-size: 4vw;
     font-weight: 2vw;
     margin-bottom: 2vh;
     color: #ECF8F6;
 }
+
 #addPost input[type="text"] {
     margin-top: 1vh;
     display: block;
@@ -316,9 +319,9 @@ nav ul .btn-nav span {
     overflow: hidden;
     position: absolute;
     z-index: -1;
-  }
-  
-  .file-input__label {
+}
+
+.file-input__label {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -331,5 +334,4 @@ nav ul .btn-nav span {
     margin-top: 2vh;
     background-color: #ECF8F6;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  }
-
+}

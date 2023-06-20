@@ -145,7 +145,6 @@
 
                     {{ if not $instance.IsImage }}
                     <img src="../assets/img/postImgBase.webp">
-
                     {{ end }}
 
                 </div>
@@ -154,14 +153,56 @@
                         <h2>Commentaires</h2>
                     </div>
                     <div class="comment">
-                        {{ range $i, $comment := .Comments }}
+                        {{ range $i, $comment := $instance.Comments }}
                         <div class="commentCard">
                             <h3>{{ $comment.AuthorName }}</h3>
                             <p>
                                 {{ $comment.Content }}
                             </p>
+
+                            {{ if $instance.IsConnected }}
+                            <div class="likesComment">
+                                <form method="post">
+                                    <button id="like" type="submit">
+                                        {{ if $comment.Like }}
+                                        <img id="like" src="../assets/img/like_black.png" alt="like">
+                                        {{ end }}
+
+                                        {{ if not $comment.Like }}
+                                        <img id="like" src="../assets/img/like_white.png" alt="like">
+                                        {{ end }}
+
+                                        <input class="more" type="hidden" value={{ $comment.IdComment }}
+                                            name="likeComment">
+                                    </button>
+                                </form>
+                                <form method="post">
+                                    <button id="dislike" type="submit">
+                                        {{ if $comment.Dislike }}
+                                        <img id="dislike" src="../assets/img/dislike_black.png" alt="dislike">
+                                        {{ end }}
+
+                                        {{ if not $comment.Dislike }}
+                                        <img id="dislike" src="../assets/img/dislike_white.png" alt="dislike">
+
+                                        {{ end }}
+
+                                        <input class="more" type="hidden" value={{ $comment.IdComment }}
+                                            name="dislikeComment">
+                                    </button>
+                                </form>
+                            </div>
+                            {{ else }}
+                            <div class="likesComment">
+                                <a href="/"><img id="like" src="../assets/img/like_white.png" href="/" alt="like"></a>
+                                <a href="/"><img id="dislike" src="../assets/img/dislike_white.png" href="/"
+                                        alt="dislike"></a>
+                            </div>
+                            {{ end }}
+
                         </div>
                         {{ end }}
+
                     </div>
                     {{ if .IsConnected }}
                     <form class="addCommentForm" method="post">
@@ -170,9 +211,9 @@
                         <input class="btn" id="addCommentButton" type="submit" value="envoyer">
                     </form>
                     {{ end }}
+
                 </div>
             </div>
-
             {{ end }}
             {{ end }}
         </div>

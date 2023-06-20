@@ -25,11 +25,3 @@ func WebServer() {
 	}
 }
 
-func ContainsStringArray(array []string, value string) bool {
-	for i := 0; i < len(array); i++ {
-		if value == array[i] {
-			return true
-		}
-	}
-	return false
-}
