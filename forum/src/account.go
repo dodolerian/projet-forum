@@ -45,7 +45,6 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 		} else {
 			hashpass, _ := HashPassword(passwordForm)
 
-
 			AddUsers(database, usernameForm, hashpass, "", mailForm)
 			id, username, password, profilDescription, mail, xp := FetchUserWithName(database, usernameForm)
 			connectedUser = nil
