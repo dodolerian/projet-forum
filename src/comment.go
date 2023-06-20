@@ -2,12 +2,14 @@ package forum
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"strconv"
 	"time"
-	"fmt"
+
 	_ "github.com/mattn/go-sqlite3"
 )
+
 var allComment []recuperationCommentFromDb
 
 func recuperationComment() []recuperationCommentFromDb {
@@ -31,10 +33,10 @@ func recuperationComment() []recuperationCommentFromDb {
 		}
 		commentIntoStruc := recuperationCommentFromDb{}
 		commentIntoStruc = recuperationCommentFromDb{
-			IdPost:   idPost,
-			IdAuthor: idAuthor,
-			Content:  content,
-			Date:     date,
+			IdPost:    idPost,
+			IdAuthor:  idAuthor,
+			Content:   content,
+			Date:      date,
 			IdComment: idComment,
 		}
 		allComment = append(allComment, commentIntoStruc)

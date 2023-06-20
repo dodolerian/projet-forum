@@ -58,6 +58,27 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	/* Author Post */
+	if r.Method == http.MethodPost {
+		IdAuthor := r.FormValue("author")
+		for i := 0; i < len(allUsers); i++ {
+			if strconv.Itoa(allUsers[i].Id) == IdAuthor {
+				name := allUsers[i].Username
+				description := allUsers[i].ProfilDescription
+				if description == "" {
+					description = "Pas de description"
+				}
+				userStruct := UserStruct{}
+				userStruct = UserStruct{
+					Id:                allUsers[i].Id,
+					Username:          name,
+					ProfilDescription: description,
+				}
+				User = append(User, userStruct)
+			}
+		}
+	}
+
 	tag := ""
 
 	/* COMMENTS */
@@ -73,14 +94,14 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		likeIdPostStr := r.FormValue("like")
 		dislikeIdPostStr := r.FormValue("dislike")
 
-		UseLike(database, likeIdPostStr, dislikeIdPostStr, connectedUserId )
+		UseLike(database, likeIdPostStr, dislikeIdPostStr, connectedUserId)
 	}
 
 	if r.Method == http.MethodPost {
 		likeIdCommentStr := r.FormValue("likeComment")
 		dislikeIdCommentStr := r.FormValue("dislikeComment")
 
-		UseLikeComment(database, likeIdCommentStr, dislikeIdCommentStr, connectedUserId )
+		UseLikeComment(database, likeIdCommentStr, dislikeIdCommentStr, connectedUserId)
 	}
 
 	allComment = nil
@@ -98,9 +119,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	for i := len(allPost) - 1; i >= 0; i-- {
 		_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		_, username, _, _, _, _ := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
 		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
+		_, username, _, _, _, xpIntPost := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		_, username, _, _, _, xpIntPost := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		/* Check valide post */
 		checkPost := strings.Split(allPost[i].Content, "")
@@ -121,6 +144,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		if imgBase64Str == "" {
 			isImage = false
 		}
+		isImage := true
+		if imgBase64Str == "" {
+			isImage = false
+		}
 
 		postFinalIntoStruc := PostStruct{
 			Id:          allPost[i].Id,
@@ -133,8 +160,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			Comments:    allCommentOfThisPost,
 			Image:       imgBase64Str,
 			IsImage:     isImage,
+			IsImage:     isImage,
 			IsConnected: true,
 			Tag:         allPost[i].Tag,
+			Xp:          xpIntPost,
 			Xp:          xpIntPost,
 		}
 
@@ -172,23 +201,24 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	}
 	if len(connectedUser) > 1 {
 		xpInt, _ := strconv.Atoi(connectedUser[5])
+		xpInt, _ := strconv.Atoi(connectedUser[5])
 		homePage = HomePageStruct{
 			ConnectedUserXp: xpInt,
-			Post:        	allPostFinal,
-			NbrPost:    	len(allPost),
-			Comments:    	allComment,
-			User:        	User,
-			IsConnected: 	true,
+			Post:            allPostFinal,
+			NbrPost:         len(allPost),
+			Comments:        allComment,
+			User:            User,
+			IsConnected:     true,
 		}
 
 	} else {
 		homePage = HomePageStruct{
 			ConnectedUserXp: 0,
-			Post:        	allPostFinal,
-			NbrPost:     	len(allPost),
-			Comments:    	allComment,
-			User:        	User,
-			IsConnected: 	false,
+			Post:            allPostFinal,
+			NbrPost:         len(allPost),
+			Comments:        allComment,
+			User:            User,
+			IsConnected:     false,
 		}
 	}
 

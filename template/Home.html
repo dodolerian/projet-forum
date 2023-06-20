@@ -30,9 +30,27 @@
         {{ end }}
 
         {{ if gt .ConnectedUserXp 99}}
+
+        {{ if lt .ConnectedUserXp 20}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel1.png">
+        </a>
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 19}}
+        {{ if lt .ConnectedUserXp 100}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel2.png">
+        </a>
+        {{ end }}
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 99}}
         <a class="pictureProfil" href="">
             <img class="pictureProfil" src="../assets/img/ppLevel3.png">
+            <img class="pictureProfil" src="../assets/img/ppLevel3.png">
         </a>
+        {{ end }}
         {{ end }}
     </header>
     <div class="cache"></div>
@@ -122,6 +140,7 @@
 
                 <div class="image">
                     {{ if $instance.IsImage }}
+                    {{ if $instance.IsImage }}
                     <img src="data:image/jpg;base64,{{ $instance.Image }}">
                     {{ end }}
 
@@ -130,6 +149,7 @@
                     {{ end }}
 
                 </div>
+                <div class=" comments">
                 <div class=" comments">
                     <div class="titleComment">
                         <h2>Commentaires</h2>
@@ -232,6 +252,7 @@
     </main>
 </body>
 
+<script type="module" src="../assets/home.js"></script>
 <script type="module" src="../assets/home.js"></script>
 
 </html> 

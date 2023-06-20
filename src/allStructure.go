@@ -9,10 +9,10 @@ type createAccountStruct struct {
 
 //Comment Structure
 type recuperationCommentFromDb struct {
-	IdPost   int
-	IdAuthor int
-	Content  string
-	Date     string
+	IdPost    int
+	IdAuthor  int
+	Content   string
+	Date      string
 	IdComment int
 }
 
@@ -30,14 +30,12 @@ type CommentStruct struct {
 
 type HomePageStruct struct {
 	ConnectedUserXp int
-	Post        []PostStruct
-	NbrPost     int
-	Comments    []recuperationCommentFromDb
-	User        []UserStruct
-	IsConnected bool
+	Post            []PostStruct
+	NbrPost         int
+	Comments        []recuperationCommentFromDb
+	User            []UserStruct
+	IsConnected     bool
 }
-
-
 
 type PostStruct struct {
 	Id          int
@@ -52,9 +50,8 @@ type PostStruct struct {
 	IsImage     bool
 	IsConnected bool
 	Tag         string
-	Xp 			int
+	Xp          int
 }
-
 
 // Post Structure
 
@@ -69,9 +66,7 @@ type recuperationPostFromDb struct {
 	Tag     string
 }
 
-
 // Profil Structure
-
 
 type ProfilPageStruct struct {
 	Username          string
@@ -80,7 +75,7 @@ type ProfilPageStruct struct {
 	ConnectedUserXp   int
 }
 
-// Recuperation User 
+// Recuperation User
 
 type recuperationUserFromDb struct {
 	Id                int
@@ -88,12 +83,12 @@ type recuperationUserFromDb struct {
 	ProfilDescription string
 }
 
-// User struct 
+// User struct
 type UserStruct struct {
 	Id                int
 	Username          string
 	ProfilDescription string
-	xp				  int
+	xp                int
 }
 
 // Dislike Structure
@@ -113,13 +108,13 @@ type LikeFromDb struct {
 // Dislike comment Structure
 
 type DislikeCommentFromDb struct {
-	IdUser int
+	IdUser    int
 	IdComment int
 }
 
 // Like comment Structure
 
 type LikeCommentFromDb struct {
-	IdUser int
+	IdUser    int
 	IdComment int
 }

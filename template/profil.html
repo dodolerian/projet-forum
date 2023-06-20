@@ -15,6 +15,7 @@
 <body>
     <header>
         <img class="logo" src="../assets/img/logo.png" alt="logo">
+        <img class="logo" src="../assets/img/logo.png" alt="logo">
         <h1>Open Chat Room</h1>
 
         {{ if lt .ConnectedUserXp 20}}
@@ -37,6 +38,8 @@
         </a>
         {{ end }}
 
+        {{ end }}
+
     </header>
     <nav>
         <ul>
@@ -56,6 +59,19 @@
         <div class="profile-card">
 
             <div class="image">
+                {{ if lt .ConnectedUserXp 20}}
+                <img class="profile-img" src="../assets/img/ppLevel1.png">
+                {{ end }}
+
+                {{ if gt .ConnectedUserXp 19}}
+                {{ if lt .ConnectedUserXp 100}}
+                <img class="profile-img" src="../assets/img/ppLevel2.png">
+                {{ end }}
+                {{ end }}
+
+                {{ if gt .ConnectedUserXp 99}}
+                <img class="profile-img" src="../assets/img/ppLevel3.png">
+                {{ end }}
                 {{ if lt .ConnectedUserXp 20}}
                 <img class="profile-img" src="../assets/img/ppLevel1.png">
                 {{ end }}
@@ -99,7 +115,10 @@
     <div class="form" id="description">
         <form class="form_description">
             <h2 class="form_description_title">Changer de description</h2>
+        <form class="form_description">
+            <h2 class="form_description_title">Changer de description</h2>
             <div class=" form__group">
+                <input type="text" name="description" placeholder="Description" class="form__input" maxlength="20" />
                 <input type="text" name="description" placeholder="Description" class="form__input" maxlength="20" />
             </div>
             <input class="btn" type="submit">
@@ -135,9 +154,13 @@
 
             </select>
             <input class="btn" id="addPostButton" type="submit" value="Ajouter un post">
+            </select>
+            <input class="btn" id="addPostButton" type="submit" value="Ajouter un post">
             <button class="btn" id="exitPost">Sortir</button>
         </form>
     </div>
+
+
 
 
 </body>
