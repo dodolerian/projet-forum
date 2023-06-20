@@ -8,12 +8,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type recuperationUserFromDb struct {
-	Id                int
-	Username          string
-	ProfilDescription string
-}
-
 var allUsers []recuperationUserFromDb
 
 func recuperationUser() []recuperationUserFromDb {

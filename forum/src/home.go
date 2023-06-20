@@ -10,46 +10,6 @@ import (
 	"strings"
 )
 
-type HomePageStruct struct {
-	Post        []PostStruct
-	NbrPost     int
-	Comments    []recuperationCommentFromDb
-	User        []UserStruct
-	IsConnected bool
-}
-
-type CommentStruct struct {
-	IdPost     int
-	IdAuthor   int
-	AuthorName string
-	Content    string
-	Like       int
-	Dislike    int
-	Date       string
-	Image      string
-}
-
-type PostStruct struct {
-	Id          int
-	Author      int
-	AuthorName  string
-	Content     string
-	Like        bool
-	Dislike     bool
-	Date        string
-	Comments    []CommentStruct
-	Image       string
-	IsImage     bool
-	IsConnected bool
-	Tag         string
-}
-
-type UserStruct struct {
-	Id                int
-	Username          string
-	ProfilDescription string
-}
-
 func Home(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("template/Home.html"))
@@ -161,7 +121,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 		isLiked := LikeOnPost(connectedUserId, allPost[i].Id, allLikeList)
 		isDisliked := DislikeOnPost(connectedUserId, allPost[i].Id, allDislikeList)
-		_, username, _, _, _, _ = FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
+		_, username, _, _, _, xpIntPost := FetchUserWithId(database, strconv.Itoa(allPost[i].Author))
 		/* Check valide post */
 		checkPost := strings.Split(allPost[i].Content, "")
 		limite := 0
@@ -195,6 +155,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			IsImage:     isImage,
 			IsConnected: true,
 			Tag:         allPost[i].Tag,
+			Xp:          xpIntPost,
 		}
 
 		if len(connectedUser) == 1 {
@@ -230,21 +191,24 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	}
 	if len(connectedUser) > 1 {
+		xpInt, _ := strconv.Atoi(connectedUser[5])
 		homePage = HomePageStruct{
-			Post:        allPostFinal,
-			NbrPost:     len(allPost),
-			Comments:    allComment,
-			User:        User,
-			IsConnected: true,
+			ConnectedUserXp: xpInt,
+			Post:        	allPostFinal,
+			NbrPost:    	len(allPost),
+			Comments:    	allComment,
+			User:        	User,
+			IsConnected: 	true,
 		}
 
 	} else {
 		homePage = HomePageStruct{
-			Post:        allPostFinal,
-			NbrPost:     len(allPost),
-			Comments:    allComment,
-			User:        User,
-			IsConnected: false,
+			ConnectedUserXp: 0,
+			Post:        	allPostFinal,
+			NbrPost:     	len(allPost),
+			Comments:    	allComment,
+			User:        	User,
+			IsConnected: 	false,
 		}
 	}
 
