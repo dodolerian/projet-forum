@@ -316,6 +316,14 @@ nav .search-bar {
     margin-bottom: 1.72vh;
 }
 
+.post .comment .likesComment {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 6.726vw;
+    width: 100%;
+}
+
 
 
 /* hashtag */
