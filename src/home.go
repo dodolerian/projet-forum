@@ -12,7 +12,7 @@ import (
 
 func Home(w http.ResponseWriter, r *http.Request) {
 
-	tmpl := template.Must(template.ParseFiles("template/Home.html"))
+	tmpl := template.Must(template.ParseFiles("template/home.html"))
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
 	homePage := HomePageStruct{}
