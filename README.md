@@ -39,6 +39,12 @@ __Si il est avec docker:__
 
 - Ouvir docker.
 
+- Faire ``cd forum``
+
+- Faire ``go mod init forum ``puis `` go mod tidy`` dans le terminal au premier lancement du projet.
+
+- Faire ``cd ..``
+
 - Faire la commande suivante dans le terminale ``docker build --no-cache  -t forum:v3 . ``
 
 - Puis faire ``docker run -p 3333:3333 forum:v3 ``
