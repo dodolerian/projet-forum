@@ -46,11 +46,11 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 			if filetype != "image/jpeg" {
 				fmt.Println("image type not good")
-				errorPost = "image type not good"
+				errorPost = "type de l'image pas bon"
 			} else {
 				if handler.Size > 5000000 {
 					fmt.Println("image to heavy")
-					errorPost = "image to heavy"
+					errorPost = "image trop grande"
 				} else {
 					if !VerifyPostContent(ContentPost) {
 						AddPost(database, ContentPost, connectedUser[0], buff, tag)
@@ -66,7 +66,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 						ModifyXpUser(database, currentId, nextXp)
 					} else {
-						errorPost = "a banned word was used"
+						errorPost = "un mot banni a été utilisé"
 					}
 				}
 			}
@@ -88,7 +88,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 			} else {
 				fmt.Println(VerifyPostContent(ContentPost))
 				
-				errorPost = "a banned word was used"
+				errorPost = "un mot banni a été utilisé"
 			}
 		}
 	}
