@@ -43,8 +43,6 @@ __Si il est avec docker:__
 
 - Puis faire ``docker run -p 3333:3333 forum:v3 ``
 
-- Faire la commande suivante dans le terminale ``docker build --no-cache  -t forum:v3 . ``
-
 - Quand dans la console est écrit ``Starting server at port 3333 : http://localhost:3333``, aller sur `` http://localhost:3333/`` 
 
 
