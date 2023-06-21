@@ -12,7 +12,7 @@ import (
 
 func Home(w http.ResponseWriter, r *http.Request) {
 
-	tmpl := template.Must(template.ParseFiles("template/home.html"))
+	tmpl := template.Must(template.ParseFiles("template/Home.html"))
 	database, _ := sql.Open("sqlite3", "./database/forumBDD.db")
 
 	homePage := HomePageStruct{}
@@ -73,14 +73,14 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		likeIdPostStr := r.FormValue("like")
 		dislikeIdPostStr := r.FormValue("dislike")
 
-		UseLike(database, likeIdPostStr, dislikeIdPostStr, connectedUserId )
+		UseLike(database, likeIdPostStr, dislikeIdPostStr, connectedUserId)
 	}
 
 	if r.Method == http.MethodPost {
 		likeIdCommentStr := r.FormValue("likeComment")
 		dislikeIdCommentStr := r.FormValue("dislikeComment")
 
-		UseLikeComment(database, likeIdCommentStr, dislikeIdCommentStr, connectedUserId )
+		UseLikeComment(database, likeIdCommentStr, dislikeIdCommentStr, connectedUserId)
 	}
 
 	allComment = nil
@@ -174,21 +174,21 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		xpInt, _ := strconv.Atoi(connectedUser[5])
 		homePage = HomePageStruct{
 			ConnectedUserXp: xpInt,
-			Post:        	allPostFinal,
-			NbrPost:    	len(allPost),
-			Comments:    	allComment,
-			User:        	User,
-			IsConnected: 	true,
+			Post:            allPostFinal,
+			NbrPost:         len(allPost),
+			Comments:        allComment,
+			User:            User,
+			IsConnected:     true,
 		}
 
 	} else {
 		homePage = HomePageStruct{
 			ConnectedUserXp: 0,
-			Post:        	allPostFinal,
-			NbrPost:     	len(allPost),
-			Comments:    	allComment,
-			User:        	User,
-			IsConnected: 	false,
+			Post:            allPostFinal,
+			NbrPost:         len(allPost),
+			Comments:        allComment,
+			User:            User,
+			IsConnected:     false,
 		}
 	}
 

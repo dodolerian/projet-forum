@@ -1,39 +1,39 @@
 
-# Projet Forum Open Chat Room :
+# Projet Forum Open Chat Room 📄 :
 Le projet forum est le projet de fin d'année en Bachelor 1 informatique.
-Le but du projet est de construire un forum fonctionnelle.
+Le but du projet est de construire un forum fonctionnel.
 Il doit pouvoir contenir:
 - Un échange entre plusieurs utilisateurs
 - Différentes catégories de postes
 - Pouvoir liker et deliker un poste
-- Filtre les postes
+- Filtrer les postes
 Le projet doit égallement contenir une base de donné en SQLITE
 
-## Membres du groupe :
+## Membres du groupe 👨‍💻 :
 
 - Sulien Payraudeau
 - Matias Bellaud
 - Maxime Fuzeau 
 - Dorian Martin
 
-## Langages :
+## Langages 🛠️ :
 Le projet à été réalisé en golang pour le back , html, css , js  pour le front et sqLite pour la base de donnée.
 Le projet a égallement été dockérisé.
 
-## Comment lancer le projet :
+## Comment lancer le projet 🚀 :
 __Si le projet n'est pas avec le docker:__ 
 
-- Copier le git: https://github.com/dodolerian/projet-forum
+- Cloner le git: https://github.com/dodolerian/projet-forum
 
-- Faire ``go mod init forum ``puis `` go mod tidy`` dans le terminale au premier lancement du projet.
+- Faire ``go mod init forum ``puis `` go mod tidy`` dans le terminal au premier lancement du projet.
 
-- Faire ``go run main/main.go ``dans le terminale.
+- Faire ``go run main/main.go ``dans le terminal.
 
--  Aller sur `` http://localhost:3333/`` 
+- Aller sur `` http://localhost:3333/`` 
 
 __Si il est avec docker:__
 
-- Copier le git: https://github.com/dodolerian/projet-forum
+- Cloner le git: https://github.com/dodolerian/projet-forum
 
 - Ouvir docker.
 
@@ -46,7 +46,7 @@ __Si il est avec docker:__
 - Quand dans la console est écrit ``Starting server at port 3333 : http://localhost:3333``, aller sur `` http://localhost:3333/`` 
 
 
-## Que contient le projet:
+## Que contient le projet 📖 :
 L'utilisateur a la possibilité de créer un compte, de se connecter et se déconnecter.
 Quand il est connecté il peut liker et commenter un poste.
 Sur sa page de profil il peut égallement ajouter un poste.

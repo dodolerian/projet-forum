@@ -375,6 +375,7 @@ nav ul .btn-nav-deco span {
         justify-content: center;
         padding-left: 0;
         width: 15vw;
+        border: none;
     }
 
     nav ul .btn-nav span,
