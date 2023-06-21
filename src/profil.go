@@ -86,6 +86,8 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 
 				ModifyXpUser(database, currentId, nextXp)
 			} else {
+				fmt.Println(VerifyPostContent(ContentPost))
+				
 				errorPost = "a banned word was used"
 			}
 		}
@@ -129,7 +131,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 }
 
 func VerifyPostContent(content string) bool {
-	bannedWords := []string{"nazi","gay","lgbt","suicide","terrorisme", "fuck", "connard", "pute", "salope", "enculé", ""}
+	bannedWords := []string{"nazi","gay","lgbt","suicide","terrorisme", "fuck", "connard", "pute", "salope", "enculé"}
 	for i:=0;i<len(bannedWords);i++{
 		if strings.Contains(content,bannedWords[i]) {
 			return true

@@ -15,6 +15,8 @@ body {
 body::-webkit-scrollbar {
     width: 0.263vw;
     height: 0.9vh;
+    width: 0.263vw;
+    height: 0.9vh;
     background-color: #0D1B2A
 }
 
@@ -29,9 +31,12 @@ header {
     justify-content: space-evenly;
     align-items: center;
     gap: 60.29vh;
+    gap: 60.29vh;
     width: 100%;
     height: 16.15vh;
+    height: 16.15vh;
     color: #ECF8F6;
+    font-size: 1.261vw;
     font-size: 1.261vw;
     background-color: #0D1B2A;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
@@ -80,9 +85,11 @@ nav {
 nav ul {
     position: relative;
     left: 5vw;
+    left: 5vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 3.94vw;
     gap: 3.94vw;
     height: 100%;
     color: #FEEAA1;
@@ -96,6 +103,9 @@ nav ul .btn-nav {
     height: 5.38vh;
     width: 10.51vw;
     gap: 0.631vw;
+    height: 5.38vh;
+    width: 10.51vw;
+    gap: 0.631vw;
     border-radius: 5px;
     background-color: #ECF8F6;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
@@ -104,10 +114,13 @@ nav ul .btn-nav {
 nav ul .img-btn-nav {
     height: 4.3vh;
     width: 2.102vw;
+    height: 4.3vh;
+    width: 2.102vw;
 }
 
 nav ul .btn-nav span {
     color: #1B263B;
+    font-size: 1.261vw;
     font-size: 1.261vw;
     font-weight: 600;
 }
@@ -120,13 +133,32 @@ nav .search-bar {
     align-items: center;
     justify-content: center;
     height: 5.38vh;
+    height: 5.38vh;
     border-radius: 5px;
     background-color: #ECF8F6;
+    width: 22.701vw;
+    right: 5.045vw;
     width: 22.701vw;
     right: 5.045vw;
 }
 
 /* POSTS */
+
+/* DESCRIPTION PopUp */
+
+.popUpUser {
+    padding: 1vh 0;
+    width: 80%;
+    background-color: #0D1B2A;
+    color: #ECF8F6;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* */
 
 .posts {
     display: flex;
@@ -145,6 +177,9 @@ nav .search-bar {
     height: 43vh;
     width: 63.058vw;
     margin-top: 3.23vh;
+    height: 43vh;
+    width: 63.058vw;
+    margin-top: 3.23vh;
     background-color: #415A77;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
@@ -157,6 +192,9 @@ nav .search-bar {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 37.68vh;
+    width: 18.392vw;
+    margin-left: 5.38vh;
     height: 37.68vh;
     width: 18.392vw;
     margin-left: 5.38vh;
@@ -175,13 +213,27 @@ nav .search-bar {
     background-color: #ECF8F6;
 }
 
+.form-user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 2vw;
+    width: 100%;
+    border: none;
+    background-color: #ECF8F6;
+}
+
 .post .content .user {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 1.682vw;
+    gap: 1.682vw;
     width: 100%;
     color: #0D1B2A;
+    border: none;
+    background-color: #ECF8F6;
+    cursor: pointer;
     border: none;
     background-color: #ECF8F6;
     cursor: pointer;
@@ -225,6 +277,7 @@ nav .search-bar {
     align-items: center;
     justify-content: space-evenly;
     gap: 6.726vw;
+    gap: 6.726vw;
     width: 100%;
 }
 
@@ -237,6 +290,8 @@ nav .search-bar {
     justify-content: center;
     background-color: #ECF8F6;
     width: 1.576vw;
+    background-color: #ECF8F6;
+    width: 1.576vw;
 }
 
 /* post image */
@@ -245,6 +300,8 @@ nav .search-bar {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 23.647vw;
+    height: 38vh;
     width: 23.647vw;
     height: 38vh;
     background-color: #1B263B;
@@ -266,6 +323,9 @@ nav .search-bar {
     height: 37.68vh;
     width: 18.392vw;
     margin-right: 2.627vw;
+    height: 37.68vh;
+    width: 18.392vw;
+    margin-right: 2.627vw;
     background-color: #ECF8F6;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -277,6 +337,8 @@ nav .search-bar {
     justify-content: center;
     margin: 1.72vh 0;
     height: 5.38vh;
+    margin: 1.72vh 0;
+    height: 5.38vh;
     width: 100%;
     background-color: #415A77;
     color: #ECF8F6;
@@ -286,6 +348,9 @@ nav .search-bar {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 24vh;
+    width: 15.765vw;
+    gap: 3.45vh;
     height: 24vh;
     width: 15.765vw;
     gap: 3.45vh;
@@ -302,6 +367,8 @@ nav .search-bar {
 .post .comments #comment {
     height: 3.23vh;
     width: 1.576vw;
+    height: 3.23vh;
+    width: 1.576vw;
 }
 
 .post .comments .comment .commentCard {
@@ -311,9 +378,19 @@ nav .search-bar {
     justify-content: center;
     width: 15.134vw;
     gap: 0.86vh;
+    width: 15.134vw;
+    gap: 0.86vh;
     border-bottom: 1px solid #0D1B2A;
     padding-bottom: 0.86vh;
     margin-bottom: 1.72vh;
+}
+
+.post .comment .likesComment {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 6.726vw;
+    width: 100%;
 }
 
 
@@ -325,6 +402,7 @@ nav .search-bar {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 3.45vh 0;
     padding: 3.45vh 0;
     border-radius: 5px;
     margin: 50vh 10.3vh 0 150.3vh;
@@ -394,6 +472,8 @@ nav .search-bar {
     justify-content: center;
     margin: 0 0 1.72vh 0;
     height: 5.38vh;
+    margin: 0 0 1.72vh 0;
+    height: 5.38vh;
     width: 100%;
     background-color: #415A77;
     color: #ECF8F6;
@@ -404,7 +484,10 @@ nav .search-bar {
     align-items: center;
     justify-content: center;
     height: 4.3vh;
+    height: 4.3vh;
     width: 90%;
+    margin: 0.17vh;
+    padding: 0.17vh;
     margin: 0.17vh;
     padding: 0.17vh;
     background: none;
@@ -416,6 +499,9 @@ nav .search-bar {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 4.3vh;
+    margin: 0.17vh;
+    padding: 0.17vh;
     height: 4.3vh;
     margin: 0.17vh;
     padding: 0.17vh;
@@ -431,10 +517,11 @@ nav .search-bar {
     color: #ECF8F6;
 }
 
-@media screen and (max-width: 1800px){
+@media screen and (max-width: 1800px) {
     header {
         gap: 10vw;
     }
+
     .posts {
         display: flex;
         flex-direction: column;
@@ -444,22 +531,28 @@ nav .search-bar {
         margin-top: 30vh;
         margin-left: 0;
     }
+
     .posts .post {
         width: 98%;
     }
+
     .post .content {
         width: 30%;
     }
+
     .post .image {
         width: 30%;
     }
+
     .post .comments {
         width: 30%;
     }
+
     .post .content .txt {
         font-size: 1vw;
         width: 20vw;
     }
+
     .hashtags {
         flex-direction: row;
         padding: 1vh 0;
@@ -467,12 +560,15 @@ nav .search-bar {
         height: 6vh;
         width: 60vw;
     }
+
     .searchForm label {
         display: none;
     }
+
     .searchForm input {
         height: 2.5vh;
     }
+
     .popUpUser {
         gap: 0.5vh;
         height: 6vh;
@@ -481,7 +577,7 @@ nav .search-bar {
     }
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1200px) {
     .hashtags {
         margin: 20vh 10.3vh 0 50.3vh;
         height: 6vh;
@@ -489,7 +585,7 @@ nav .search-bar {
     }
 }
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1000px) {
     .hashtags {
         margin: 20vh 10.3vh 0 40.3vh;
         height: 6vh;
@@ -497,77 +593,95 @@ nav .search-bar {
     }
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) {
     header {
         gap: 0;
         font-size: 2vw;
     }
+
     nav ul .btn-nav {
         color: #0D1B2A;
         justify-content: center;
         padding-left: 0;
     }
+
     nav ul .btn-nav span {
         font-size: 2vw;
     }
+
     nav ul .img-btn-nav {
         display: none;
     }
+
     .posts .post {
         height: 25vh;
     }
+
     .post .content {
         height: 22vh;
         margin-left: 2vh;
     }
+
     .post .image {
         height: 25vh;
     }
+
     .post .comments {
         height: 22vh;
     }
+
     .post .content .user {
         font-size: 1vh;
         margin-left: 1vw;
     }
+
     .post .content .txt {
         height: 12vh;
         width: 20vw;
     }
+
     .post .content .tag {
         font-size: 1vw;
     }
+
     .post .comments .titleComment {
         margin: 1vh 0;
         height: 4vh;
         font-size: 1vh;
     }
+
     .post .comments .comment {
         height: 10vh;
         width: 20vw;
     }
+
     .post .addCommentForm {
         margin: 0 0 1vh 0;
         height: 5vh;
     }
+
     .post .addCommentForm #ContentComment {
         font-size: 1vh;
     }
+
     .post .addCommentForm .btn {
         font-size: 1vh;
     }
+
     .hashtags {
         margin: 20vh 10.3vh 0 25.3vh;
     }
+
     .popUpUser {
         font-size: 2vw;
     }
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 400px) {
     .hashtags {
         margin: 20vh 10.3vh 0 20.3vh;
     }
+
     .searchForm select,
     .searchForm input {
         font-size: 2vw;
