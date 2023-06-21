@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./../assets/profil.css">
+    <script src="./../assets/profil.js"></script>
+
+    <title>Forum</title>
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="../assets/img/logo.png" alt="logo">
+        <h1>Open Chat Room</h1>
+
+        {{ if lt .ConnectedUserXp 20}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel1.png">
+        </a>
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 19}}
+        {{ if lt .ConnectedUserXp 100}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel2.png">
+        </a>
+        {{ end }}
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 99}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel3.png">
+        </a>
+        {{ end }}
+
+    </header>
+    <nav>
+        <ul>
+            <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
+                    alt="home"><span>Accueil</span></a>
+            <form method="post" action="/">
+                <button class="btn-nav-deco" type="submit">
+                    <img class="img-btn-nav" src="../assets/img/deconnection.jpg" alt="deconnection">
+                    <span>Déconnection</span>
+                </button>
+                <input name="deconnection" type="hidden" value="deconnection" alt="Déconnection"></input>
+            </form>
+        </ul>
+
+    </nav>
+    <main>
+        <div class="profile-card">
+
+            <div class="image">
+                {{ if lt .ConnectedUserXp 20}}
+                <img class="profile-img" src="../assets/img/ppLevel1.png">
+                {{ end }}
+
+                {{ if gt .ConnectedUserXp 19}}
+                {{ if lt .ConnectedUserXp 100}}
+                <img class="profile-img" src="../assets/img/ppLevel2.png">
+                {{ end }}
+                {{ end }}
+
+                {{ if gt .ConnectedUserXp 99}}
+                <img class="profile-img" src="../assets/img/ppLevel3.png">
+                {{ end }}
+            </div>
+
+            <div class="text-data">
+
+                <span class="name">
+                    {{ if .Username }}
+                    {{ .Username }}
+                    {{ end }}
+                </span>
+                <span class="mail">
+                    {{ if .Mail }}
+                    {{ .Mail }}
+                    {{ end }}
+                </span>
+                <span class="descriptionText">
+                    {{ if .ProfilDescription }}
+                    {{ .ProfilDescription }}
+                    {{ end }}
+                </span>
+            </div>
+        </div>
+    </main>
+    <div class="btn-profil">
+        <button id="buttonDescription">Changer votre description</button>
+        <div class="errorCreatePost">
+            {{ if .Error }}
+            {{ .Error }}
+            {{ end }}
+        </div>
+        <button id="buttonPost">Ajouter un post</button>
+    </div>
+
+    <!-- Description Modif -->
+    <div class="form" id="description">
+        <form class="form_description">
+            <h2 class="form_description_title">Changer de description</h2>
+            <div class=" form__group">
+                <input type="text" name="description" placeholder="Description" class="form__input" maxlength="20" />
+            </div>
+            <input class="btn" type="submit">
+            <button class="btn" id="exitDescription" type="reset">Sortir</button>
+        </form>
+    </div>
+    <!-- Ajout de Post -->
+    <div id="addPost" class="addPost">
+        <form class="addPostForm" method="post" enctype="multipart/form-data">
+            <h2 class="form_add_title">Ajouter un post</h2>
+            <input type="text" name="ContentPost" id="ContentPost" placeholder="Contenu">
+            <div class="file-input">
+                <input type="file" name="photo" id="file-input" class="file-input__input" accept=".jpg" />
+                <label class="file-input__label" for="file-input">
+
+                    <span>Charger un fichier</span></label>
+            </div>
+            <label class="tag" for="tag">Choisissez un tag :</label>
+            <select id="tag" name="tag">
+                <option value="">All</option>
+                <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
+                <option value="#gaming">#gaming</option>
+                <option value="#voiture">#voiture</option>
+                <option value="#etude">#etude</option>
+                <option value="#actu">#actu</option>
+                <option value="#technologie">#technologie</option>
+                <option value="#ville">#ville</option>
+                <option value="#animaux">#animaux</option>
+                <option value="#gouvernement">#gouvernement</option>
+                <option value="#alcool">#alcool</option>
+                <option value="#sport">#sport</option>
+                <option value="#hashtag">#hashtag</option>
+
+            </select>
+            <input class="btn" id="addPostButton" type="submit" value="Ajouter un post">
+            <button class="btn" id="exitPost" type="reset">Sortir</button>
+        </form>
+    </div>
+</body>
+
+<script type="module" src="../assets/profil.js"></script>
+
+</html>

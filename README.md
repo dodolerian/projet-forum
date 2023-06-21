@@ -25,6 +25,8 @@ __Si le projet n'est pas avec le docker:__
 
 - Cloner le git: https://github.com/dodolerian/projet-forum
 
+- Faire ``cd forum``
+
 - Faire ``go mod init forum ``puis `` go mod tidy`` dans le terminal au premier lancement du projet.
 
 - Faire ``go run main/main.go ``dans le terminal.

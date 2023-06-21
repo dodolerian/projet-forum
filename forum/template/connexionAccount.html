@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../assets/account.css">
+    <title>Connection</title>
+</head>
+
+<body>
+    <main>
+        <div class="user">
+            <div class="hello">Bienvenue !</div>
+            <div class="helloNext">connectes toi à ton compte ...</div>
+
+            <form class="form-connexion">
+                <div class="form__group">
+                    <div id="descriptionForm" class="mail">mail</div>
+                    <input type="email" id="mailToSave" name="mail" class="form__input" />
+                </div>
+                {{ if .MailError }}
+                {{ .MailError }}
+                {{ end }}
+
+                <div class="form__group">
+                    <div id="descriptionForm" class="password">mot de passe</div>
+                    <input type="password" name="password" class="form__input" />
+                </div>
+                {{ if .PasswordError }}
+                {{ .PasswordError }}
+                {{ end }}
+                <input id="btn" class="btnSubmit" type="submit">
+                <div id="otherConnection">
+                    <span id="textConnection">Pas encore de compte ? </span>
+                    <a id="otherBtnConnection" href="/create">Créer</a>
+                </div>
+                <div id="otherConnection">
+                    <span id="textConnection">Pas envie de se connecter ? </span>
+                    <a id="otherBtnConnection" href=" /home">Invité</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+
+        const button = document.querySelector('.btn')
+        const form = document.querySelector('.form')
+
+
+        button.addEventListener('click', function () {
+            form.classList.add('form--no')
+        });
+
+    </script>
+</body>
+
+</html>

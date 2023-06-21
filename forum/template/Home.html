@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./../assets/Home.css">
+    <title>Open Chat Room</title>
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="../assets/img/logo.png" alt="logo">
+        <h1>Open Chat Room</h1>
+
+        {{ if lt .ConnectedUserXp 20}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel1.png">
+        </a>
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 19}}
+        {{ if lt .ConnectedUserXp 100}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel2.png">
+        </a>
+        {{ end }}
+        {{ end }}
+
+        {{ if gt .ConnectedUserXp 99}}
+        <a class="pictureProfil" href="">
+            <img class="pictureProfil" src="../assets/img/ppLevel3.png">
+        </a>
+        {{ end }}
+    </header>
+    <div class="cache"></div>
+    <nav>
+        <ul>
+            <a class="btn-nav" href="/home"><img class="img-btn-nav" src="../assets/img/home.png"
+                    alt="home"><span>Accueil</span></a>
+            {{ if .IsConnected }}
+            <a class="btn-nav" href="/profil"><img class="img-btn-nav" src="../assets/img/profil.png"
+                    alt="profil"><span>Profil</span></a>
+            {{ else }}
+            <a class="btn-nav" href="/"><img class="img-btn-nav" src="../assets/img/profil.png"
+                    alt="profil"><span>Connection</span></a>
+            {{ end }}
+
+        </ul>
+    </nav>
+    <main>
+
+        <div class="posts">
+            {{ if ge .NbrPost 0}}
+            {{ range $index, $instance := .Post }}
+            <div class="post">
+                <div class="content">
+                    <form method="post" class="form-user">
+                        <button type="submit" class="user">
+                            {{ if lt .Xp 20}}
+                            <img class="userPP" src="../assets/img/ppLevel1.png">
+                            {{ end }}
+
+                            {{ if gt .Xp 19}}
+                            {{ if lt .Xp 100}}
+                            <img class="userPP" src="../assets/img/ppLevel2.png">
+                            {{ end }}
+                            {{ end }}
+
+                            {{ if gt .Xp 99}}
+                            <img class="userPP" src="../assets/img/ppLevel3.png">
+                            {{ end }}
+
+                            <h2>{{ $instance.AuthorName }}</h2>
+                            <input type="hidden" value={{ $instance.Author }} name="author">
+                        </button>
+                    </form>
+                    <p class="txt">
+                        {{ $instance.Content }}
+                    </p>
+                    <p class="tag">{{ $instance.Tag }}</p>
+                    {{ if .IsConnected }}
+
+                    <div class="likes">
+                        <form method="post">
+                            <button id="like" type="submit">
+                                {{ if $instance.Like }}
+                                <img id="like" src="../assets/img/like_black.png" alt="like">
+                                {{ end }}
+
+                                {{ if not $instance.Like }}
+                                <img id="like" src="../assets/img/like_white.png" alt="like">
+                                {{ end }}
+
+                                <input class="more" type="hidden" value={{ $instance.Id }} name="like">
+                            </button>
+                        </form>
+                        <form method="post">
+                            <button id="dislike" type="submit">
+                                {{ if $instance.Dislike }}
+                                <img id="dislike" src="../assets/img/dislike_black.png" alt="dislike">
+                                {{ end }}
+
+                                {{ if not $instance.Dislike }}
+                                <img id="dislike" src="../assets/img/dislike_white.png" alt="dislike">
+
+                                {{ end }}
+
+                                <input class="more" type="hidden" value={{ $instance.Id }} name="dislike">
+                            </button>
+                        </form>
+                    </div>
+                    {{ else }}
+                    <div class="likes">
+                        <a href="/"><img id="like" src="../assets/img/like_white.png" href="/" alt="like"></a>
+                        <a href="/"><img id="dislike" src="../assets/img/dislike_white.png" href="/" alt="dislike"></a>
+                    </div>
+                    {{ end }}
+                </div>
+
+                <div class="image">
+                    {{ if $instance.IsImage }}
+                    <img src="data:image/jpg;base64,{{ $instance.Image }}">
+                    {{ end }}
+
+                    {{ if not $instance.IsImage }}
+                    <img src="../assets/img/postImgBase.webp">
+                    {{ end }}
+
+                </div>
+                <div class=" comments">
+                    <div class="titleComment">
+                        <h2>Commentaires</h2>
+                    </div>
+                    <div class="comment">
+                        {{ range $i, $comment := $instance.Comments }}
+                        <div class="commentCard">
+                            <h3>{{ $comment.AuthorName }}</h3>
+                            <p>
+                                {{ $comment.Content }}
+                            </p>
+
+                            {{ if $instance.IsConnected }}
+                            <div class="likesComment">
+                                <form method="post">
+                                    <button id="like" type="submit">
+                                        {{ if $comment.Like }}
+                                        <img id="like" src="../assets/img/like_black.png" alt="like">
+                                        {{ end }}
+
+                                        {{ if not $comment.Like }}
+                                        <img id="like" src="../assets/img/like_white.png" alt="like">
+                                        {{ end }}
+
+                                        <input class="more" type="hidden" value={{ $comment.IdComment }}
+                                            name="likeComment">
+                                    </button>
+                                </form>
+                                <form method="post">
+                                    <button id="dislike" type="submit">
+                                        {{ if $comment.Dislike }}
+                                        <img id="dislike" src="../assets/img/dislike_black.png" alt="dislike">
+                                        {{ end }}
+
+                                        {{ if not $comment.Dislike }}
+                                        <img id="dislike" src="../assets/img/dislike_white.png" alt="dislike">
+
+                                        {{ end }}
+
+                                        <input class="more" type="hidden" value={{ $comment.IdComment }}
+                                            name="dislikeComment">
+                                    </button>
+                                </form>
+                            </div>
+                            {{ else }}
+                            <div class="likesComment">
+                                <a href="/"><img id="like" src="../assets/img/like_white.png" href="/" alt="like"></a>
+                                <a href="/"><img id="dislike" src="../assets/img/dislike_white.png" href="/"
+                                        alt="dislike"></a>
+                            </div>
+                            {{ end }}
+
+                        </div>
+                        {{ end }}
+
+                    </div>
+                    {{ if .IsConnected }}
+                    <form class="addCommentForm" method="post">
+                        <input name="idPost" type="hidden" value="{{ $instance.Id }}">
+                        <input type="text" name="ContentComment" id="ContentComment" placeholder="Commentaires ...">
+                        <input class="btn" id="addCommentButton" type="submit" value="envoyer">
+                    </form>
+                    {{ end }}
+
+                </div>
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+        <div class="hashtags">
+            <form class="searchForm" method="post">
+                <label for="tag">Choisissez un tag :</label>
+                <select id="tag" name="tag">
+                    <option value="">All</option>
+                    <option value="#lesdevsongeniaux">#lesdevsongeniaux</option>
+                    <option value="#gaming">#gaming</option>
+                    <option value="#voiture">#voiture</option>
+                    <option value="#etude">#etude</option>
+                    <option value="#actu">#actu</option>
+                    <option value="#technologie">#technologie</option>
+                    <option value="#ville">#ville</option>
+                    <option value="#animaux">#animaux</option>
+                    <option value="#gouvernement">#gouvernement</option>
+                    <option value="#alcool">#alcool</option>
+                    <option value="#sport">#sport</option>
+                    <option value="#hashtag">#hashtag</option>
+    
+                </select>
+                <input type="submit" value="Entrer">
+            </form>
+            <!-- User description -->
+            <div class="popUpUser">
+                {{ range $index, $instance := .User }}
+                <h2 class="name">{{ $instance.Username }}</h2>
+                <p class="description">{{ $instance.ProfilDescription }}</p>
+                {{ end }}
+            </div>
+        </div>
+
+    </main>
+</body>
+
+<script type="module" src="../assets/home.js"></script>
+
+</html>

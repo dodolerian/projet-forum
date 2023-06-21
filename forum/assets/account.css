@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: url(img/forumConnexionBg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    vertical-align: center;
+}
+
+.user {
+    margin-top: 8vw;
+    background-color: #25313f;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    justify-content: center;
+}
+
+.hello {
+    margin: 1vw;
+    color: rgb(238, 238, 238);
+    font-size: 2.3vw;
+}
+
+.helloNext {
+    margin-top: 0vw;
+    margin-bottom: 1vw;
+    color: #d3d6da;
+    font-size: 1.5vw;
+}
+
+.form-connexion {
+    display: flex;
+    flex-direction: column;
+    color: #d3d6da;
+}
+
+.form__group {
+    margin: 0.5vw;
+    display: block;
+}
+
+.remember {
+    margin: 1vw;
+    display: flex;
+    gap: 1vw;
+    align-items: center;
+}
+
+#descriptionForm {
+    display: flex;
+    text-align: left;
+    margin-bottom: 1vh;
+    color: #d3d6da;
+    font-size: 1.2vw;
+}
+
+.form__input {
+    height: 2vw;
+    width: 20vw;
+    border-radius: 5px;
+    box-shadow: none;
+    border: 0 none;
+}
+
+.btnSubmit {
+    background-color: #48596d;
+    border-radius: 5px;
+    box-shadow: none;
+    border: 0 none;
+    font-size: 1.2vw;
+    color: rgb(238, 238, 238);
+    padding-left: 6vw;
+    padding-right: 6vw;
+    padding-top: 1.5vw;
+    padding-bottom: 1.5vw;
+}
+
+#otherConnection {
+    text-align: left;
+    margin-left: 1.2vw;
+    margin-top: 1vw;
+}
+
+#textConnection {
+    font-size: 1vw;
+    color: rgb(238, 238, 238);
+}
+
+#otherBtnConnection {
+    text-decoration: none;
+    color: rgb(73, 181, 207);
+    font-size: 1vw;
+}

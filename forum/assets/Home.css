@@ -1,0 +1,686 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    /* background-color: #ECF8F6; */
+    background-image: url(./img/bg_home.png);
+    background-size: cover;
+}
+
+body::-webkit-scrollbar {
+    width: 0.263vw;
+    height: 0.9vh;
+    width: 0.263vw;
+    height: 0.9vh;
+    background-color: #0D1B2A
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #415A77;
+}
+
+/* Header */
+header {
+    position: fixed;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 60.29vh;
+    width: 100%;
+    height: 16.15vh;
+    color: #ECF8F6;
+    font-size: 1.261vw;
+    background-color: #0D1B2A;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+header .logo,
+header .pictureProfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.255vw;
+    width: 5.255vw;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.cache {
+    position: fixed;
+    margin-top: 16vh;
+    width: 100%;
+    height: 5vh;
+    background-color: #ECF8F6;
+}
+
+/* MAIN */
+
+main {
+    display: flex;
+    flex-direction: row;
+    background-color: #ECF8F6;
+}
+
+/* NAVBAR */
+
+nav {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 8.6vh;
+    margin-top: 20vh;
+    background-color: #1B263B;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+nav ul {
+    position: relative;
+    left: 5vw;
+    left: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3.94vw;
+    gap: 3.94vw;
+    height: 100%;
+    color: #FEEAA1;
+}
+
+nav ul .btn-nav {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    height: 5.38vh;
+    width: 10.51vw;
+    gap: 0.631vw;
+    height: 5.38vh;
+    width: 10.51vw;
+    gap: 0.631vw;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+nav ul .img-btn-nav {
+    height: 4.3vh;
+    width: 2.102vw;
+    height: 4.3vh;
+    width: 2.102vw;
+}
+
+nav ul .btn-nav span {
+    color: #1B263B;
+    font-size: 1.261vw;
+    font-size: 1.261vw;
+    font-weight: 600;
+}
+
+/*search bar */
+
+nav .search-bar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.38vh;
+    height: 5.38vh;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+    width: 22.701vw;
+    right: 5.045vw;
+    width: 22.701vw;
+    right: 5.045vw;
+}
+
+/* POSTS */
+
+/* DESCRIPTION PopUp */
+
+.popUpUser {
+    padding: 1vh 0;
+    width: 80%;
+    background-color: #0D1B2A;
+    color: #ECF8F6;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* */
+
+.posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5.045vw;
+    margin-top: 30vh;
+}
+
+.posts .post {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 43vh;
+    width: 63.058vw;
+    margin-top: 3.23vh;
+    height: 43vh;
+    width: 63.058vw;
+    margin-top: 3.23vh;
+    background-color: #415A77;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* post content */
+
+.post .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 37.68vh;
+    width: 18.392vw;
+    margin-left: 5.38vh;
+    height: 37.68vh;
+    width: 18.392vw;
+    margin-left: 5.38vh;
+    background-color: #ECF8F6;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 2vw;
+    width: 100%;
+    border: none;
+    background-color: #ECF8F6;
+}
+
+.form-user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 2vw;
+    width: 100%;
+    border: none;
+    background-color: #ECF8F6;
+}
+
+.post .content .user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.682vw;
+    gap: 1.682vw;
+    width: 100%;
+    color: #0D1B2A;
+    border: none;
+    background-color: #ECF8F6;
+    cursor: pointer;
+    border: none;
+    background-color: #ECF8F6;
+    cursor: pointer;
+}
+
+.post .content .user .userPP {
+    height: 3.153vw;
+    width: 3.153vw;
+    border-radius: 50%;
+}
+
+/* txt */
+
+.post .content .txt {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    height: 22vh;
+    width: 15.765vw;
+    padding: 1vh;
+}
+
+/* tags */
+
+.post .content .tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: #0D1B2A;
+    border: none;
+    background-color: #ECF8F6;
+    font-size: 0.7vw;
+}
+
+/*like */
+
+.post .content .likes {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 6.726vw;
+    gap: 6.726vw;
+    width: 100%;
+}
+
+#like,
+#dislike {
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ECF8F6;
+    width: 1.576vw;
+    background-color: #ECF8F6;
+    width: 1.576vw;
+}
+
+/* post image */
+
+.post .image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 23.647vw;
+    height: 38vh;
+    width: 23.647vw;
+    height: 38vh;
+    background-color: #1B263B;
+}
+
+.post .image img {
+    max-height: 100%;
+    max-width: 20vw;
+    object-fit: cover;
+}
+
+/* post comments */
+
+.post .comments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 37.68vh;
+    width: 18.392vw;
+    margin-right: 2.627vw;
+    height: 37.68vh;
+    width: 18.392vw;
+    margin-right: 2.627vw;
+    background-color: #ECF8F6;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.post .comments .titleComment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.72vh 0;
+    height: 5.38vh;
+    margin: 1.72vh 0;
+    height: 5.38vh;
+    width: 100%;
+    background-color: #415A77;
+    color: #ECF8F6;
+}
+
+.post .comments .comment {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 24vh;
+    width: 15.765vw;
+    gap: 3.45vh;
+    height: 24vh;
+    width: 15.765vw;
+    gap: 3.45vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: 1px;
+}
+
+.post .comments .comment::-webkit-scrollbar {
+    width: 0;
+}
+
+.post .comments #comment {
+    height: 3.23vh;
+    width: 1.576vw;
+    height: 3.23vh;
+    width: 1.576vw;
+}
+
+.post .comments .comment .commentCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 15.134vw;
+    gap: 0.86vh;
+    width: 15.134vw;
+    gap: 0.86vh;
+    border-bottom: 1px solid #0D1B2A;
+    padding-bottom: 0.86vh;
+    margin-bottom: 1.72vh;
+}
+
+.post .comment .likesComment {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 6.726vw;
+    width: 100%;
+}
+
+
+
+/* hashtag */
+
+.hashtags {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3.45vh 0;
+    padding: 3.45vh 0;
+    border-radius: 5px;
+    margin: 50vh 10.3vh 0 150.3vh;
+    height: 22.701vh;
+    width: 22.701vw;
+    background-color: #1B263B;
+    color: #FEEAA1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.searchForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5vh;
+    color: #ECF8F6;
+}
+
+.searchForm label {
+    font-size: 2.5vh;
+    font-weight: bold;
+}
+
+.searchForm select {
+    width: 15.765vw;
+    height: 3vh;
+    border: none;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+    color: #0D1B2A;
+}
+
+.searchForm input {
+    width: 15.765vw;
+    height: 3.45vh;
+    border: none;
+    border-radius: 5px;
+    background-color: #ECF8F6;
+    color: #0D1B2A;
+}
+
+/* DESCRIPTION PopUp */
+
+.popUpUser {
+    padding: 1vh 0;
+    width: 80%;
+    background-color: #0D1B2A;
+    color: #ECF8F6;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    height: 50%;
+    margin-top: 2vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* */
+
+/* ADD COMMENT */
+
+.post .addCommentForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 1.72vh 0;
+    height: 5.38vh;
+    margin: 0 0 1.72vh 0;
+    height: 5.38vh;
+    width: 100%;
+    background-color: #415A77;
+    color: #ECF8F6;
+}
+
+.post .addCommentForm #ContentComment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4.3vh;
+    height: 4.3vh;
+    width: 90%;
+    margin: 0.17vh;
+    padding: 0.17vh;
+    margin: 0.17vh;
+    padding: 0.17vh;
+    background: none;
+    border: none;
+    color: #ECF8F6;
+}
+
+.post .addCommentForm .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4.3vh;
+    margin: 0.17vh;
+    padding: 0.17vh;
+    height: 4.3vh;
+    margin: 0.17vh;
+    padding: 0.17vh;
+    background-color: #415A77;
+    color: #ECF8F6;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.post .addCommentForm #ContentComment::placeholder {
+    color: #ECF8F6;
+}
+
+@media screen and (max-width: 1800px) {
+    header {
+        gap: 10vw;
+    }
+
+    .posts {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 30vh;
+        margin-left: 0;
+    }
+
+    .posts .post {
+        width: 98%;
+    }
+
+    .post .content {
+        width: 30%;
+    }
+
+    .post .image {
+        width: 30%;
+    }
+
+    .post .comments {
+        width: 30%;
+    }
+
+    .post .content .txt {
+        font-size: 1vw;
+        width: 20vw;
+    }
+
+    .hashtags {
+        flex-direction: row;
+        padding: 1vh 0;
+        margin: 20vh 10.3vh 0 60.3vh;
+        height: 6vh;
+        width: 60vw;
+    }
+
+    .searchForm label {
+        display: none;
+    }
+
+    .searchForm input {
+        height: 2.5vh;
+    }
+
+    .popUpUser {
+        gap: 0.5vh;
+        height: 6vh;
+        margin-top: 0.5vh;
+        margin-left: 0.5vw;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .hashtags {
+        margin: 20vh 10.3vh 0 50.3vh;
+        height: 6vh;
+        width: 60vw;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .hashtags {
+        margin: 20vh 10.3vh 0 40.3vh;
+        height: 6vh;
+        width: 60vw;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    header {
+        gap: 0;
+        font-size: 2vw;
+    }
+
+    nav ul .btn-nav {
+        color: #0D1B2A;
+        justify-content: center;
+        padding-left: 0;
+    }
+
+    nav ul .btn-nav span {
+        font-size: 2vw;
+    }
+
+    nav ul .img-btn-nav {
+        display: none;
+    }
+
+    .posts .post {
+        height: 25vh;
+    }
+
+    .post .content {
+        height: 22vh;
+        margin-left: 2vh;
+    }
+
+    .post .image {
+        height: 25vh;
+    }
+
+    .post .comments {
+        height: 22vh;
+    }
+
+    .post .content .user {
+        font-size: 1vh;
+        margin-left: 1vw;
+    }
+
+    .post .content .txt {
+        height: 12vh;
+        width: 20vw;
+    }
+
+    .post .content .tag {
+        font-size: 1vw;
+    }
+
+    .post .comments .titleComment {
+        margin: 1vh 0;
+        height: 4vh;
+        font-size: 1vh;
+    }
+
+    .post .comments .comment {
+        height: 10vh;
+        width: 20vw;
+    }
+
+    .post .addCommentForm {
+        margin: 0 0 1vh 0;
+        height: 5vh;
+    }
+
+    .post .addCommentForm #ContentComment {
+        font-size: 1vh;
+    }
+
+    .post .addCommentForm .btn {
+        font-size: 1vh;
+    }
+
+    .hashtags {
+        margin: 20vh 10.3vh 0 25.3vh;
+    }
+
+    .popUpUser {
+        font-size: 2vw;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .hashtags {
+        margin: 20vh 10.3vh 0 20.3vh;
+    }
+
+    .searchForm select,
+    .searchForm input {
+        font-size: 2vw;
+    }
+}
